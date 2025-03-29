@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Empresa {
     @Id
+    @Column(name="id_empresa")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEmpresa;
 
