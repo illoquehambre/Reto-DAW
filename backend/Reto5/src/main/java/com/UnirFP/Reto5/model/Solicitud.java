@@ -14,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Solicitud {
     @Id
+    @Column(name="id_solicitud")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idSolicitud;
 

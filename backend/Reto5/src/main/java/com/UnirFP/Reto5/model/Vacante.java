@@ -14,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Vacante {
     @Id
+    @Column(name="id_vacante")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idVacante;
 
