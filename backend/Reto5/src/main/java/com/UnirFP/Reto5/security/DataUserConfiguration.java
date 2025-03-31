@@ -34,6 +34,10 @@ public class DataUserConfiguration{
                 .authorizeHttpRequests(authorize -> authorize
                         // Endpoints públicos
                         .requestMatchers("/login", "/registro", "/public/**", "/api/login", "/api-docs/**", "/swagger-ui/**").permitAll()
+                        //Para hacer pruebas mientras tanto. Luego se elimina
+                        .requestMatchers("/empresa/nuevaVacante").permitAll()
+                        .requestMatchers("/empresa/editarVacante").permitAll()
+                        .requestMatchers("/empresa/cancelarVacante/**").permitAll()
                         // Cualquier otra URL requiere autenticación
                         .anyRequest().authenticated()
                 )

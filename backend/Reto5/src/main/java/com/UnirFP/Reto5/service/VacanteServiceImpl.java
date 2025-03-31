@@ -27,6 +27,11 @@ public class VacanteServiceImpl implements VacanteService{
 	@Override
 	public int insertOne(Vacante entidad) {
 		try {
+			if (entidad.getIdVacante() == null) {
+				entidad.setEstatus("CREADA");
+				vrepo.save(entidad);
+				return 1;
+			}
 			if (vrepo.existsById(entidad.getIdVacante())) {
 				return 0;
 			}else {
