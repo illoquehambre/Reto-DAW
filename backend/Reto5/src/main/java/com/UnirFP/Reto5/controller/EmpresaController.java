@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,10 +23,10 @@ import com.UnirFP.Reto5.service.CategoriaService;
 import com.UnirFP.Reto5.service.EmpresaService;
 import com.UnirFP.Reto5.service.VacanteService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/empresa")
 public class EmpresaController {
 	
@@ -44,7 +46,7 @@ public class EmpresaController {
 	
 	@PostMapping("/nuevaVacante")
 	public ResponseEntity<Integer> altaVacante(@RequestBody VacanteDto vacanteDto){
-		
+	
 		Categoria categoria = cservice.findById(vacanteDto.getIdCategoria());
 		Empresa empresa = eservice.findById(vacanteDto.getIdEmpresa());
 		
@@ -54,7 +56,7 @@ public class EmpresaController {
 		vacante.setDescripcion(vacanteDto.getDescripcion());
 		vacante.setFecha(vacanteDto.getFecha());
 		vacante.setSalario(vacanteDto.getSalario());
-		vacante.setEstatus(vacanteDto.getEstatus());
+		//vacante.setEstatus(vacanteDto.getEstatus());
 		vacante.setDestacado(vacanteDto.isDestacado());
 		vacante.setImagen(vacanteDto.getImagen());
 		vacante.setDetalles(vacanteDto.getDetalles());
@@ -78,6 +80,7 @@ public class EmpresaController {
 		
 		Vacante vacante = new Vacante();
 		
+		vacante.setIdVacante(vacanteDto.getIdVacante());
 		vacante.setNombre(vacanteDto.getNombre());
 		vacante.setDescripcion(vacanteDto.getDescripcion());
 		vacante.setFecha(vacanteDto.getFecha());

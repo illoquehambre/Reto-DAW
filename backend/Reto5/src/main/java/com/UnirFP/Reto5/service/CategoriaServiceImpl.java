@@ -3,10 +3,12 @@ package com.UnirFP.Reto5.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.UnirFP.Reto5.model.Categoria;
 import com.UnirFP.Reto5.repository.CategoriaRepository;
 
+@Service
 public class CategoriaServiceImpl implements CategoriaService{
 	
 	@Autowired
