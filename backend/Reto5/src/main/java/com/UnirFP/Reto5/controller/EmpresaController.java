@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.UnirFP.Reto5.model.Categoria;
 import com.UnirFP.Reto5.model.Empresa;
+import com.UnirFP.Reto5.model.Usuario;
 import com.UnirFP.Reto5.model.Vacante;
+import com.UnirFP.Reto5.model.dto.EmpresaDto;
 import com.UnirFP.Reto5.model.dto.VacanteDto;
+import com.UnirFP.Reto5.repository.UsuarioRepository;
 import com.UnirFP.Reto5.service.CategoriaService;
 import com.UnirFP.Reto5.service.EmpresaService;
 import com.UnirFP.Reto5.service.VacanteService;
@@ -31,6 +34,9 @@ import com.UnirFP.Reto5.service.VacanteService;
 public class EmpresaController {
 	
 	@Autowired
+	private UsuarioRepository uservice;
+	
+	@Autowired
 	private VacanteService vservice;
 	
 	@Autowired
@@ -39,9 +45,88 @@ public class EmpresaController {
 	@Autowired
 	private EmpresaService eservice;
 	
+	//EMPRESA
+	@GetMapping("/{idEmpresa}")
+	public ResponseEntity<EmpresaDto> unaEmpresa(@PathVariable int idEmpresa){
+		Empresa empresa = eservice.findById(idEmpresa);
+		EmpresaDto empresaDto = new EmpresaDto(
+				empresa.getIdEmpresa(),
+				empresa.getCif(),
+				empresa.getNombreEmpresa(),
+				empresa.getDireccionFiscal(),
+				empresa.getPais(),
+				empresa.getUsuario().getEmail());
+		//return new ResponseEntity<Empresa>(eservice.findById(idEmpresa),HttpStatus.OK);
+		return new ResponseEntity<EmpresaDto>(empresaDto,HttpStatus.OK);
+	}
+	
+	@PostMapping("/")
+	public ResponseEntity<Integer> altaEmpresa(@RequestBody EmpresaDto empresaDto){
+		
+		Usuario usuario = uservice.findByEmail(empresaDto.getEmail());
+		
+		Empresa empresa = new Empresa();
+		empresa.setCif(empresaDto.getCif());
+	    empresa.setNombreEmpresa(empresaDto.getNombreEmpresa());
+	    empresa.setDireccionFiscal(empresaDto.getDireccionFiscal());
+	    empresa.setPais(empresaDto.getPais());
+	    empresa.setUsuario(usuario);
+	    
+		switch(eservice.insertOne(empresa)) {
+			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
+			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
+			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
+			default: return null;
+		}
+	}
+	
+	@PutMapping("/")
+	public ResponseEntity<Integer> editarEmpresa(@RequestBody EmpresaDto empresaDto){ 
+		
+		Usuario usuario = uservice.findByEmail(empresaDto.getEmail());
+		
+		Empresa empresa = new Empresa();
+		empresa.setIdEmpresa(empresaDto.getIdEmpresa());
+		empresa.setCif(empresaDto.getCif());
+	    empresa.setNombreEmpresa(empresaDto.getNombreEmpresa());
+	    empresa.setDireccionFiscal(empresaDto.getDireccionFiscal());
+	    empresa.setPais(empresaDto.getPais());
+	    empresa.setUsuario(usuario);
+	    
+		switch(eservice.updateOne(empresa)) {
+			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
+			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
+			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
+			default: return null;
+		}
+	}
+	
+	@DeleteMapping("/{idEmpresa}")
+	public ResponseEntity<Integer> eliminarEmpresa(@PathVariable int idEmpresa){ 
+		
+		switch(eservice.deleteOne(idEmpresa)) {
+			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
+			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
+			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
+			default: return null;
+		}
+	}
+	
+	
+	//VACANTES
+	@GetMapping("/vacante/{idVacante}")
+	public ResponseEntity<Vacante> unaVacante(@PathVariable int idVacante){
+		return new ResponseEntity<Vacante>(vservice.findById(idVacante),HttpStatus.OK);
+	}
+	
 	@GetMapping("/vacantes")
 	public ResponseEntity<List<Vacante>> listaVacantes(){
 		return new ResponseEntity<List<Vacante>>(vservice.findAll(),HttpStatus.OK);
+	}
+	
+	@GetMapping("/vacantesEmpresa/{idEmpresa}")
+	public ResponseEntity<List<Vacante>> listaVacantesPorEmpresa(@PathVariable int idEmpresa){
+		return new ResponseEntity<List<Vacante>>(vservice.findByEmpresa(idEmpresa),HttpStatus.OK);
 	}
 	
 	@PostMapping("/nuevaVacante")
@@ -64,10 +149,10 @@ public class EmpresaController {
 		vacante.setEmpresa(empresa);
 		
 		switch(vservice.insertOne(vacante)) {
-		case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
-		case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
-		case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
-		default: return null;
+			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
+			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
+			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
+			default: return null;
 		}
 		
 	}
@@ -93,10 +178,10 @@ public class EmpresaController {
 		vacante.setEmpresa(empresa);
 		
 		switch(vservice.updateOne(vacante)) {
-		case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
-		case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
-		case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
-		default: return null;
+			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
+			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
+			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
+			default: return null;
 		}
 	}
 	
@@ -104,10 +189,10 @@ public class EmpresaController {
 	public ResponseEntity<Integer> cancelarVacante(@PathVariable int idVacante){ 
 		
 		switch(vservice.deleteOne(idVacante)) {
-		case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
-		case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
-		case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
-		default: return null;
+			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
+			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
+			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
+			default: return null;
 		}
 	}
 
