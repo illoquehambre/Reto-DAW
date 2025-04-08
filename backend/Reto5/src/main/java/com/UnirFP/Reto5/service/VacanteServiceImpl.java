@@ -18,6 +18,11 @@ public class VacanteServiceImpl implements VacanteService{
 	public Vacante findById(Integer clavePk) {
 		return vrepo.findById(clavePk).orElse(null);
 	}
+	
+	@Override
+	public List<Vacante> findByEmpresa(Integer idEmpresa){
+		return vrepo.findByIdEmpresa(idEmpresa);
+	}
 
 	@Override
 	public List<Vacante> findAll() {

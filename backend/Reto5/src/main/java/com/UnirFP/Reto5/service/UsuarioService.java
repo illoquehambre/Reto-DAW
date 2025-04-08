@@ -24,6 +24,14 @@ public class UsuarioService {
         return dto;
     }
     
+    public Usuario findByEmail(String email){
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        if (usuario == null) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
+        
+        return usuario;
+    }
     
 	public List<Usuario> findAll() {
 		return usuarioRepository.findAll();
