@@ -23,6 +23,11 @@ public class SolicitudServiceImpl implements SolicitudService{
 	public List<Solicitud> findAll() {
 		return srepo.findAll();
 	}
+	
+	@Override
+	public List<Solicitud> findByVacante(int idVacante){
+		return srepo.findByVacante_IdVacante(idVacante);
+	}
 
 	@Override
 	public int insertOne(Solicitud entidad) {

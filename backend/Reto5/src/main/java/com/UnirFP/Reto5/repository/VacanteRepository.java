@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VacanteRepository extends JpaRepository<Vacante, Integer> {
 	
-	public List<Vacante> findByIdEmpresa(int idEmpresa); 
+	public List<Vacante> findByEmpresa_IdEmpresa(int idEmpresa); 
 }
