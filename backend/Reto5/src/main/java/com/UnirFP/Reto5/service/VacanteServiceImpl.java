@@ -21,7 +21,7 @@ public class VacanteServiceImpl implements VacanteService{
 	
 	@Override
 	public List<Vacante> findByEmpresa(Integer idEmpresa){
-		return vrepo.findByIdEmpresa(idEmpresa);
+		return vrepo.findByEmpresa_IdEmpresa(idEmpresa);
 	}
 
 	@Override
