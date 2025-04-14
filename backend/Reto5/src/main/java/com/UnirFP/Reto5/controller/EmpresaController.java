@@ -109,7 +109,7 @@ public class EmpresaController {
 		}
 	}
 	
-	@DeleteMapping("/{idEmpresa}")
+	/*@DeleteMapping("/{idEmpresa}")
 	public ResponseEntity<Integer> eliminarEmpresa(@PathVariable int idEmpresa){ 
 		
 		switch(eservice.deleteOne(idEmpresa)) {
@@ -118,7 +118,7 @@ public class EmpresaController {
 			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
 			default: return null;
 		}
-	}
+	}*/
 	
 	
 	//VACANTES

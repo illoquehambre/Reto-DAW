@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface SolicitudRepository extends JpaRepository<Solicitud, Integer> {
 	
 	public List<Solicitud> findByVacante_IdVacante(int idVacante);
+	public List<Solicitud> findByUsuario_Email(String email);
 }

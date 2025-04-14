@@ -7,6 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class UsuarioResponseDto {
 
+	private String email;
     private String nombre;
     private String apellidos;
     private String rol;
