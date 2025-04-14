@@ -7,4 +7,5 @@ import com.UnirFP.Reto5.model.Solicitud;
 public interface SolicitudService extends CrudGenerico<Solicitud,Integer>{
 
 	List<Solicitud> findByVacante(int idVacante);
+	List<Solicitud> findByUsuario(String email);
 }
