@@ -26,6 +26,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,15 +58,26 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public UsuarioResponseDto login(@RequestBody LoginRequest loginRequest) {
-        UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken(loginRequest.getNombre(), loginRequest.getContrasenia());
+    //public UsuarioResponseDto login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    	/*PasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.encode("prueba"));*/
+    	try {
+    		UsernamePasswordAuthenticationToken authToken =
+    				new UsernamePasswordAuthenticationToken(loginRequest.getNombre(), loginRequest.getContrasenia());
 
-        Authentication auth = authenticationManager.authenticate(authToken);
+    		Authentication auth = authenticationManager.authenticate(authToken);
 
-        SecurityContextHolder.getContext().setAuthentication(auth);
+    		SecurityContextHolder.getContext().setAuthentication(auth);
 
-        return  usuarioService.findByNombre(loginRequest.getNombre());
+    		//return  usuarioService.findByNombre(loginRequest.getNombre());
+    		return new ResponseEntity<UsuarioResponseDto>(usuarioService.findByNombre(loginRequest.getNombre()),HttpStatus.OK);
+    	} catch (Exception e) {
+    		//return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    		return new ResponseEntity<Exception>(e ,HttpStatus.UNAUTHORIZED);
+    	}
+    	
+    	//return new ResponseEntity<LoginRequest>(loginRequest ,HttpStatus.UNAUTHORIZED);
 
     }
     

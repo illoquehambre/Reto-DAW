@@ -1,0 +1,7 @@
+<div class="row">
+    @for(categoria of arrCategoria; track categoria.idCategoria){
+    <article class="col-12 col-md-6 col-sd-3">
+        <app-categoria-card [miCategoria] = "categoria"></app-categoria-card>
+    </article>
+    }
+</div>

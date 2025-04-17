@@ -38,6 +38,8 @@ public class DataUserConfiguration{
                         .requestMatchers("/empresa/nuevaVacante").permitAll()
                         .requestMatchers("/empresa/editarVacante").permitAll()
                         .requestMatchers("/empresa/cancelarVacante/**").permitAll()
+                        //.requestMatchers("/admin/**").hasAnyAuthority("ROLE_ADMON")
+                        .requestMatchers("/admin/**").permitAll()
                         // Cualquier otra URL requiere autenticación
                         .anyRequest().authenticated()
                 )
@@ -55,7 +57,7 @@ public class DataUserConfiguration{
         return http.build();
     }
 
-    @Bean
+   @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
