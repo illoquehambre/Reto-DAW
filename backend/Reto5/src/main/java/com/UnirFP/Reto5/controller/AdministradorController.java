@@ -6,6 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,16 +23,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.UnirFP.Reto5.model.Categoria;
 import com.UnirFP.Reto5.model.Empresa;
 import com.UnirFP.Reto5.model.Usuario;
+import com.UnirFP.Reto5.model.Vacante;
 import com.UnirFP.Reto5.model.dto.EmpresaDto;
+import com.UnirFP.Reto5.model.dto.UsuarioCreacionDto;
 import com.UnirFP.Reto5.model.dto.UsuarioResponseDto;
 import com.UnirFP.Reto5.service.CategoriaService;
 import com.UnirFP.Reto5.service.EmpresaService;
 import com.UnirFP.Reto5.service.UsuarioService;
+import com.UnirFP.Reto5.service.VacanteService;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/admin")
 public class AdministradorController {
+	
+	/*@Autowired
+	private VacanteService vservice;*/
 	
 	@Autowired
 	private EmpresaService eservice;
@@ -138,7 +148,8 @@ public class AdministradorController {
 					usuario.getEmail(),
 					usuario.getNombre(),
 					usuario.getApellidos(),
-					usuario.getRol());
+					usuario.getRol(),
+					usuario.getEnabled());
 			usuariosDto.add(usuarioDto);
 		}
 		return new ResponseEntity<List<UsuarioResponseDto>>(usuariosDto,HttpStatus.OK);
@@ -152,7 +163,8 @@ public class AdministradorController {
 				usuario.getEmail(),
 				usuario.getNombre(),
 				usuario.getApellidos(),
-				usuario.getRol());
+				usuario.getRol(),
+				usuario.getEnabled());
 		//return new ResponseEntity<Empresa>(eservice.findById(idEmpresa),HttpStatus.OK);
 		return new ResponseEntity<UsuarioResponseDto>(usuarioDto,HttpStatus.OK);
 	}
@@ -209,7 +221,14 @@ public class AdministradorController {
 	}
 	
 	@PutMapping("/usuario")
-	public ResponseEntity<Integer> modificarUsuario(@RequestBody Usuario usuario){
+	public ResponseEntity<Integer> modificarUsuario(@RequestBody UsuarioCreacionDto usuarioDto){
+		
+		Usuario usuario = uservice.findByEmail(usuarioDto.getEmail());
+		usuario.setNombre(usuarioDto.getNombre());
+		usuario.setApellidos(usuarioDto.getApellidos());
+		usuario.setPassword(usuarioDto.getPassword());
+		usuario.setRol(usuarioDto.getRol());
+		
 		switch(uservice.updateOne(usuario)) {
 			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
 			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
@@ -242,6 +261,7 @@ public class AdministradorController {
 	
 	@PostMapping("/categoria")
 	public ResponseEntity<Integer> altaCategoria(@RequestBody Categoria categoria){
+		System.out.println(categoria);
 		switch(cservice.insertOne(categoria)) {
 			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
 			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
@@ -252,6 +272,9 @@ public class AdministradorController {
 	
 	@PutMapping("/categoria")
 	public ResponseEntity<Integer> editarCategoria(@RequestBody Categoria categoria){
+		/*Categoria categoria2 = new Categoria();
+		categoria2.setNombre(categoria.getNombre());
+		categoria2.setDescripcion(categoria.getDescripcion());*/
 		switch(cservice.updateOne(categoria)) {
 			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
 			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
@@ -267,7 +290,14 @@ public class AdministradorController {
 			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
 			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
 			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
+			case 2: return new ResponseEntity<Integer>(2, HttpStatus.CONFLICT);
 			default: return null;
 		}
 	}
+	
+	/*@GetMapping("/prueba/{idCategoria}")
+	public ResponseEntity<Vacante> prueba(@PathVariable int idCategoria){
+		return new ResponseEntity<Vacante>(vservice.findByCategoria(idCategoria), HttpStatus.OK);
+	}*/
+	
 }

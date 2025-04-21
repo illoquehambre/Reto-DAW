@@ -13,7 +13,23 @@ export class CategoriaService {
 
   constructor() { }
 
-  categoriasAll(): Promise<any>{
-      return lastValueFrom(this.httpClient.get<any>(this.baseUrl+"/categorias"));
+  getAll(): Promise<ICategoria[]>{
+      return lastValueFrom(this.httpClient.get<ICategoria[]>(this.baseUrl+"/categorias"));
     }
+
+  findById(id_categoria: number): Promise<ICategoria>{
+    return lastValueFrom(this.httpClient.get<ICategoria>(this.baseUrl+"/categoria/"+id_categoria));
+  }
+
+  insert(categoria: ICategoria): Promise<number>{
+    return lastValueFrom(this.httpClient.post<number>(this.baseUrl+"/categoria", categoria));
+  }
+
+  update(categoria: ICategoria): Promise<number>{
+    return lastValueFrom(this.httpClient.put<number>(this.baseUrl+"/categoria", categoria)); 
+  }
+
+  delete(id_categoria: number): Promise<number> {
+    return lastValueFrom(this.httpClient.delete<number>(this.baseUrl+"/categoria/"+id_categoria));
+  }
 }

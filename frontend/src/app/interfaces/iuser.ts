@@ -3,4 +3,5 @@ export interface IUser {
     nombre: string;
     apellidos: string;
     rol: string;
+    enabled: number;
 }

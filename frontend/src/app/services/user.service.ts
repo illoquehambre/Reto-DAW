@@ -11,11 +11,16 @@ export class UserService {
 
   private httpClient = inject(HttpClient);
   private baseUrl: string = 'http://localhost:8083/api';
+  private baseUrlAdmin: string = 'http://localhost:8083/admin';
 
   constructor() { }
 
   login(login: ILogin): Promise<any>{
     return lastValueFrom(this.httpClient.post<any>(this.baseUrl+"/login", login));
+  }
+
+  getAll(): Promise<IUser[]>{
+    return lastValueFrom(this.httpClient.get<IUser[]>(this.baseUrlAdmin+"/usuarios"));
   }
 
 }
