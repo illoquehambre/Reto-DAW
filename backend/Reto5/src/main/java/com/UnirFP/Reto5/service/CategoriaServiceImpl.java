@@ -7,9 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.UnirFP.Reto5.model.Categoria;
 import com.UnirFP.Reto5.repository.CategoriaRepository;
+import com.UnirFP.Reto5.repository.VacanteRepository;
 
 @Service
 public class CategoriaServiceImpl implements CategoriaService{
+	
+	@Autowired
+	private VacanteRepository vrepo;
 	
 	@Autowired
 	private CategoriaRepository crepo;
@@ -27,8 +31,13 @@ public class CategoriaServiceImpl implements CategoriaService{
 	@Override
 	public int insertOne(Categoria entidad) {
 		try {
-			if (crepo.existsById(entidad.getIdCategoria())) {
-				return 0;
+			if (entidad.getIdCategoria() != null) {
+				if (crepo.existsById(entidad.getIdCategoria())) {
+					return 0;
+				}else {
+					crepo.save(entidad);
+					return 1;
+				}
 			}else {
 				crepo.save(entidad);
 				return 1;
@@ -59,11 +68,16 @@ public class CategoriaServiceImpl implements CategoriaService{
 	@Override
 	public int deleteOne(Integer clavePk) {
 		try {
-			if (crepo.existsById(clavePk)) {
-				crepo.deleteById(clavePk);
-				return 1;
+			if (vrepo.findFirstByCategoriaIdCategoria(clavePk) == null) {
+				if (crepo.existsById(clavePk)) {
+					crepo.deleteById(clavePk);
+					return 1;
+				}else {
+					return 0;
+				}
 			}else {
-				return 0;
+				System.out.println("Paso");
+				return 2;
 			}
 			
 		} catch (Exception e) {

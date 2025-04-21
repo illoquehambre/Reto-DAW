@@ -5,6 +5,7 @@ import com.UnirFP.Reto5.model.Vacante;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -12,4 +13,5 @@ public interface VacanteRepository extends JpaRepository<Vacante, Integer> {
 	
 	public List<Vacante> findByEmpresa_IdEmpresa(int idEmpresa); 
 	public List<Vacante> findByEstatus(String estatus);
+	public Vacante findFirstByCategoriaIdCategoria(int idCategoria);
 }

@@ -63,15 +63,31 @@ public class UserController {
     	/*PasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println(encoder.encode("prueba"));*/
     	try {
-    		UsernamePasswordAuthenticationToken authToken =
+    		/*UsernamePasswordAuthenticationToken authToken =
     				new UsernamePasswordAuthenticationToken(loginRequest.getNombre(), loginRequest.getContrasenia());
 
     		Authentication auth = authenticationManager.authenticate(authToken);
 
     		SecurityContextHolder.getContext().setAuthentication(auth);
+    		
+    		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    		//System.out.println("Usuario autenticado: " + auth.getName());
+    		//System.out.println("Roles: " + auth.getAuthorities());*/
+    		
+    		UsernamePasswordAuthenticationToken authToken =
+    		        new UsernamePasswordAuthenticationToken(loginRequest.getNombre(), loginRequest.getContrasenia());
+
+    		Authentication auth = authenticationManager.authenticate(authToken);
+    		SecurityContextHolder.getContext().setAuthentication(auth);
+
+    	
+    		/*System.out.println("Usuario autenticado: " + auth.getName());
+    		System.out.println("Roles: " + auth.getAuthorities());*/
 
     		//return  usuarioService.findByNombre(loginRequest.getNombre());
     		return new ResponseEntity<UsuarioResponseDto>(usuarioService.findByNombre(loginRequest.getNombre()),HttpStatus.OK);
+    		//return new ResponseEntity<Authentication>(auth,HttpStatus.OK);
+ 
     	} catch (Exception e) {
     		//return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     		return new ResponseEntity<Exception>(e ,HttpStatus.UNAUTHORIZED);

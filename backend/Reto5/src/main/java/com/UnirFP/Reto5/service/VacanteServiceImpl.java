@@ -20,6 +20,11 @@ public class VacanteServiceImpl implements VacanteService{
 	}
 	
 	@Override
+	public Vacante findByCategoria(Integer idCategoria) {
+		return vrepo.findFirstByCategoriaIdCategoria(idCategoria);
+	}
+	
+	@Override
 	public List<Vacante> findByEmpresa(Integer idEmpresa){
 		return vrepo.findByEmpresa_IdEmpresa(idEmpresa);
 	}

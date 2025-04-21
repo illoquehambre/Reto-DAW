@@ -8,11 +8,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 @EnableWebSecurity
 @Configuration
@@ -39,6 +41,7 @@ public class DataUserConfiguration{
                         .requestMatchers("/empresa/editarVacante").permitAll()
                         .requestMatchers("/empresa/cancelarVacante/**").permitAll()
                         //.requestMatchers("/admin/**").hasAnyAuthority("ROLE_ADMON")
+                        //.requestMatchers("/admin/**").authenticated()
                         .requestMatchers("/admin/**").permitAll()
                         // Cualquier otra URL requiere autenticación
                         .anyRequest().authenticated()
@@ -52,7 +55,13 @@ public class DataUserConfiguration{
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login")
                         .permitAll()
-                );
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // Habilita sesiones
+                        )
+                        .securityContext(securityContext -> 
+                        securityContext.securityContextRepository(new HttpSessionSecurityContextRepository())
+                    );
 
         return http.build();
     }

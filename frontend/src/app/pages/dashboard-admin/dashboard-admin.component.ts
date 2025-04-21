@@ -15,4 +15,8 @@ export class DashboardAdminComponent {
   categorias(){
     this.router.navigate(['/categoriasList']);
   }
+
+  usuarios(){
+    this.router.navigate(['/usersList']);
+  }
 }

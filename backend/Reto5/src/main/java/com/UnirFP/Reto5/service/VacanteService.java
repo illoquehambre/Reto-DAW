@@ -8,4 +8,5 @@ public interface VacanteService extends CrudGenerico<Vacante,Integer>{
 
 	List<Vacante> findByEmpresa(Integer idEmpresa);
 	List<Vacante> findAllCreada();
+	Vacante findByCategoria(Integer idCategoria);
 }

@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,7 +24,7 @@ public class UsuarioService {
         if (usuario == null) {
             throw new RuntimeException("Usuario no encontrado");
         }
-        UsuarioResponseDto dto = new UsuarioResponseDto(usuario.getEmail(),usuario.getNombre(), usuario.getApellidos(), usuario.getRol());
+        UsuarioResponseDto dto = new UsuarioResponseDto(usuario.getEmail(),usuario.getNombre(), usuario.getApellidos(), usuario.getRol(), usuario.getEnabled());
         return dto;
     }
     
@@ -44,17 +46,26 @@ public class UsuarioService {
 			
 			Usuario existe = usuarioRepository.findById(entidad.getEmail()).orElse(null);
 			
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			String pass = "";
+	        //System.out.println(encoder.encode("prueba"));
+			
 			if (existe == null) {
 				if (esEmpresa == 2) {
+					
 					//entidad.setPassword(PasswordGenerator());
+					pass = entidad.getNombre() + "1234";
+					entidad.setPassword(encoder.encode(pass));
 					entidad.setRol("CLIENTE");
 				}
 				if (esEmpresa == 1) {
-					entidad.setPassword(PasswordGenerator());
+					pass = entidad.getNombre() + "1234";
+					entidad.setPassword(encoder.encode(pass));
 					entidad.setRol("EMPRESA");
 				}
 				if (esEmpresa == 0) {
-					//entidad.setPassword(PasswordGenerator());
+					pass = entidad.getNombre() + "1234";
+					entidad.setPassword(encoder.encode(pass));
 					entidad.setRol("ADMON");
 				}
 				entidad.setEnabled(1);
@@ -72,7 +83,10 @@ public class UsuarioService {
 	
 	public int updateOne(Usuario usuario) {
 		try {
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			
 			if(usuarioRepository.existsById(usuario.getEmail())) {
+				usuario.setPassword(encoder.encode(usuario.getPassword()));
 				usuarioRepository.save(usuario);
 				return 1;
 			}else
