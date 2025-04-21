@@ -1,28 +1,38 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ICategoria } from '../../interfaces/icategoria';
+import { CategoriaService } from '../../services/categoria.service';
 
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [],
+  imports: [RouterModule, ReactiveFormsModule],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css'
 })
 export class UserFormComponent {
 
   router = inject(Router);
-  UserService = inject(UserService);
+  userService = inject(UserService);
+  categoriaService = inject(CategoriaService);
   activatedRoute = inject(ActivatedRoute);
   
   userForm: FormGroup;
+  categoriaForm: FormGroup;
   tipo: string;
   
   constructor(){
     this.tipo = "Nuevo";
   
     this.userForm = new FormGroup({
+      idCategoria: new FormControl('', []),
+      nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      descripcion: new FormControl('', [Validators.required, Validators.minLength(5)])
+    },[]);
+
+    this.categoriaForm = new FormGroup({
       idCategoria: new FormControl('', []),
       nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
       descripcion: new FormControl('', [Validators.required, Validators.minLength(5)])
