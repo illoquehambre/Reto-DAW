@@ -36,7 +36,7 @@ public class VacanteServiceImpl implements VacanteService{
 	
 	@Override
 	public List<Vacante> findAllCreada(){
-		return vrepo.findByEstatus("CREADA");
+		return vrepo.findAllByEstatus("CREADA");
 	}
 
 	@Override
