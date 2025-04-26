@@ -41,7 +41,7 @@ public class UsuarioService {
 		return usuarioRepository.findAll();
 	}
 	
-	public Usuario insertOne(Usuario entidad, int esEmpresa) {
+	public int insertOne(Usuario entidad, int esEmpresa) {
 		try {
 			
 			Usuario existe = usuarioRepository.findById(entidad.getEmail()).orElse(null);
@@ -70,14 +70,18 @@ public class UsuarioService {
 				}
 				entidad.setEnabled(1);
 				entidad.setFechaRegistro(new Date());
-				return usuarioRepository.save(entidad);
+				//return usuarioRepository.save(entidad);
+				usuarioRepository.save(entidad);
+				return 1;
 			} else {
-				return null;
+				//return null;
+				return 0;
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			//return null;
+			return -1;
 		}
 	}
 	

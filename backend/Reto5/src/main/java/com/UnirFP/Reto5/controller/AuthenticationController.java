@@ -32,7 +32,7 @@ public class AuthenticationController {
 */
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest loginUserDto) {
-
+    	System.out.println(loginUserDto);
         Usuario authenticatedUser = authenticationService.authenticate(loginUserDto);
         System.out.println(authenticatedUser);
         String jwtToken = jwtService.generateToken(authenticatedUser);
@@ -40,7 +40,7 @@ public class AuthenticationController {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwtToken);
         loginResponse.setExpiresIn(jwtService.getExpirationTime());
-
+        
         return ResponseEntity.ok(loginResponse);
     }
 }

@@ -1,8 +1,8 @@
 export interface IEmpresa {
     id?: number;
     cif: string;
-    nombre: string;
-    direccion: string;
+    nombreEmpresa: string;
+    direccionFiscal: string;
     pais: string;
     email: string;
 } 

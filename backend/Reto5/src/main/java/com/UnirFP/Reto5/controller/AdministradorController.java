@@ -170,54 +170,54 @@ public class AdministradorController {
 	}
 	
 	@PostMapping("/usuarioEmpresa")
-	public ResponseEntity<Usuario> altaUsuarioEmpresa(@RequestBody UsuarioResponseDto usuarioDto){
+	public ResponseEntity<Integer> altaUsuarioEmpresa(@RequestBody UsuarioResponseDto usuarioDto){
 		
 		Usuario usuario = new Usuario();
 		usuario.setEmail(usuarioDto.getEmail());
 		usuario.setNombre(usuarioDto.getNombre());
 		usuario.setApellidos(usuarioDto.getApellidos());
 		   
-		return new ResponseEntity<Usuario>(uservice.insertOne(usuario, 1),HttpStatus.CREATED);
-		/*switch(uservice.insertOne(usuario,1)) {
+		//return new ResponseEntity<Usuario>(uservice.insertOne(usuario, 1),HttpStatus.CREATED);
+		switch(uservice.insertOne(usuario,1)) {
 			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
 			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
 			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
 			default: return null;
-		}*/
+		}
 	}
 	
 	@PostMapping("/usuarioAdmin")
-	public ResponseEntity<Usuario> altaUsuarioAdmin(@RequestBody UsuarioResponseDto usuarioDto){
+	public ResponseEntity<Integer> altaUsuarioAdmin(@RequestBody UsuarioResponseDto usuarioDto){
 		
 		Usuario usuario = new Usuario();
 		usuario.setEmail(usuarioDto.getEmail());
 		usuario.setNombre(usuarioDto.getNombre());
 		usuario.setApellidos(usuarioDto.getApellidos());
-		   
-		return new ResponseEntity<Usuario>(uservice.insertOne(usuario, 0),HttpStatus.CREATED);
-		/*switch(uservice.insertOne(usuario,1)) {
+		
+		//return new ResponseEntity<Usuario>(uservice.insertOne(usuario, 0),HttpStatus.CREATED);
+		switch(uservice.insertOne(usuario,0)) {
 			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
 			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
 			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
 			default: return null;
-		}*/
+		}
 	}
 	
 	@PostMapping("/usuarioCliente")
-	public ResponseEntity<Usuario> altaUsuarioCliente(@RequestBody UsuarioResponseDto usuarioDto){
+	public ResponseEntity<Integer> altaUsuarioCliente(@RequestBody UsuarioResponseDto usuarioDto){
 		
 		Usuario usuario = new Usuario();
 		usuario.setEmail(usuarioDto.getEmail());
 		usuario.setNombre(usuarioDto.getNombre());
 		usuario.setApellidos(usuarioDto.getApellidos());
 		   
-		return new ResponseEntity<Usuario>(uservice.insertOne(usuario, 2),HttpStatus.CREATED);
-		/*switch(uservice.insertOne(usuario,1)) {
+		//return new ResponseEntity<Usuario>(uservice.insertOne(usuario, 2),HttpStatus.CREATED);
+		switch(uservice.insertOne(usuario,2)) {
 			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
 			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
 			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
 			default: return null;
-		}*/
+		}
 	}
 	
 	@PutMapping("/usuario")

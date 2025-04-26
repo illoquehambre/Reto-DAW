@@ -27,8 +27,13 @@ public class EmpresaServiceImpl implements EmpresaService{
 	@Override
 	public int insertOne(Empresa entidad) {
 		try {
-			if (erepo.existsById(entidad.getIdEmpresa())) {
-				return 0;
+			if (entidad.getIdEmpresa() != null) {
+				if (erepo.existsById(entidad.getIdEmpresa())) {
+					return 0;
+				}else {
+					erepo.save(entidad);
+					return 1;
+				}
 			}else {
 				erepo.save(entidad);
 				return 1;

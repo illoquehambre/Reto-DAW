@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IEmpresa } from '../interfaces/iempresa';
 
@@ -21,15 +21,25 @@ export class EmpresaService {
     return this.httpClient.get<IEmpresa>(`${this.baseUrl}/${id}`);
   }
 
-  insert(empresa: IEmpresa): Observable<IEmpresa> {
-    return this.httpClient.post<IEmpresa>(this.baseUrl, empresa);
+  insert(empresa: IEmpresa): Observable<number> {
+    return this.httpClient.post<number>(this.baseUrl+"/empresa", empresa, this.getAuthoritation());
   }
 
-  update(id: number, empresa: IEmpresa): Observable<IEmpresa> {
-    return this.httpClient.put<IEmpresa>(`${this.baseUrl}/${id}`, empresa);
+  update(empresa: IEmpresa): Observable<number> {
+    return this.httpClient.put<number>(this.baseUrl+"/empresa", empresa, this.getAuthoritation());
   }
 
   delete(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  getAuthoritation(){
+      const httOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}` || "" //Esto que si no hay Token que lo pase vacío
+        })
+      };
+      return httOptions;
+    }
 } 
