@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-empresa-card',
+  standalone: true,
+  imports: [],
   templateUrl: './empresa-card.component.html',
   styleUrls: ['./empresa-card.component.css']
 })

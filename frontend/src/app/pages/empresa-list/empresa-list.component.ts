@@ -34,5 +34,13 @@ export class EmpresaListComponent implements OnInit {
     volver(){
       this.router.navigate(['/dashboardAdmin']);
     }
+
+    update(id: number){
+
+    }
+
+    delete(id: number){
+
+    }
   }
   
