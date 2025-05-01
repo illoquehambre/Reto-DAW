@@ -1,5 +1,5 @@
 export interface IEmpresa {
-    id?: number;
+    idEmpresa?: number;
     cif: string;
     nombreEmpresa: string;
     direccionFiscal: string;

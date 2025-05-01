@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { IEmpresa } from '../interfaces/iempresa';
 
 @Injectable({
@@ -19,6 +19,10 @@ export class EmpresaService {
 
   findById(id: number): Observable<IEmpresa> {
     return this.httpClient.get<IEmpresa>(`${this.baseUrl}/${id}`);
+  }
+
+  findByEmail(email: string): Promise<IEmpresa>{
+    return lastValueFrom(this.httpClient.get<IEmpresa>(this.baseUrl+"/empresaEmail/"+email, this.getAuthoritation()));
   }
 
   insert(empresa: IEmpresa): Observable<number> {

@@ -19,14 +19,14 @@
   }  
 
   <div class="row">
-    @for (empresa of arrEmpresas; track empresa.id) {
+    @for (empresa of arrEmpresas; track empresa.idEmpresa) {
       <div class="col-md-6 col-lg-4 mb-4">
         <app-empresa-card [miEmpresa]="empresa"></app-empresa-card>
         <div class="mt-2">
-          <button class="btn btn-sm btn-primary me-2" (click)="update(empresa.id!)">
+          <button class="btn btn-sm btn-primary me-2" (click)="update(empresa.idEmpresa!)">
             <i class="bi bi-pencil"></i> Editar
           </button>
-          <button class="btn btn-sm btn-danger" (click)="delete(empresa.id!)">
+          <button class="btn btn-sm btn-danger" (click)="delete(empresa.idEmpresa!)">
             <i class="bi bi-trash"></i> Eliminar
           </button>
         </div>
