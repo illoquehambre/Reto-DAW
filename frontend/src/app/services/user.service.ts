@@ -31,6 +31,10 @@ export class UserService {
     return lastValueFrom(this.httpClient.get<IUser[]>(this.baseUrlAdmin+"/usuarios", this.getAuthoritation()));
   }
 
+  getByEmail(email: string): Promise<IUser>{
+    return lastValueFrom(this.httpClient.get<IUser>(this.baseUrlAdmin+"/usuario/"+email, this.getAuthoritation()));
+  }
+
   insertEmpresa(user: IUser): Promise<number>{
     return lastValueFrom(this.httpClient.post<number>(this.baseUrlAdmin+"/usuarioEmpresa", user, this.getAuthoritation()));
   }
@@ -43,20 +47,13 @@ export class UserService {
     return lastValueFrom(this.httpClient.post<number>(this.baseUrlAdmin+"/usuarioCliente", user, this.getAuthoritation()));
   }
 
-  /*
-  login(login: ILogin): Promise<any> {
-  return lastValueFrom(this.httpClient.post<any>(this.baseUrl + "/login", login)).then(response => {
-    if (response && response.token) {
-      localStorage.setItem('accessToken', response.token); // Guarda el token
-    }
-    return response;
-  }).catch(error => {
-    console.error('Error en login:', error);
-    throw error;
-  });
-}
+  update(user: IUser): Promise<number>{
+    return lastValueFrom(this.httpClient.put<number>(this.baseUrlAdmin+"/usuario", user, this.getAuthoritation())); 
+  }
 
-  */
+  delete(email: string): Promise<number>{
+    return lastValueFrom(this.httpClient.delete<number>(this.baseUrlAdmin+"/usuario/"+email, this.getAuthoritation()));
+  }
 
 getAuthoritation(){
     const httOptions = {

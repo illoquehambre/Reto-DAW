@@ -18,6 +18,6 @@ export const routes: Routes = [
     {path:"usersList", component: UserListComponent},
     {path:"empresasList", component: EmpresaListComponent},
     {path:"userNew", component: UserFormComponent},
-    {path:"userUpdate/:id_user", component: UserFormComponent},
+    {path:"userUpdate/:email", component: UserFormComponent},
     {path:"**", redirectTo: "login"}
 ];
