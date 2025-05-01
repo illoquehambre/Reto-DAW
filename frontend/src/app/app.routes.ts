@@ -6,12 +6,17 @@ import { CategoriaFormComponent } from './pages/categoria-form/categoria-form.co
 import { UserListComponent } from './pages/user-list/user-list.component';
 import { UserFormComponent } from './pages/user-form/user-form.component';
 import { EmpresaListComponent } from './pages/empresa-list/empresa-list.component';
+import { DashboardClienteComponent } from './pages/dashboard-cliente/dashboard-cliente.component';
+import { VacantesListComponent } from './pages/vacantes-list/vacantes-list.component';
 
 
 export const routes: Routes = [
     {path:"", pathMatch: "full", redirectTo: "login"},
     {path:"login", component: LoginComponent},
     {path:"dashboardAdmin", component: DashboardAdminComponent},
+    {path:"dashboardCliente", component: DashboardClienteComponent},
+    //{path:"dashboardEmpresa", component: DashboardAdminComponent},
+    {path:"vacantesList", component: VacantesListComponent},
     {path:"categoriasList", component: CategoriaListComponent},
     {path:"categoriaNew", component: CategoriaFormComponent},
     {path:"categoriaUpdate/:id_categoria", component: CategoriaFormComponent},

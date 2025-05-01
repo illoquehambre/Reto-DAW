@@ -4,6 +4,10 @@ import { IUser } from '../interfaces/iuser';
 import { lastValueFrom } from 'rxjs';
 import { ILogin } from '../interfaces/ilogin';
 
+export interface IAuthResponse {
+  token: string;
+  rol: string;      // <-- roles que envía tu backend
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -15,16 +19,19 @@ export class UserService {
 
   constructor() { }
 
-  login(login: ILogin): Promise<any>{
-    return lastValueFrom(this.httpClient.post<any>(this.baseUrl+"/login", login)).then(response => {
-      if (response && response.token) {
-        localStorage.setItem('accessToken', response.token); // Guarda el token
+  async login(login: ILogin): Promise<IAuthResponse> {
+    try {
+      const response = await lastValueFrom(this.httpClient.post<IAuthResponse>(`${this.baseUrl}/login`, login));
+      if (response.token) {
+        localStorage.setItem('accessToken', response.token);
+        localStorage.setItem('rol', JSON.stringify(response.rol));
       }
+
       return response;
-    }).catch(error => {
-      console.error('Error en login:', error);
-      throw error;
-    });
+    } catch (err) {
+      console.error('Error en login:', err);
+      throw err;
+    }
   }
 
   getAll(): Promise<IUser[]>{
