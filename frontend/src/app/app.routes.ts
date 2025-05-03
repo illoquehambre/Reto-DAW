@@ -10,19 +10,29 @@ import { UserListComponent } from './pages/user-list/user-list.component';
 import { UserFormComponent } from './pages/user-form/user-form.component';
 import { EmpresaListComponent } from './pages/empresa-list/empresa-list.component';
 import { AuthGuard } from './auth.guard';
+import { HomeComponentComponent } from './pages/home-component/home-component.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 export const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'home' }, 
+  { path: 'home', component: HomeComponentComponent }, 
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: LoginComponent },
   {
     path: 'dashboardAdmin',
     component: DashboardAdminComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
   {
     path: 'dashboardCliente',
     component: DashboardClienteComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['CLIENTE'] },
+  },
+  {
+    path: 'perfil',
+    component: PerfilComponent,
     canActivate: [AuthGuard],
     data: { rol: ['CLIENTE'] },
   },
@@ -36,43 +46,43 @@ export const routes: Routes = [
     path: 'categoriasList',
     component: CategoriaListComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
   {
     path: 'categoriaNew',
     component: CategoriaFormComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
   {
     path: 'categoriaUpdate/:id_categoria',
     component: CategoriaFormComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
   {
     path: 'usersList',
     component: UserListComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
   {
     path: 'empresasList',
     component: EmpresaListComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
   {
     path: 'userNew',
     component: UserFormComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
   {
     path: 'userUpdate/:email',
     component: UserFormComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
   { path: '**', redirectTo: 'login' },
 ];

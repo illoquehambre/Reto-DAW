@@ -1,12 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IUser } from '../interfaces/iuser';
-import { lastValueFrom } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable, tap } from 'rxjs';
 import { ILogin } from '../interfaces/ilogin';
 
 export interface IAuthResponse {
   token: string;
-  rol: string;      // <-- roles que envía tu backend
+  rol: string;     
 }
 @Injectable({
   providedIn: 'root'
@@ -16,23 +16,42 @@ export class UserService {
   private httpClient = inject(HttpClient);
   private baseUrl: string = 'http://localhost:8083/auth';
   private baseUrlAdmin: string = 'http://localhost:8083/admin';
+  private baseUrlUser: string = 'http://localhost:8083/api';
+  private currentUserSubject = new BehaviorSubject<IUser | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor() { }
+  constructor() { 
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      this.loadUserProfile().subscribe({
+        next: (user) => this.currentUserSubject.next(user),
+        error: (err) => console.error('Error al cargar perfil:', err)
+      });
+    }
+  }
 
-  async login(login: ILogin): Promise<IAuthResponse> {
+  async login(login: ILogin): Promise<IAuthResponse> { 
     try {
-      const response = await lastValueFrom(this.httpClient.post<IAuthResponse>(`${this.baseUrl}/login`, login));
+      const response = await lastValueFrom(
+        this.httpClient.post<IAuthResponse>(`${this.baseUrl}/login`, login)
+      );
+  
       if (response.token) {
         localStorage.setItem('accessToken', response.token);
         localStorage.setItem('rol', JSON.stringify(response.rol));
+  
+        if (response.rol === 'CLIENTE') {
+          await lastValueFrom(this.loadUserProfile());
+        }
       }
-
       return response;
+      
     } catch (err) {
-      console.error('Error en login:', err);
+      console.error('Error general en login:', err);
       throw err;
     }
   }
+  
 
   getAll(): Promise<IUser[]>{
     return lastValueFrom(this.httpClient.get<IUser[]>(this.baseUrlAdmin+"/usuarios", this.getAuthoritation()));
@@ -66,10 +85,20 @@ getAuthoritation(){
     const httOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}` || "" //Esto que si no hay Token que lo pase vacío
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}` || "" 
       })
     };
     return httOptions;
   }
+
+  public loadUserProfile(): Observable<IUser> {
+    return this.httpClient.get<IUser>(this.baseUrlUser+'/usuario', { 
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
+    }).pipe(
+      tap(userDto => this.currentUserSubject.next(userDto))
+    );
+  }
+
+
 
 }

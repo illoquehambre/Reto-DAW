@@ -1,5 +1,6 @@
 // auth.service.ts
 import { Injectable } from '@angular/core';
+import { IUser } from '../interfaces/iuser';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -24,6 +25,10 @@ export class AuthService {
     return this.getRoles().includes(rol);
   }
 
+  getCurrentUserEmail(): string | null {
+    return localStorage.getItem('email');
+  }
+
   isAuthenticated(): boolean {
     return !!localStorage.getItem(this.tokenKey);
   }
@@ -33,4 +38,7 @@ export class AuthService {
     localStorage.removeItem(this.roleKey);
     this.rol = '';
   }
+
+
+
 }

@@ -1,10 +1,15 @@
-<header>
-    <app-navbar></app-navbar>
-</header>
+<div class="d-flex flex-column min-vh-100">
 
-<main class="mt-5">
-    <div class="container">
-      <router-outlet/>
+  <header>
+    <app-navbar></app-navbar>
+  </header>
+
+  <main class="mt-0 flex-grow-1">
+    <div class="container-fluid PX-0">
+      <router-outlet></router-outlet>
     </div>
-</main>
-  
+  </main>
+
+  <app-footer></app-footer>
+
+</div>
