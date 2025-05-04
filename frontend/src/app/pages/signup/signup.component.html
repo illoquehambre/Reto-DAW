@@ -1,0 +1,47 @@
+<!-- src/app/auth/signup/signup.component.html -->
+<section class="bg-secondary vh-100">
+    <div class="container pt-5">
+        <div class="card p-4 bg-white mx-auto" style="max-width: 500px;">
+            <h3 class="text-center">Formulario de Registro</h3>
+            <hr>
+            <form #signUpForm="ngForm" (ngSubmit)="registerUser(signUpForm)">
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" ngModel required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="apellidos" class="form-label">Apellidos</label>
+                    <input type="text" id="apellidos" name="apellidos" class="form-control" ngModel required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" ngModel required email>
+                </div>
+
+                <div class="mb-3">
+                    <label for="contrasenia" class="form-label">Contraseña</label>
+                    <input type="password" id="contrasenia" name="contrasenia" class="form-control" ngModel required
+                        minlength="6">
+                </div>
+
+                <div class="mb-3">
+                    <label for="confirmarContrasenia" class="form-label">Confirmar Contraseña</label>
+                    <input type="password" id="confirmarContrasenia" name="confirmarContrasenia" class="form-control"
+                        ngModel required>
+                </div>
+                @if (errorMessage) {
+                <div class="alert alert-danger">
+                    {{ errorMessage }}
+                </div>
+                }
+
+
+                <button type="submit" class="btn btn-primary w-100 mt-3" [disabled]="signUpForm.invalid">
+                    Registrarse
+                </button>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,8 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IUser } from '../interfaces/iuser';
+<<<<<<< HEAD
 import { BehaviorSubject, lastValueFrom, Observable, tap } from 'rxjs';
+=======
+import { lastValueFrom, Observable } from 'rxjs';
+>>>>>>> b03916b8424f78f8bbcfc846f21319f82bd8afd4
 import { ILogin } from '../interfaces/ilogin';
+import { ISignUp } from '../interfaces/isignup';
 
 export interface IAuthResponse {
   token: string;
@@ -52,6 +57,10 @@ export class UserService {
     }
   }
   
+
+  register(data: ISignUp): Observable<IUser> {
+    return this.httpClient.post<IUser>(`${this.baseUrl}/signup`, data);
+  }
 
   getAll(): Promise<IUser[]>{
     return lastValueFrom(this.httpClient.get<IUser[]>(this.baseUrlAdmin+"/usuarios", this.getAuthoritation()));
