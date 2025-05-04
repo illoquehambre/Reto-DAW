@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @RequestMapping("/auth")
 @CrossOrigin(origins = "*")
 @RestController
@@ -22,6 +24,7 @@ public class AuthenticationController {
     private  AuthService authenticationService;
 
 
+
 /*
     @PostMapping("/signup")
     public ResponseEntity<Usuario> register(@RequestBody RegistroUsuarioDto registerUserDto) {
@@ -30,6 +33,18 @@ public class AuthenticationController {
         return ResponseEntity.ok(registeredUser);
     }
 */
+    @PostMapping("/signup")
+    public ResponseEntity<Usuario> signup(@RequestBody RegistroUsuarioDto dto) {
+        if (authenticationService.existsByEmail(dto.getEmail())) {
+            throw new IllegalArgumentException("El email ya está registrado");
+        }
+        if (!dto.getContrasenia().equals(dto.getConfirmarContrasenia())) {
+            throw new IllegalArgumentException("Las contraseñas no coinciden");
+        }
+
+        return  ResponseEntity.ok(authenticationService.signup(dto));
+    }
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest loginUserDto) {
     	System.out.println(loginUserDto);
