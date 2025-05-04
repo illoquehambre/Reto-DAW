@@ -10,6 +10,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class AuthService {
     @Autowired
@@ -26,7 +28,10 @@ public class AuthService {
         user.setNombre(input.getNombre());
         user.setPassword(passwordEncoder.encode(input.getContrasenia()));
         user .setEmail(input.getEmail());
-
+        user.setApellidos(input.getApellidos());
+        user.setEnabled(1);
+        user.setFechaRegistro(new Date());
+        user.setRol("CLIENTE");
         return userRepository.save(user);
     }
 
@@ -42,5 +47,9 @@ public class AuthService {
 
         System.out.println(usuario);
         return usuario;
+    }
+
+    public boolean existsByEmail(String email){
+        return userRepository.existsById(email);
     }
 }
