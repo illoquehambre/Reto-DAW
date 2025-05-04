@@ -10,16 +10,26 @@ export class CategoriaService {
 
   private httpClient = inject(HttpClient);
   private baseUrl: string = 'http://localhost:8083/admin';
+  private baseUrlCli: string = 'http://localhost:8083/api';
 
   constructor() { }
 
   getAll(): Promise<ICategoria[]>{
     console.log(localStorage.getItem("accessToken"));
       return lastValueFrom(this.httpClient.get<ICategoria[]>(this.baseUrl+"/categorias", this.getAuthoritation()));
-    }
+  }
+
+  getAllCliente(): Promise<ICategoria[]>{
+    console.log(localStorage.getItem("accessToken"));
+      return lastValueFrom(this.httpClient.get<ICategoria[]>(this.baseUrlCli+"/categorias", this.getAuthoritation()));
+  }
 
   findById(id_categoria: number): Promise<ICategoria>{
     return lastValueFrom(this.httpClient.get<ICategoria>(this.baseUrl+"/categoria/"+id_categoria, this.getAuthoritation()));
+  }
+
+  findByIdCliente(id_categoria: number): Promise<ICategoria>{
+    return lastValueFrom(this.httpClient.get<ICategoria>(this.baseUrlCli+"/categoria/"+id_categoria, this.getAuthoritation()));
   }
 
   insert(categoria: ICategoria): Promise<number>{

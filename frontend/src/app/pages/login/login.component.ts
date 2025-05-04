@@ -30,6 +30,7 @@ export class LoginComponent {
       console.log(role);
       switch (role) {
         case 'ADMON':
+          console.log('pruebaaaa')
           this.router.navigate(['/dashboardAdmin']);
           break;
         case 'CLIENTE':

@@ -2,12 +2,14 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VacanteService } from '../../services/vacante.service';
 import { IVacante } from '../../interfaces/ivacante';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+import { VacantesFilterComponent } from "../../components/vacantes-filter/vacantes-filter.component";
 
 @Component({
   selector: 'app-vacantes-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule, VacantesFilterComponent],
   templateUrl: './vacantes-list.component.html',
   styleUrls: ['./vacantes-list.component.css']
 })
@@ -16,6 +18,7 @@ export class VacantesListComponent implements OnInit {
   vacantes: IVacante[] = [];
   loading = true;
   error: string | null = null;
+  router = inject(Router);
 
   async ngOnInit() {
     try {
@@ -26,5 +29,13 @@ export class VacantesListComponent implements OnInit {
     } finally {
       this.loading = false;
     }
+  }
+
+  recibirVacantesFiltradas(listaFiltrada: IVacante[]) {
+    this.vacantes = listaFiltrada; 
+  }
+
+  volver(){
+    this.router.navigate(['/dashboardCliente']);
   }
 }

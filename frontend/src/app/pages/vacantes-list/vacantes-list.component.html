@@ -12,6 +12,20 @@
         {{ error }}
       </div>
     }
+
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="mb-0">Vacantes</h1>
+      <div class="ml-auto">
+        <button class="btn btn-success" (click)="volver()">Volver</button>
+      </div>
+  </div>
+  <hr class="mx-auto w-100" style="height: 2px; background-color: black;">
+
+  <app-vacantes-filter (listaFiltrada)="recibirVacantesFiltradas($event)"></app-vacantes-filter>
+
+    <p></p>
+    <p></p>
+    <p></p>
   
     @if (!loading && !error) {
       <div class="row gy-4">
@@ -30,11 +44,16 @@
                 @if (vacante.destacado) {
                   <span class="badge bg-success mb-2">Destacado</span>
                 }
-                <a [routerLink]="['/vacantes', vacante.idVacante]" class="btn btn-primary mt-auto">
+                <a [routerLink]="['/vacanteDetalle', vacante.idVacante]" class="btn btn-primary mt-auto">
                   Ver detalles
                 </a>
               </div>
             </div>
+          </div>
+        }
+        @empty {
+          <div class="alert alert-danger text-center" role="alert">
+            No hay vacantes con estos filtros
           </div>
         }
       </div>

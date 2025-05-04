@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IUser } from '../interfaces/iuser';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { ILogin } from '../interfaces/ilogin';
+import { ISignUp } from '../interfaces/isignup';
 
 export interface IAuthResponse {
   token: string;
@@ -32,6 +33,10 @@ export class UserService {
       console.error('Error en login:', err);
       throw err;
     }
+  }
+
+  register(data: ISignUp): Observable<IUser> {
+    return this.httpClient.post<IUser>(`${this.baseUrl}/signup`, data);
   }
 
   getAll(): Promise<IUser[]>{
