@@ -1,0 +1,38 @@
+<!-- src/app/vacantes/vacante-details/vacante-details.component.html -->
+<section class="container py-5">
+    @if (loading) {
+    <div class="text-center">
+        <p>Cargando detalles de la vacante…</p>
+    </div>
+    }
+
+    @if (error) {
+    <div *ngIf="error" class="alert alert-danger text-center">
+        {{ error }}
+    </div>
+    }
+
+    @if (vacante) {
+    <div class="card mx-auto" style="max-width: 600px;">
+        @if (vacante.imagen) {
+        <img [src]="vacante.imagen" class="card-img-top" alt="Imagen de {{ vacante.nombre }}">
+
+        }
+        <div class="card-body">
+            <h2 class="card-title">{{ vacante.nombre }}</h2>
+            <p class="text-muted">
+                Publicada el {{ vacante.fecha | date:'longDate' }} • Salario: {{ vacante.salario | currency }}
+            </p>
+            <hr>
+            <h5>Descripción</h5>
+            <p>{{ vacante.descripcion }}</p>
+            <h5>Detalles</h5>
+            <p>{{ vacante.detalles }}</p>
+            <p><strong>Estatus:</strong> {{ vacante.estatus }}</p>
+            <p><strong>Destacado:</strong> {{ vacante.destacado ? 'Sí' : 'No' }}</p>
+            <a routerLink="/vacantesList" class="btn btn-secondary mt-3">Volver a lista</a>
+        </div>
+    </div>
+    }
+
+</section>

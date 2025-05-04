@@ -11,11 +11,18 @@ import { UserFormComponent } from './pages/user-form/user-form.component';
 import { EmpresaListComponent } from './pages/empresa-list/empresa-list.component';
 import { AuthGuard } from './auth.guard';
 import { SignUpComponent } from './pages/signup/signup.component';
+import { VacanteDetailsComponent } from './pages/vacante-details/vacante-details.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
+  {
+    path: 'vacantes/:id',
+    component: VacanteDetailsComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['CLIENTE'] },
+  },
   {
     path: 'dashboardAdmin',
     component: DashboardAdminComponent,

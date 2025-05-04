@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -121,6 +122,31 @@ public class UserController {
 		
 		//return new ResponseEntity<List<Vacante>>(vservice.findAll(),HttpStatus.OK);
 		return new ResponseEntity<List<VacanteDto>>(vacantesDto,HttpStatus.OK);
+	}
+
+	@GetMapping("/vacantes/{id}")
+	public ResponseEntity<VacanteDto> listaVacantes(@PathVariable int id){
+
+		Vacante vacante = vservice.findById(id);
+
+		VacanteDto vacanteDto = new VacanteDto();
+
+		vacanteDto.setIdVacante(vacante.getIdVacante());
+		vacanteDto.setNombre(vacante.getNombre());
+		vacanteDto.setDescripcion(vacante.getDescripcion());
+		vacanteDto.setFecha(vacante.getFecha());
+		vacanteDto.setSalario(vacante.getSalario());
+		vacanteDto.setEstatus(vacante.getEstatus());
+		vacanteDto.setDestacado(vacante.isDestacado());
+		vacanteDto.setImagen(vacante.getImagen());
+		vacanteDto.setDetalles(vacante.getDetalles());
+		vacanteDto.setIdCategoria(vacante.getCategoria().getIdCategoria());
+		vacanteDto.setIdEmpresa(vacante.getEmpresa().getIdEmpresa());
+
+
+
+		//return new ResponseEntity<List<Vacante>>(vservice.findAll(),HttpStatus.OK);
+		return new ResponseEntity<VacanteDto>(vacanteDto,HttpStatus.OK);
 	}
     
     @GetMapping("/solicitudes/{email}")

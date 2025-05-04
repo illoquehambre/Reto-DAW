@@ -16,4 +16,13 @@ export class VacanteService {
     });
     return lastValueFrom(this.http.get<IVacante[]>(this.apiUrl, { headers }));
   }
+
+  getVacanteById(id: number): Promise<IVacante> {
+    const token = localStorage.getItem('accessToken') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    });
+    return lastValueFrom(this.http.get<IVacante>(`${this.apiUrl}/${id}`, { headers }));
+  }
 }
