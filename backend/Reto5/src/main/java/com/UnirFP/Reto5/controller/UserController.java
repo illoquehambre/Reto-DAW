@@ -1,12 +1,17 @@
 package com.UnirFP.Reto5.controller;
 
+import com.UnirFP.Reto5.model.Categoria;
+import com.UnirFP.Reto5.model.Empresa;
 import com.UnirFP.Reto5.model.Solicitud;
 import com.UnirFP.Reto5.model.Usuario;
 import com.UnirFP.Reto5.model.Vacante;
+import com.UnirFP.Reto5.model.dto.EmpresaDto;
 import com.UnirFP.Reto5.model.dto.LoginRequest;
 import com.UnirFP.Reto5.model.dto.SolicitudDto;
 import com.UnirFP.Reto5.model.dto.UsuarioResponseDto;
 import com.UnirFP.Reto5.model.dto.VacanteDto;
+import com.UnirFP.Reto5.service.CategoriaService;
+import com.UnirFP.Reto5.service.EmpresaService;
 import com.UnirFP.Reto5.service.SolicitudService;
 import com.UnirFP.Reto5.service.UsuarioService;
 import com.UnirFP.Reto5.service.VacanteService;
@@ -53,6 +58,11 @@ public class UserController {
     @Autowired
     private SolicitudService sservice;
 
+    @Autowired
+	private CategoriaService cservice;
+    
+    @Autowired
+	private EmpresaService eservice;
 
 /*
     @PostMapping("/login")
@@ -121,6 +131,68 @@ public class UserController {
 		
 		//return new ResponseEntity<List<Vacante>>(vservice.findAll(),HttpStatus.OK);
 		return new ResponseEntity<List<VacanteDto>>(vacantesDto,HttpStatus.OK);
+	}
+    
+    @GetMapping("/vacante/{idVacante}")
+	public ResponseEntity<VacanteDto> unaVacante(@PathVariable int idVacante){
+		Vacante vacante = vservice.findById(idVacante);
+		VacanteDto vacanteDto = new VacanteDto(
+				vacante.getIdVacante(),
+			    vacante.getNombre(),
+			    vacante.getDescripcion(),
+			    vacante.getFecha(),
+			    vacante.getSalario(),
+			    vacante.getEstatus(),
+			    vacante.isDestacado(),
+			    vacante.getImagen(),
+			    vacante.getDetalles(),
+			    vacante.getCategoria().getIdCategoria(),
+			    vacante.getEmpresa().getIdEmpresa());
+		
+		return new ResponseEntity<VacanteDto>(vacanteDto,HttpStatus.OK);
+	}
+    
+    @GetMapping("/categorias")
+	public ResponseEntity<List<Categoria>> todasCategorias(){
+		return new ResponseEntity<List<Categoria>>(cservice.findAll(),HttpStatus.OK);
+	}
+    
+    @GetMapping("/categoria/{idCategoria}")
+	public ResponseEntity<Categoria> unaCategoria(@PathVariable int idCategoria){ 
+		return new ResponseEntity<Categoria>(cservice.findById(idCategoria),HttpStatus.OK);
+	}
+    
+    @GetMapping("/empresas")
+	public ResponseEntity<List<EmpresaDto>> todasEmpresas(){
+		List<Empresa> empresas = eservice.findAll();
+		List<EmpresaDto> empresasDto = new ArrayList<>(); 
+		
+		for(Empresa empresa : empresas) {
+			EmpresaDto empresaDto = new EmpresaDto(
+					empresa.getIdEmpresa(),
+					empresa.getCif(),
+					empresa.getNombreEmpresa(),
+					empresa.getDireccionFiscal(),
+					empresa.getPais(),
+					empresa.getUsuario().getEmail());
+			empresasDto.add(empresaDto);
+		}
+		
+		return new ResponseEntity<List<EmpresaDto>>(empresasDto,HttpStatus.OK);
+	}
+    
+    @GetMapping("/empresa/{idEmpresa}")
+	public ResponseEntity<EmpresaDto> unaEmpresa(@PathVariable int idEmpresa){
+		Empresa empresa = eservice.findById(idEmpresa);
+		EmpresaDto empresaDto = new EmpresaDto(
+				empresa.getIdEmpresa(),
+				empresa.getCif(),
+				empresa.getNombreEmpresa(),
+				empresa.getDireccionFiscal(),
+				empresa.getPais(),
+				empresa.getUsuario().getEmail());
+		//return new ResponseEntity<Empresa>(eservice.findById(idEmpresa),HttpStatus.OK);
+		return new ResponseEntity<EmpresaDto>(empresaDto,HttpStatus.OK);
 	}
     
     @GetMapping("/solicitudes/{email}")

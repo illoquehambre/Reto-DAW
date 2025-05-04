@@ -10,6 +10,7 @@ export class EmpresaService {
 
   private httpClient = inject(HttpClient);
   private baseUrl: string = 'http://localhost:8083/admin';
+  private baseUrlCli: string = 'http://localhost:8083/api';
 
   constructor() { }
 
@@ -17,8 +18,16 @@ export class EmpresaService {
     return this.httpClient.get<IEmpresa[]>(this.baseUrl);
   }
 
+  getAllCliente(): Promise<IEmpresa[]> {
+    return lastValueFrom(this.httpClient.get<IEmpresa[]>(this.baseUrlCli+"/empresas", this.getAuthoritation()));
+  }
+
   findById(id: number): Observable<IEmpresa> {
     return this.httpClient.get<IEmpresa>(`${this.baseUrl}/${id}`);
+  }
+
+  findByIdCliente(id: number): Promise<IEmpresa> {
+    return lastValueFrom(this.httpClient.get<IEmpresa>(`${this.baseUrlCli}/empresa/${id}`, this.getAuthoritation()));
   }
 
   findByEmail(email: string): Promise<IEmpresa>{
