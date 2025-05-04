@@ -7,6 +7,7 @@ import com.UnirFP.Reto5.model.Vacante;
 public interface VacanteService extends CrudGenerico<Vacante,Integer>{
 
 	List<Vacante> findByEmpresa(Integer idEmpresa);
+	List<Vacante> findByEmpresaEmail(String email);
 	List<Vacante> findAllCreada();
 	Vacante findByCategoria(Integer idCategoria);
 }

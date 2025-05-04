@@ -30,6 +30,12 @@ public class VacanteServiceImpl implements VacanteService{
 	}
 
 	@Override
+	public List<Vacante> findByEmpresaEmail(String email) {
+
+		return vrepo.findByEmpresaUsuarioEmail(email);
+	}
+
+	@Override
 	public List<Vacante> findAll() {
 		return vrepo.findAll();
 	}
