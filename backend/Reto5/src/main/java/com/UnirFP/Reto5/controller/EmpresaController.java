@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -175,6 +176,32 @@ public class EmpresaController {
 		List<VacanteDto> vacantesDto = new ArrayList<>();
 		
 		
+		for (Vacante vacante: vacantes) {
+			VacanteDto vacanteDto = new VacanteDto();
+			vacanteDto.setIdVacante(vacante.getIdVacante());
+			vacanteDto.setNombre(vacante.getNombre());
+			vacanteDto.setDescripcion(vacante.getDescripcion());
+			vacanteDto.setFecha(vacante.getFecha());
+			vacanteDto.setSalario(vacante.getSalario());
+			vacanteDto.setEstatus(vacante.getEstatus());
+			vacanteDto.setDestacado(vacante.isDestacado());
+			vacanteDto.setImagen(vacante.getImagen());
+			vacanteDto.setDetalles(vacante.getDetalles());
+			vacanteDto.setIdCategoria(vacante.getCategoria().getIdCategoria());
+			vacanteDto.setIdEmpresa(vacante.getEmpresa().getIdEmpresa());
+			vacantesDto.add(vacanteDto);
+		}
+		//return new ResponseEntity<List<Vacante>>(vservice.findByEmpresa(idEmpresa),HttpStatus.OK);
+		return new ResponseEntity<List<VacanteDto>>(vacantesDto,HttpStatus.OK);
+	}
+
+	@GetMapping("/vacantesEmpresa")
+	public ResponseEntity<List<VacanteDto>> listaVacantesEmpresaUsuario(@AuthenticationPrincipal Usuario userDetails){
+		String email = userDetails.getEmail();
+		List<Vacante> vacantes = vservice.findByEmpresaEmail(email);
+		List<VacanteDto> vacantesDto = new ArrayList<>();
+
+
 		for (Vacante vacante: vacantes) {
 			VacanteDto vacanteDto = new VacanteDto();
 			vacanteDto.setIdVacante(vacante.getIdVacante());
