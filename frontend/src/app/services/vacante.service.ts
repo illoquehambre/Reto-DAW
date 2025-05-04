@@ -7,6 +7,7 @@ import { IVacante } from '../interfaces/ivacante';
 export class VacanteService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8083/api/vacantes'; 
+  
 
   getAllVacantes(): Promise<IVacante[]> {
     const token = localStorage.getItem('accessToken') || '';
@@ -16,4 +17,5 @@ export class VacanteService {
     });
     return lastValueFrom(this.http.get<IVacante[]>(this.apiUrl, { headers }));
   }
+
 }

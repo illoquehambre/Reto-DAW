@@ -12,6 +12,7 @@ import { EmpresaListComponent } from './pages/empresa-list/empresa-list.componen
 import { AuthGuard } from './auth.guard';
 import { HomeComponentComponent } from './pages/home-component/home-component.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+import { DashboardEmpresaComponent } from './pages/dashboard-empresa/dashboard-empresa.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' }, 
@@ -29,6 +30,12 @@ export const routes: Routes = [
     component: DashboardClienteComponent,
     canActivate: [AuthGuard],
     data: { rol: ['CLIENTE'] },
+  },
+  {
+    path: 'dashboardEmpresa',
+    component: DashboardEmpresaComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['EMPRESA'] },
   },
   {
     path: 'perfil',

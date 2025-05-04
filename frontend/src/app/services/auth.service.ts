@@ -1,6 +1,6 @@
 // auth.service.ts
 import { Injectable } from '@angular/core';
-import { IUser } from '../interfaces/iuser';
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
