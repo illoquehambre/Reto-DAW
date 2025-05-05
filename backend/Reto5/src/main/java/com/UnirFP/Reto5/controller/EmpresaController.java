@@ -220,7 +220,42 @@ public class EmpresaController {
 		//return new ResponseEntity<List<Vacante>>(vservice.findByEmpresa(idEmpresa),HttpStatus.OK);
 		return new ResponseEntity<List<VacanteDto>>(vacantesDto,HttpStatus.OK);
 	}
-	
+
+	@PostMapping("/nuevaVacante")
+	public ResponseEntity<?> registrarVacante(@RequestBody VacanteDto vacanteDto) {
+		vacanteDto.getNombre();
+		vacanteDto.getDescripcion();
+		vacanteDto.getFecha();
+		vacanteDto.getSalario();
+		vacanteDto.getEstatus();
+		vacanteDto.isDestacado();
+		vacanteDto.getImagen();
+		vacanteDto.getDetalles();
+		vacanteDto.getIdCategoria();
+		vacanteDto.getIdEmpresa();
+
+
+    Empresa empresa = eservice.findById(vacanteDto.getIdEmpresa());
+    Categoria categoria = cservice.findById(vacanteDto.getIdCategoria());
+
+
+    	Vacante vacante = new Vacante();
+			vacante.setNombre(vacanteDto.getNombre());
+			vacante.setDescripcion(vacanteDto.getDescripcion());
+			vacante.setFecha(vacanteDto.getFecha());
+			vacante.setSalario(vacanteDto.getSalario());
+			vacante.setEstatus(vacanteDto.getEstatus());
+			vacante.setDestacado(vacanteDto.isDestacado());
+			vacante.setImagen(vacanteDto.getImagen());
+			vacante.setDetalles(vacanteDto.getDetalles());
+			vacante.setCategoria(categoria);
+			vacante.setEmpresa(empresa);
+
+    			vservice.insertOne(vacante);
+    				return new ResponseEntity<>("Vacante creada", HttpStatus.CREATED);
+}
+
+	/*
 	@PostMapping("/nuevaVacante")
 	public ResponseEntity<Integer> altaVacante(@RequestBody VacanteDto vacanteDto){
 	
@@ -248,7 +283,7 @@ public class EmpresaController {
 		}
 		
 	}
-	
+	*/
 	@PutMapping("/editarVacante")
 	public ResponseEntity<Integer> editarVacante(@RequestBody VacanteDto vacanteDto){ 
 		
@@ -389,4 +424,25 @@ public class EmpresaController {
 			default: return null;
 		}
 	}
+
+	@GetMapping("/me")
+public ResponseEntity<EmpresaDto> obtenerEmpresaUsuario(@AuthenticationPrincipal Usuario userDetails) {
+    Empresa empresa = eservice.findByEmail(userDetails.getEmail());
+
+    if (empresa == null) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    EmpresaDto empresaDto = new EmpresaDto(
+        empresa.getIdEmpresa(),
+        empresa.getCif(),
+        empresa.getNombreEmpresa(),
+        empresa.getDireccionFiscal(),
+        empresa.getPais(),
+        empresa.getUsuario().getEmail()
+    );
+
+    return new ResponseEntity<>(empresaDto, HttpStatus.OK);
+}
+
 }

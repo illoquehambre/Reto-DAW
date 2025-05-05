@@ -6,7 +6,7 @@ import { IVacante } from '../interfaces/ivacante';
 @Injectable({ providedIn: 'root' })
 export class VacanteService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8083/api'; // Ajusta la URL si es necesario
+  private apiUrl = 'http://localhost:8083/empresa'; // Ajusta la URL si es necesario
 
   getAllVacantes(): Promise<IVacante[]> {
     const token = localStorage.getItem('accessToken') || '';
@@ -24,6 +24,21 @@ export class VacanteService {
       Authorization: `Bearer ${token}`
     });
     return lastValueFrom(this.http.get<IVacante>(this.apiUrl+"/vacante/"+id_vacante, { headers }));
+  }
+
+  async insert(vacante: IVacante): Promise<number> {
+    console.log("Enviando solicitud con token...");
+    return await lastValueFrom(
+        this.http.post<number>("http://localhost:8083/empresa/nuevaVacante",vacante,this.getAuthoritation()));
+  }
+
+  async getByCategoria(idCategoria: number): Promise<IVacante[]> {
+    return await lastValueFrom(this.http.get<IVacante[]>(`${this.apiUrl}/vacantes/categoria/${idCategoria}`));
+  }
+
+
+  async getByEmpresa(idEmpresa: number): Promise<IVacante[]> {
+    return await lastValueFrom(this.http.get<IVacante[]>(`${this.apiUrl}/vacantes/empresa/${idEmpresa}`));
   }
 
   async filtrarVacantes(filtrar: any): Promise<IVacante[]>{
@@ -45,6 +60,16 @@ export class VacanteService {
     }
 
     return arrVacantes;
+  }
+
+  getAuthoritation(){
+    const httOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}` || "" //Esto que si no hay Token que lo pase vacío
+      })
+    };
+    return httOptions;
   }
 
   /*

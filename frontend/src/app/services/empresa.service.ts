@@ -9,8 +9,7 @@ import { IEmpresa } from '../interfaces/iempresa';
 export class EmpresaService {
 
   private httpClient = inject(HttpClient);
-  private baseUrl: string = 'http://localhost:8083/admin';
-  private baseUrlCli: string = 'http://localhost:8083/api';
+  private baseUrl: string = 'http://localhost:8083/empresa';
 
   constructor() { }
 
@@ -19,7 +18,7 @@ export class EmpresaService {
   }
 
   getAllCliente(): Promise<IEmpresa[]> {
-    return lastValueFrom(this.httpClient.get<IEmpresa[]>(this.baseUrlCli+"/empresas", this.getAuthoritation()));
+    return lastValueFrom(this.httpClient.get<IEmpresa[]>(this.baseUrl+"/empresas", this.getAuthoritation()));
   }
 
   findById(id: number): Observable<IEmpresa> {
@@ -27,12 +26,14 @@ export class EmpresaService {
   }
 
   findByIdCliente(id: number): Promise<IEmpresa> {
-    return lastValueFrom(this.httpClient.get<IEmpresa>(`${this.baseUrlCli}/empresa/${id}`, this.getAuthoritation()));
+    return lastValueFrom(this.httpClient.get<IEmpresa>(`${this.baseUrl}/${id}`, this.getAuthoritation()));
   }
 
-  findByEmail(email: string): Promise<IEmpresa>{
-    return lastValueFrom(this.httpClient.get<IEmpresa>(this.baseUrl+"/empresaEmail/"+email, this.getAuthoritation()));
+  async findByEmail(email: string): Promise<IEmpresa> {
+    return await lastValueFrom(this.httpClient.get<IEmpresa>(this.baseUrl+"/me", this.getAuthoritation())
+    );
   }
+
 
   insert(empresa: IEmpresa): Observable<number> {
     return this.httpClient.post<number>(this.baseUrl+"/empresa", empresa, this.getAuthoritation());
@@ -46,13 +47,20 @@ export class EmpresaService {
     return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  getAuthoritation(){
-      const httOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}` || "" //Esto que si no hay Token que lo pase vacío
-        })
-      };
-      return httOptions;
-    }
+  getAuthoritation() {
+    const token = localStorage.getItem('accessToken');
+    const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ""  
+    });
+    return { headers };
+  }
+
+
+async findEmpresaUsuario(): Promise<IEmpresa> {
+  return await lastValueFrom(this.httpClient.get<IEmpresa>(`${this.baseUrl}/me`, this.getAuthoritation()
+    ));
+  }
+
+  
 } 
