@@ -17,8 +17,5 @@ export class VacanteCardComponent {
   vacanteService = inject(VacanteService);
   @Input() vacante!: IVacante;
 
-  editarVacante(id: number) {
-    console.log('Editar vacante:', id);
-  }
 
 }

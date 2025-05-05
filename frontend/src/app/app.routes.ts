@@ -4,7 +4,6 @@ import { SignUpComponent } from './pages/signup/signup.component';
 import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin.component';
 import { DashboardClienteComponent } from './pages/dashboard-cliente/dashboard-cliente.component';
 import { DashboardEmpresaComponent } from './pages/dashboard-empresa/dashboard-empresa.component';
-import { VacantesListComponent } from './pages/vacantes-list/vacantes-list.component';
 import { VacanteFormComponent } from './pages/vacante-form/vacante-form.component';
 import { CategoriaListComponent } from './pages/categoria-list/categoria-list.component';
 import { CategoriaFormComponent } from './pages/categoria-form/categoria-form.component';
@@ -14,6 +13,7 @@ import { EmpresaListComponent } from './pages/empresa-list/empresa-list.componen
 import { AuthGuard } from './auth.guard';
 import { VacanteFormEmpresaComponent } from './pages/vacante-form-empresa/vacante-form-empresa.component';
 import { VacantesListClienteComponent } from './pages/vacantes-list-cliente/vacantes-list-cliente.component';
+import { VacantesListComponent } from './pages/vacantes-list/vacantes-list.component';
 
 export const routes: Routes = [
 
