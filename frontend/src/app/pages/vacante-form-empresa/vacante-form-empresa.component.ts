@@ -21,6 +21,7 @@ export class VacanteFormEmpresaComponent implements OnInit {
   private ruta = inject(ActivatedRoute);
 
   formVacante: FormGroup;
+  err: string = "";
   tipo: string = "Crear";
   estOptions: Estatus[] = [Estatus.CREADA, Estatus.CUBIERTA, Estatus.CANCELADA];
 
@@ -60,5 +61,9 @@ export class VacanteFormEmpresaComponent implements OnInit {
 
   volver(): void {
     this.router.navigate(["/dashboardEmpresa"]);
+  }
+
+  checkControl(nombre: string, required: string) {
+    return nombre;
   }
 }

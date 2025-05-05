@@ -8,6 +8,7 @@ import { IUserForm } from '../../interfaces/iuser-form';
 import { IUser } from '../../interfaces/iuser';
 import { IEmpresa } from '../../interfaces/iempresa';
 import { EmpresaService } from '../../services/empresa.service';
+import { EmpresaCliService } from '../../services/empresa-cli.service';
 
 @Component({
   selector: 'app-user-form',
@@ -20,7 +21,7 @@ export class UserFormComponent {
 
   router = inject(Router);
   userService = inject(UserService);
-  empresaService = inject(EmpresaService);
+  empresaService = inject(EmpresaCliService);
   activatedRoute = inject(ActivatedRoute);
   
   userForm: FormGroup;

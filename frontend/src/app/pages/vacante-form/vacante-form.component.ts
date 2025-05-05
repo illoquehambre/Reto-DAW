@@ -7,6 +7,7 @@ import { IEmpresa } from '../../interfaces/iempresa';
 import { ICategoria } from '../../interfaces/icategoria';
 import { EmpresaService } from '../../services/empresa.service';
 import { CategoriaService } from '../../services/categoria.service';
+import { EmpresaCliService } from '../../services/empresa-cli.service';
 
 @Component({
   selector: 'app-vacante-form',
@@ -18,7 +19,7 @@ import { CategoriaService } from '../../services/categoria.service';
 export class VacanteFormComponent {
 
   vacanteService = inject(VacanteService);
-  empresaService = inject(EmpresaService);
+  empresaService = inject(EmpresaCliService);
   categoriaService = inject(CategoriaService);
   activatedRoute = inject(ActivatedRoute);
   miVacante!: IVacante;
@@ -42,7 +43,7 @@ export class VacanteFormComponent {
       console.log(params.id_vacante);
       if(params.id_vacante){
         try {
-          this.miVacante = await this.vacanteService.getById(params.id_vacante);  
+          this.miVacante = await this.vacanteService.getByIdCli(params.id_vacante);  
           this.miEmpresa = await this.empresaService.findByIdCliente(this.miVacante.idEmpresa);  
           this.empresa = this.miEmpresa.nombreEmpresa   
           this.miCategoria = await this.categoriaService.findByIdCliente(this.miVacante.idCategoria);

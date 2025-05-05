@@ -26,7 +26,7 @@ export const routes: Routes = [
     path: 'dashboardAdmin',
     component: DashboardAdminComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
   {
     path: 'dashboardCliente',
@@ -53,7 +53,8 @@ export const routes: Routes = [
     path: 'vacantesList',
     component: VacantesListComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['CLIENTE', 'EMPRESA'] },
+    //data: { rol: ['CLIENTE', 'EMPRESA'] },
+    data: { rol: ['CLIENTE'] },
   },
   
   {
@@ -69,21 +70,21 @@ export const routes: Routes = [
     path: 'categoriaNew',
     component: CategoriaFormComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
 
   {
     path: 'categoriasList',
     component: CategoriaListComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
   
   {
     path: 'categoriaUpdate/:id_categoria',
     component: CategoriaFormComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
 
   /** Usuarios **/
@@ -91,21 +92,21 @@ export const routes: Routes = [
     path: 'userNew',
     component: UserFormComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
 
   {
     path: 'usersList',
     component: UserListComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
   
   {
     path: 'userUpdate/:email',
     component: UserFormComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
 
   /** Empresas **/
@@ -113,7 +114,7 @@ export const routes: Routes = [
     path: 'empresasList',
     component: EmpresaListComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMIN'] },
+    data: { rol: ['ADMON'] },
   },
 
   { path: '**', redirectTo: 'login' },

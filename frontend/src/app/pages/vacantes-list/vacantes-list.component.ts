@@ -22,7 +22,7 @@ export class VacantesListComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      this.vacantes = await this.vacanteService.getAllVacantes();
+      this.vacantes = await this.vacanteService.getAllVacantesCli();
     } catch (err) {
       console.error('Error al cargar vacantes', err);
       this.error = 'No se pudieron cargar las vacantes';
