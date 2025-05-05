@@ -6,6 +6,7 @@ import { VacanteService } from '../../services/vacante.service';
 import { IEmpresa } from '../../interfaces/iempresa';
 import { EmpresaService } from '../../services/empresa.service';
 import { IVacante } from '../../interfaces/ivacante';
+import { EmpresaCliService } from '../../services/empresa-cli.service';
 
 @Component({
   selector: 'app-vacantes-filter',
@@ -18,7 +19,7 @@ export class VacantesFilterComponent {
 
   categoriaService = inject(CategoriaService);
   vacanteService = inject(VacanteService);
-  empresaService = inject(EmpresaService);
+  empresaService = inject(EmpresaCliService);
   arrCategoria: ICategoria[];
   arrEmpresa: IEmpresa[];
 
@@ -49,7 +50,7 @@ export class VacantesFilterComponent {
 
   async filtrar(formularioFiltro: NgForm){
     let filtrar = formularioFiltro.value;
-    let vacantesFiltradas = await this.vacanteService.filtrarVacantes(filtrar);
+    let vacantesFiltradas = await this.vacanteService.filtrarVacantesCli(filtrar);
     //this.vacanteService.filtrarVacantes(filtrar);
     this.listaFiltrada.emit(vacantesFiltradas);
     //formularioFiltro.resetForm();
@@ -57,7 +58,7 @@ export class VacantesFilterComponent {
 
   async reestablecer(formularioFiltro: NgForm){
     formularioFiltro.resetForm();
-    let vacantesFiltradas = await this.vacanteService.getAllVacantes();
+    let vacantesFiltradas = await this.vacanteService.getAllVacantesCli();
     this.listaFiltrada.emit(vacantesFiltradas);
   }
 }
