@@ -14,6 +14,7 @@ import { AuthGuard } from './auth.guard';
 import { VacanteFormEmpresaComponent } from './pages/vacante-form-empresa/vacante-form-empresa.component';
 import { VacantesListClienteComponent } from './pages/vacantes-list-cliente/vacantes-list-cliente.component';
 import { VacantesListComponent } from './pages/vacantes-list/vacantes-list.component';
+import { VacanteDetailComponent } from './pages/vacante-detail/vacante-detail.component';
 
 export const routes: Routes = [
 
@@ -70,6 +71,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: { rol: ['CLIENTE'] },
   },
+
+  {
+    path: 'vacante/:id',
+    component: VacanteDetailComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['EMPRESA'] },
+  },
+
 
   /** Categorias **/
 

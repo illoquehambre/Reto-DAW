@@ -9,6 +9,8 @@
                 @if(vacante.destacado) {
                     <p class="text-success"> Vacante destacada</p>
                 }
+                <a [routerLink]="['/vacante', vacante.idVacante]" class="btn btn-info">Ver detalles</a>
+
             </div>
         </div>
     </div>
