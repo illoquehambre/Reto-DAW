@@ -13,7 +13,7 @@ export class DashboardClienteComponent {
   router = inject(Router);
 
   vacantes(){
-    this.router.navigate(['/vacantesList']);
+    this.router.navigate(['/vacantesListCli']);
   }
 
   solicitudes(){
