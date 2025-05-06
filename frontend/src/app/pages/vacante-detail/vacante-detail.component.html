@@ -1,0 +1,22 @@
+<div class="container">
+    @if (error) {
+      <div class="alert alert-danger text-center">{{ error }}</div>
+    }
+
+    @if (!error && vacante) {
+      <div class="card p-4">
+        <h2 class="card-title">{{ vacante.nombre }}</h2>
+        <p>Descripción: {{ vacante.descripcion }}</p>
+        <p>Salario: {{ vacante.salario | currency:'EUR' }}</p>
+        <p>Fecha de publicación: {{ vacante.fecha | date:'longDate' }}</p>
+        <p>Estatus: {{ vacante.estatus }}</p>
+        @if(vacante.destacado) {
+            <p class="text-success"> Vacante destacada</p>
+        }
+        <p>Detalles: {{ vacante.detalles }}</p>
+
+        <button class="btn btn-warning mt-3" (click)="volver()">Volver</button>
+      </div>
+    }
+  </div>
+

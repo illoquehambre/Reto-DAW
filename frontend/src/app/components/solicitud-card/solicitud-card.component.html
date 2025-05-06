@@ -1,0 +1,15 @@
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="card-body d-flex">
+            <div class="flex-grow-1">
+                <h5 class="card-title">Solicitud para Vacante ID: {{ solicitud.idVacante }}</h5>
+                <p>Email: {{ solicitud.email }}</p>
+                <p>Fecha de solicitud: {{ solicitud.fecha | date:'longDate' }}</p>
+                <p>Estado: {{ solicitud.estado }}</p>
+                <p>Comentarios: {{ solicitud.comentarios }}</p>
+                <button class="btn btn-danger" (click)="eliminarSolicitud()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
