@@ -15,10 +15,13 @@ import { VacanteFormEmpresaComponent } from './pages/vacante-form-empresa/vacant
 import { VacantesListClienteComponent } from './pages/vacantes-list-cliente/vacantes-list-cliente.component';
 import { VacantesListComponent } from './pages/vacantes-list/vacantes-list.component';
 import { SolicitudFormCliComponent } from './pages/solicitud-form-cli/solicitud-form-cli.component';
+import { HomeComponentComponent } from './pages/home-component/home-component.component';
 
 export const routes: Routes = [
 
   /** Rutas generales **/
+  { path: '', pathMatch: 'full', component:HomeComponentComponent },
+  { path: 'home', pathMatch: 'full', component:HomeComponentComponent },
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
@@ -29,18 +32,56 @@ export const routes: Routes = [
     component: DashboardAdminComponent,
     canActivate: [AuthGuard],
     data: { rol: ['ADMON'] },
+    children: [
+      { path: 'usersList', component: UserListComponent },
+      { path: 'categoriasList', component: CategoriaListComponent },
+    ]
   },
   {
     path: 'dashboardCliente',
     component: DashboardClienteComponent,
     canActivate: [AuthGuard],
     data: { rol: ['CLIENTE'] },
+    children: [
+      {
+        path: 'vacantesListCli',
+        component: VacantesListClienteComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['CLIENTE'] },
+      },
+      {
+        path: '',
+        component: VacantesListClienteComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['CLIENTE'] },
+      }
+    ]
   },
   {
     path: 'dashboardEmpresa',
     component: DashboardEmpresaComponent,
     canActivate: [AuthGuard],
     data: { rol: ['EMPRESA'] },
+    children: [
+      {
+        path: 'vacanteNew',
+        component: VacanteFormEmpresaComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['EMPRESA'] },
+      },
+      {
+        path: 'vacantesList',
+        component: VacantesListComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['EMPRESA'] },
+      },
+      {
+        path: '',
+        component: VacantesListComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['EMPRESA'] },
+      },
+    ]
   },
 
   /** Vacantes **/
@@ -133,5 +174,5 @@ export const routes: Routes = [
     data: { rol: ['CLIENTE'] },
   },
 
-  { path: '**', redirectTo: 'login' },
+  { path: '**', redirectTo: 'home' },
 ];

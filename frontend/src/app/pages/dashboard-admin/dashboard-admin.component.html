@@ -1,16 +1,5 @@
-<main class="container text-center">
-    <h1 class="text-start">Mantenimientos</h1>
-    <hr class="mx-auto w-100" style="height: 2px; background-color: black;">
-        <div class="row">
-            <div class="col-12 mb-3">
-                <button class="btn btn-danger btn-lg w-100" style="padding: 15px;">Empresas</button>
-            </div>
-            <div class="col-12 mb-3">
-                <button class="btn btn-primary btn-lg w-100" style="padding: 15px;" (click)="usuarios()">Usuarios</button>
-            </div>
-            <div class="col-12 mb-3">
-                <button class="btn btn-success btn-lg w-100" style="padding: 15px;" (click)="categorias()">Categorías</button>
-            </div>
-        </div>
-</main>
+<app-sidebar-admin></app-sidebar-admin>
 
+<div class="container-fluid p-3 w-100"> 
+    <router-outlet/>
+</div>

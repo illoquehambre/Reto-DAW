@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { SidebarEmpresaComponent } from "../../components/sidebar-empresa/sidebar-empresa.component";
 
 @Component({
   selector: 'app-dashboard-empresa',
   standalone: true,
-  imports: [],
+  imports: [RouterModule, SidebarEmpresaComponent],
   templateUrl: './dashboard-empresa.component.html',
   styleUrl: './dashboard-empresa.component.css'
 })

@@ -14,7 +14,7 @@
   }
 
   @if (!loading && !error) {
-    <div class="row gy-4">
+    <div class="row justify-content-center g-3">
       @for (vacante of vacantes; track vacante.idVacante) {
         <app-vacante-card [vacante]="vacante"></app-vacante-card>
       }        

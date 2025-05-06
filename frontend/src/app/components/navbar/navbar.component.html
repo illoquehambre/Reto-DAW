@@ -1,15 +1,61 @@
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" [routerLink]="['/']"><img src="/favicon.ico" width="55px"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" [routerLink]="['dashboardAdmin']" routerLinkActive="active">Home</a>
-                </li>
-            </ul>
-        </div>
+      <a class="navbar-brand" [routerLink]="['/']">
+        <img src="/favicon.ico" width="55px" alt="Logo" />
+      </a>
+  
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+  
+          @if(!authService.isAuthenticated()){
+            <li class="nav-item">
+              <a
+                class="btn btn-primary btn-sm"
+                [routerLink]="['/login']"
+                routerLinkActive="active"
+              >
+                Iniciar Sesión
+              </a>
+            </li>
+          }
+  
+          @if(authService.isAuthenticated()){
+            <ng-container>
+              <li class="nav-item justify-content-around">
+                <a class="nav-link" [routerLink]="['/']" routerLinkActive="active">
+                  Home
+                </a>
+              </li>
+  
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="[getDashboardRoute()]" routerLinkActive="active">
+                  Dashboard
+                </a>
+              </li>
+  
+              <li class="nav-item">
+                <button class="btn btn-danger btn-sm ms-2" (click)="logout()">
+                  Cerrar Sesión
+                </button>
+              </li>
+            </ng-container>
+    
+          }
+  
+        </ul>
+      </div>
     </div>
-</nav>
+  </nav>
+  
