@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { IVacante } from '../interfaces/ivacante';
 
 @Injectable({ providedIn: 'root' })
@@ -117,4 +117,5 @@ export class VacanteService {
 
     return arrVacantes;
   }
+
 }

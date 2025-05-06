@@ -5,6 +5,7 @@ import { IVacante } from '../../interfaces/ivacante';
 import { RouterModule } from '@angular/router';
 import { VacanteCardComponent } from '../../components/vacante-card/vacante-card.component';
 
+
 @Component({
   selector: 'app-vacantes-list',
   standalone: true,

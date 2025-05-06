@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { lastValueFrom, Observable } from 'rxjs';
 import { IEmpresa } from '../interfaces/iempresa';
+import { IVacante } from '../interfaces/ivacante';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,10 @@ import { IEmpresa } from '../interfaces/iempresa';
 export class EmpresaService {
 
   private httpClient = inject(HttpClient);
-  private baseUrl: string = 'http://localhost:8083/empresa';
+
+  private baseUrl: string = 'http://localhost:8083/admin';
+  private apiUrlEmpresa = 'http://localhost:8083/empresa/vacantesEmpresa'
+
 
   constructor() { }
 
@@ -47,6 +51,18 @@ export class EmpresaService {
     return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
   }
 
+
+    getVacantesByEmpresa(idEmpresa: number): Observable<IVacante[]> {
+      const token = localStorage.getItem('accessToken') || '';
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+      return this.httpClient.get<IVacante[]>(
+        `${this.apiUrlEmpresa}/${idEmpresa}`,
+        { headers }
+      );
+    }
+
   getAuthoritation() {
     const token = localStorage.getItem('accessToken');
     const headers = new HttpHeaders({
@@ -62,5 +78,5 @@ async findEmpresaUsuario(): Promise<IEmpresa> {
     ));
   }
 
-  
+
 } 
