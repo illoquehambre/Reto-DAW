@@ -21,6 +21,9 @@ export class UserService {
   private currentUserSubject = new BehaviorSubject<IUser | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
+  private currentUserSubject = new BehaviorSubject<IUser | null>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
+
   constructor() { 
     const token = localStorage.getItem('accessToken');
     if (token) {
@@ -41,9 +44,6 @@ export class UserService {
         localStorage.setItem('accessToken', response.token);
         localStorage.setItem('rol', JSON.stringify(response.rol));
   
-        if (response.rol === 'CLIENTE') {
-          await lastValueFrom(this.loadUserProfile());
-        }
       }
       return response;
       
@@ -96,16 +96,13 @@ getAuthoritation(){
     return httOptions;
   }
 
-  public loadUserProfile(): Observable<IUser> {
-    return this.httpClient.get<IUser>(this.baseUrlUser+'/usuario', { 
-      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
-    }).pipe(
-      tap(userDto => this.currentUserSubject.next(userDto))
-    );
-  }
-
-
-
+  // public loadUserProfile(): Observable<IUser> {
+  //   return this.httpClient.get<IUser>(this.baseUrlUser+'/usuario', { 
+  //     headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` }
+  //   }).pipe(
+  //     tap(userDto => this.currentUserSubject.next(userDto))
+  //   );
+  // }
 }
-}
+
 

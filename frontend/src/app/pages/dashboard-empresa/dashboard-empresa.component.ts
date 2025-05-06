@@ -2,12 +2,18 @@
 import { Component, Input,inject } from '@angular/core';
 import { SidebarEmpresaComponent } from "../../components/sidebar-empresa/sidebar-empresa.component";
 import { VacantesEmpresaListComponent } from "../vacantes-empresa-list/vacantes-empresa-list.component";
+
+import { Component, Input,inject } from '@angular/core';
+import { SidebarEmpresaComponent } from "../../components/sidebar-empresa/sidebar-empresa.component";
+import { VacantesEmpresaListComponent } from "../vacantes-empresa-list/vacantes-empresa-list.component";
 import { Router } from '@angular/router';
+
 
 
 @Component({
   selector: 'app-dashboard-empresa',
   standalone: true,
+  imports: [SidebarEmpresaComponent, VacantesEmpresaListComponent],
   imports: [SidebarEmpresaComponent, VacantesEmpresaListComponent],
   templateUrl: './dashboard-empresa.component.html',
   styleUrl: './dashboard-empresa.component.css'
@@ -15,8 +21,6 @@ import { Router } from '@angular/router';
 export class DashboardEmpresaComponent {
 
 @Input() selectedMenu: string = 'vacantes';
-}
-
 
   router = inject(Router);
 
@@ -31,5 +35,5 @@ export class DashboardEmpresaComponent {
   solicitudes(){
     this.router.navigate(['/solicitudesList']);
   }
-} 
+}
 

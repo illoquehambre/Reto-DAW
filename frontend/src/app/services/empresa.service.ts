@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { lastValueFrom, Observable } from 'rxjs';
 import { IEmpresa } from '../interfaces/iempresa';
 import { IVacante } from '../interfaces/ivacante';
+import { ISolicitud } from '../interfaces/isolicitud';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,10 @@ import { IVacante } from '../interfaces/ivacante';
 export class EmpresaService {
 
   private httpClient = inject(HttpClient);
+
+  private baseUrl: string = 'http://localhost:8083/admin';
+  private apiUrlEmpresa = 'http://localhost:8083/empresa/vacantesEmpresa'
+
 
   private baseUrl: string = 'http://localhost:8083/admin';
   private apiUrlEmpresa = 'http://localhost:8083/empresa/vacantesEmpresa'
@@ -58,7 +63,19 @@ export class EmpresaService {
         'Authorization': `Bearer ${token}`
       });
       return this.httpClient.get<IVacante[]>(
-        `${this.apiUrlEmpresa}/${idEmpresa}`,
+        `${this.apiUrlEmpresa}/vacantesEmpresa/${idEmpresa}`,
+        { headers }
+      );
+    }
+
+    getVacantesByUsuario(): Observable<IVacante[]> {
+      const token = localStorage.getItem('accessToken') || '';
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      });
+      return this.httpClient.get<IVacante[]>(
+        `${this.apiUrlEmpresa}/vacantesEmpresa`,
         { headers }
       );
     }
@@ -79,4 +96,16 @@ async findEmpresaUsuario(): Promise<IEmpresa> {
   }
 
 
+
+    getSolicitudesByUsuario(): Observable<ISolicitud[]>{
+      const token = localStorage.getItem('accessToken') || '';
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      });
+      return this.httpClient.get<ISolicitud[]>(
+        `${this.apiUrlEmpresa}/solicitudesUsuario`,
+        { headers }
+      )
+    }
 } 

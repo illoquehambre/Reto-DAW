@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { SignUpComponent } from './pages/signup/signup.component';
 import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin.component';
 import { DashboardClienteComponent } from './pages/dashboard-cliente/dashboard-cliente.component';
 import { DashboardEmpresaComponent } from './pages/dashboard-empresa/dashboard-empresa.component';
@@ -13,12 +12,11 @@ import { EmpresaListComponent } from './pages/empresa-list/empresa-list.componen
 import { AuthGuard } from './auth.guard';
 import { HomeComponentComponent } from './pages/home-component/home-component.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
-import { DashboardEmpresaComponent } from './pages/dashboard-empresa/dashboard-empresa.component';
 import { SignUpComponent } from './pages/signup/signup.component';
 import { VacanteFormEmpresaComponent } from './pages/vacante-form-empresa/vacante-form-empresa.component';
 import { VacantesListClienteComponent } from './pages/vacantes-list-cliente/vacantes-list-cliente.component';
 import { VacantesListComponent } from './pages/vacantes-list/vacantes-list.component';
-import { VacanteDetailComponent } from './pages/vacante-detail/vacante-detail.component';
+
 
 export const routes: Routes = [
 
@@ -141,6 +139,14 @@ export const routes: Routes = [
     component: EmpresaListComponent,
     canActivate: [AuthGuard],
     data: { rol: ['ADMON'] },
+  },
+
+  /** Solicitudes **/
+  {
+    path: 'solicitudNew',
+    component: SolicitudFormCliComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['CLIENTE'] },
   },
 
   { path: '**', redirectTo: 'login' },

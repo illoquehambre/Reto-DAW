@@ -23,30 +23,17 @@ export class VacantesEmpresaListComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    console.log("iniciando")
-    const email = this.authService.getCurrentUserEmail();
-    console.log("email o nullo?: ",email)
-    if (!email) {
-      this.errorMsg = 'No hay usuario autenticado.';
-      return;
+  this.empresaService.getVacantesByUsuario().subscribe({
+    next: vacs => {
+      this.vacantesByEmpresa = vacs;
+      console.log("Vacantes cargadas:", vacs);
+    },
+    error: err => {
+      console.error('Error al cargar vacantes:', err);
+      this.errorMsg = 'No se pudieron cargar las vacantes.';
     }
-    console.log("email empresa: ", email)
-
-    this.empresaService.findByEmail(email)
-      .then((empresa: IEmpresa) => {
-        if (empresa.idEmpresa != null) {
-          this.loadVacantes(empresa.idEmpresa);
-          console.log("idEmpresa ",empresa.idEmpresa)
-        } else {
-          console.error('Empresa recuperada sin ID:', empresa);
-          this.errorMsg = 'La empresa no tiene un identificador válido.';
-        }
-      })
-      .catch(err => {
-        console.error('Error al cargar empresa:', err);
-        this.errorMsg = 'No se pudo recuperar la empresa.';
-      });
-  }
+  });
+}
 
   private loadVacantes(idEmpresa: number) {
     this.empresaService.getVacantesByEmpresa(idEmpresa).subscribe({
