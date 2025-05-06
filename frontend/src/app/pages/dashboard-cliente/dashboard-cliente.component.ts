@@ -14,5 +14,18 @@ import { SolicitudesListComponent } from "../solicitudes-list/solicitudes-list.c
   styleUrl: './dashboard-cliente.component.css'
 })
 export class DashboardClienteComponent {
+
  @Input() selectedMenu:string='perfil';
+
+
+  router = inject(Router);
+
+  vacantes(){
+    this.router.navigate(['/vacantesListCli']);
+  }
+
+  solicitudes(){
+    this.router.navigate(['/solicitudesList']);
+  }
+
 }

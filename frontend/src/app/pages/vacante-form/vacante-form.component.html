@@ -1,0 +1,47 @@
+<section>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <h3 class="mb-0">Detalles Vacante</h3>
+          <div class="ml-auto">
+            <a [routerLink]="['/vacantesListCli']" class="btn btn-warning">Volver</a>
+          </div>
+      </div>
+    <hr>
+    @if (loading) {
+        <div class="d-flex justify-content-center my-5">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Cargando...</span>
+          </div>
+        </div>
+    }
+    
+    @if (error) {
+        <div class="alert alert-danger text-center" role="alert">
+          {{ error }}
+        </div>
+    }
+
+    @if (!loading && !error) {
+        <div class="card shadow p-4">
+            <div>
+                <h2>{{miVacante.nombre}}</h2>
+                <hr class="my-3" style="height: 2px;  background-color: black;">
+                <h6>{{empresa}}</h6>
+                <p>{{miVacante.descripcion}}</p>
+                
+                @if (miVacante.destacado) {
+                    <p>Salario: {{miVacante.salario | currency:'EUR'}} - Fecha: {{miVacante.fecha | date:'longDate'}} <span class="badge bg-success mb-2">Destacado</span></p>
+                }@else{
+                    <p>Salario: {{miVacante.salario | currency:'EUR'}} - Fecha: {{miVacante.fecha | date:'longDate'}}
+                }
+                <p>Categoría: {{categoria}}</p>
+
+                <img [src]="miVacante.imagen" class="card-img-top img-fluid" alt="{{ miVacante.nombre }}">
+                <p></p>
+                <h5>Detalles</h5>
+                <p>{{miVacante.detalles}}</p>
+                <p></p>
+                <a [routerLink]="['/vacantesList']" class="btn btn-primary">Solicitar vacante</a>
+            </div>  
+        </div>
+    }
+</section>

@@ -1,11 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IUser } from '../interfaces/iuser';
-<<<<<<< HEAD
 import { BehaviorSubject, lastValueFrom, Observable, tap } from 'rxjs';
-=======
-import { lastValueFrom, Observable } from 'rxjs';
->>>>>>> b03916b8424f78f8bbcfc846f21319f82bd8afd4
 import { ILogin } from '../interfaces/ilogin';
 import { ISignUp } from '../interfaces/isignup';
 
@@ -111,3 +107,5 @@ getAuthoritation(){
 
 
 }
+}
+

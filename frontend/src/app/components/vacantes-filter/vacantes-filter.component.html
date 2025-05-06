@@ -1,0 +1,50 @@
+<section class="container mt-3">
+    <form #formularioFiltro = "ngForm"> <!--(ngSubmit)="getDataForm(formularioFiltro)">-->
+        <div class="d-flex flex-wrap justify-content-between gap-3">
+            <div class="d-flex flex-column">
+                <label for="empresa" class="form-label mt-3">Empresa</label>
+                <!--<input class="form-control" type="text" id="empresa" placeholder="Introduce una empresa" name="empresa" ngModel>-->
+                <select class="form-select" id="empresa" name="empresa" ngModel>
+                    <option value="" selected>Selecciona una opción</option>
+                    @for (empresa of arrEmpresa; track empresa.idEmpresa) {
+                        <option value="{{ empresa.idEmpresa }}" selected>{{ empresa.nombreEmpresa }}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="d-flex flex-column">
+                <label for="categoria" class="form-label mt-3">Categoría</label>
+                <select class="form-select" id="categoria" name="categoria" ngModel>
+                    <!--<option value="" selected>Selecciona una opción</option>
+                    <option value="true" selected>Activo</option>
+                    <option value="false" selected>Inactivo</option>-->
+                    <option value="" selected>Selecciona una opción</option>
+                    @for (categoria of arrCategoria; track categoria.idCategoria) {
+                        <option value="{{ categoria.idCategoria }}" selected>{{ categoria.nombre }}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="d-flex flex-column">
+                <label for="destacado" class="form-label mt-3">Destacado</label>
+                <select class="form-select" id="destacado" name="destacado" ngModel>
+                    <option value="" selected>Selecciona una opción</option>
+                    <option value="1" selected>Sí</option>
+                    <option value="0" selected>No</option>
+                </select>
+            </div>
+            
+                
+            <!--<div class="d-flex">
+                <input type="submit" value="Filtrar" class="btn btn-warning me-2">
+                <input type="submit" value="Reestablecer" class="btn btn-primary">
+            </div>-->
+
+            <div class="d-flex">
+                <input type="submit" value="Filtrar" class="btn btn-warning me-2" (click)="filtrar(formularioFiltro)">
+                <input type="submit" value="Reestablecer" class="btn btn-primary" (click)="reestablecer(formularioFiltro)">
+            </div>
+               
+        </div>
+    </form>
+</section>

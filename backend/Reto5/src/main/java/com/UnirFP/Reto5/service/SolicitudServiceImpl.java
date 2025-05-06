@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.UnirFP.Reto5.model.Solicitud;
 import com.UnirFP.Reto5.repository.SolicitudRepository;
+import com.UnirFP.Reto5.repository.EmpresaRepository;
+
 
 @Service
 public class SolicitudServiceImpl implements SolicitudService{

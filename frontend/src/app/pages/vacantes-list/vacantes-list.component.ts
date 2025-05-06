@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { VacanteService } from '../../services/vacante.service';
 import { IVacante } from '../../interfaces/ivacante';
 import { RouterModule } from '@angular/router';
-import { VacanteCardComponent } from "../../components/vacante-card/vacante-card.component";
+import { VacanteCardComponent } from '../../components/vacante-card/vacante-card.component';
+
 
 @Component({
   selector: 'app-vacantes-list',
@@ -13,7 +14,9 @@ import { VacanteCardComponent } from "../../components/vacante-card/vacante-card
   styleUrls: ['./vacantes-list.component.css']
 })
 export class VacantesListComponent implements OnInit {
+
   private vacanteService = inject(VacanteService);
+
   vacantes: IVacante[] = [];
   loading = true;
   error: string | null = null;
@@ -21,6 +24,7 @@ export class VacantesListComponent implements OnInit {
   async ngOnInit() {
     try {
       this.vacantes = await this.vacanteService.getAllVacantes();
+      console.log(this.vacantes);
     } catch (err) {
       console.error('Error al cargar vacantes', err);
       this.error = 'No se pudieron cargar las vacantes';

@@ -77,4 +77,18 @@ public class EmpresaServiceImpl implements EmpresaService{
 		}
 	}
 
+	@Override
+	public Empresa findByEmail(String email) {
+  
+    Empresa empresa = erepo.findByUsuarioEmail(email);
+    
+    if (empresa == null) {
+        throw new RuntimeException("No se encuentra empresa.");
+    }
+
+    System.out.println("Empresa: " + empresa.getNombreEmpresa());
+    return empresa;
+	
+	}
+
 }
