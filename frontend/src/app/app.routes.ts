@@ -15,6 +15,8 @@ import { VacanteFormEmpresaComponent } from './pages/vacante-form-empresa/vacant
 import { VacantesListClienteComponent } from './pages/vacantes-list-cliente/vacantes-list-cliente.component';
 import { VacantesListComponent } from './pages/vacantes-list/vacantes-list.component';
 import { SolicitudFormCliComponent } from './pages/solicitud-form-cli/solicitud-form-cli.component';
+import { SolicitudListEmpresaComponent } from './pages/solicitud-list-empresa/solicitud-list-empresa.component';
+import { VacanteDetailComponent } from './pages/vacante-detail/vacante-detail.component';
 
 export const routes: Routes = [
 
@@ -63,6 +65,13 @@ export const routes: Routes = [
     component: VacantesListClienteComponent,
     canActivate: [AuthGuard],
     data: { rol: ['CLIENTE'] },
+  },
+
+  {
+    path: 'vacante/:id',
+    component: VacanteDetailComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['EMPRESA'] },
   },
 
   {
@@ -131,6 +140,13 @@ export const routes: Routes = [
     component: SolicitudFormCliComponent,
     canActivate: [AuthGuard],
     data: { rol: ['CLIENTE'] },
+  },
+
+  {
+    path: 'solicitudes/:idVacante',
+    component: SolicitudListEmpresaComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['EMPRESA'] },
   },
 
   { path: '**', redirectTo: 'login' },
