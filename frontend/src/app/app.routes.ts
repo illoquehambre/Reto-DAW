@@ -14,6 +14,7 @@ import { AuthGuard } from './auth.guard';
 import { VacanteFormEmpresaComponent } from './pages/vacante-form-empresa/vacante-form-empresa.component';
 import { VacantesListClienteComponent } from './pages/vacantes-list-cliente/vacantes-list-cliente.component';
 import { VacantesListComponent } from './pages/vacantes-list/vacantes-list.component';
+import { SolicitudFormCliComponent } from './pages/solicitud-form-cli/solicitud-form-cli.component';
 
 export const routes: Routes = [
 
@@ -122,6 +123,14 @@ export const routes: Routes = [
     component: EmpresaListComponent,
     canActivate: [AuthGuard],
     data: { rol: ['ADMON'] },
+  },
+
+  /** Solicitudes **/
+  {
+    path: 'solicitudNew',
+    component: SolicitudFormCliComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['CLIENTE'] },
   },
 
   { path: '**', redirectTo: 'login' },
