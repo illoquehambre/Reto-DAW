@@ -56,6 +56,10 @@ export class EmpresaService {
     return { headers };
   }
 
+  getPerfilEmpresa(idEmpresa: number): Promise<IEmpresa> {
+    return lastValueFrom(this.httpClient.get<IEmpresa>(`${this.baseUrl}/${idEmpresa}`, this.getAuthoritation()));
+  }
+
 
 async findEmpresaUsuario(): Promise<IEmpresa> {
   return await lastValueFrom(this.httpClient.get<IEmpresa>(`${this.baseUrl}/me`, this.getAuthoritation()

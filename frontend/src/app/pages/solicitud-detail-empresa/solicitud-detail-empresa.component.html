@@ -1,0 +1,28 @@
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Detalles de la Solicitud</h3>
+                </div>
+                <div class="card-body">
+                    @if (error) {
+                        <div class="alert alert-danger text-center">{{ error }}</div>
+                    }
+
+                    @if (!error && solicitud) {
+                        <h2 class="card-title">{{ solicitud.nombreCandidato }}</h2>
+                        <p>Email: {{ solicitud.email }}</p>
+                        <p>Teléfono: {{ solicitud.telefono }}</p>
+                        <p>Fecha de solicitud: {{ solicitud.fecha | date:'longDate' }}</p>
+                        <p>Estatus: {{ solicitud.estatus }}</p>
+
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-primary mt-3" (click)="volver()">Volver</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,6 +5,7 @@ import { IVacante } from '../interfaces/ivacante';
 
 @Injectable({ providedIn: 'root' })
 export class VacanteService {
+  
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8083/empresa'; // Ajusta la URL si es necesario
   private apiUrlVacante = 'http://localhost:8083/api'; 
@@ -19,6 +20,16 @@ export class VacanteService {
     return lastValueFrom(this.http.get<IVacante[]>(this.apiUrl+'/vacantes', { headers }));
   }
 
+  getVacantesByEmpresa(idEmpresa: number): Promise<IVacante[]> {
+    const token = localStorage.getItem('accessToken') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    });
+  
+    return lastValueFrom(this.http.get<IVacante[]>(`${this.apiUrl}/vacantesEmpresa/${idEmpresa}`, { headers }));
+  }
+
   getById(id_vacante: number): Promise<IVacante>{
     const token = localStorage.getItem('accessToken') || '';
     const headers = new HttpHeaders({
@@ -29,10 +40,21 @@ export class VacanteService {
   }
 
   async insert(vacante: IVacante): Promise<number> {
-    console.log("Enviando solicitud con token...");
-    return await lastValueFrom(
-        this.http.post<number>(this.apiUrl+"/nuevaVacante",vacante,this.getAuthoritation()));
+    return await lastValueFrom(this.http.post<number>(this.apiUrl+"/nuevaVacante",vacante,this.getAuthoritation()));
   }
+
+  async update(vacante: IVacante): Promise<number> {
+    return await lastValueFrom(this.http.put<number>(`${this.apiUrl}/editarVacante`, vacante, this.getAuthoritation()));
+  }
+
+  async delete(idVacante: number): Promise<number> {
+    return await lastValueFrom(this.http.delete<number>(`${this.apiUrl}/cancelarVacante/${idVacante}`, this.getAuthoritation()));
+  }
+
+  findById(id: number): Promise<IVacante> {
+    return lastValueFrom(this.http.get<IVacante>(`${this.apiUrl}/vacante/${id}`, this.getAuthoritation()));
+  } 
+  
 
   async getByCategoria(idCategoria: number): Promise<IVacante[]> {
     return await lastValueFrom(this.http.get<IVacante[]>(`${this.apiUrl}/vacantes/categoria/${idCategoria}`));

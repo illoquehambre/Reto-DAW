@@ -15,7 +15,21 @@ export class VacanteCardComponent {
 
   router = inject(Router);
   vacanteService = inject(VacanteService);
+
   @Input() vacante!: IVacante;
 
+  async cancelarVacante() {
+    if (!this.vacante.idVacante) return;
 
+    this.vacanteService.delete(this.vacante.idVacante)
+      .then(response => {
+        if (response === 1) {
+          alert("Vacante cancelada");
+          this.vacante.estatus = "CANCELADA"; //Para que la vacante cancelada quede oculta sin tener que actualizar
+        } else {
+          alert("Error al cancelar la vacante");
+        }
+      });
+  }
 }
+

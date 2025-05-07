@@ -22,8 +22,9 @@ export class VacantesListComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      this.vacantes = await this.vacanteService.getAllVacantes();
-      console.log(this.vacantes);
+      const idEmpresa = 1; // Aquí puedes obtener el ID dinámicamente
+      this.vacantes = await this.vacanteService.getVacantesByEmpresa(idEmpresa);
+      console.log("Vacantes de la empresa:", this.vacantes);
     } catch (err) {
       console.error('Error al cargar vacantes', err);
       this.error = 'No se pudieron cargar las vacantes';

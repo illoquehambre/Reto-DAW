@@ -1,4 +1,4 @@
-<div class="card mb-3">
+<div class="card mb-3" [hidden]="vacante.estatus === 'CANCELADA'">
     <div class="row g-0">
         <div class="card-body d-flex">
             <div class="flex-grow-1">
@@ -9,8 +9,13 @@
                 @if(vacante.destacado) {
                     <p class="text-success"> Vacante destacada</p>
                 }
-                <a [routerLink]="['/vacante', vacante.idVacante]" class="btn btn-primary">Ver detalles</a>
-                <a [routerLink]="['/solicitudes', vacante.idVacante]" class="btn btn-warning">Ver solicitudes</a>
+
+                <a [routerLink]="['/vacante', vacante.idVacante]" class="me-1 btn btn-primary">Ver detalles</a>
+                <a [routerLink]="['/solicitudes', vacante.idVacante]" class="me-1 btn btn-warning">Ver solicitudes</a>
+                <a [routerLink]="['/editarVacante', vacante.idVacante]" class="me-1 btn btn-info">Editar</a>
+
+                <button type="button" class="btn btn-danger" (click)="cancelarVacante()">Cancelar Vacante</button>
+                
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { VacanteService } from '../../services/vacante.service';
 import { EmpresaService } from '../../services/empresa.service';
@@ -21,12 +21,15 @@ export class VacanteFormEmpresaComponent implements OnInit {
   private ruta = inject(ActivatedRoute);
 
   formVacante: FormGroup;
-  err: string = "";
-  tipo: string = "Crear";
+  mensaje: string = "";
+  tipo!: string;
+  err: string = '';
+
   estOptions: Estatus[] = [Estatus.CREADA, Estatus.CUBIERTA, Estatus.CANCELADA];
 
   constructor() {
     this.formVacante = new FormGroup({
+      idVacante: new FormControl(null),
       nombre: new FormControl('', [Validators.required, Validators.minLength(3)]),
       descripcion: new FormControl('', [Validators.required, Validators.minLength(10)]),
       fecha: new FormControl('', [Validators.required]),
@@ -40,30 +43,56 @@ export class VacanteFormEmpresaComponent implements OnInit {
     });
   }
 
-  async ngOnInit(): Promise<void> {
-    const email = localStorage.getItem('email');
-    if (email) {
-        const empresa = await this.empresaService.findByEmail(email);
-        if (empresa?.idEmpresa) {
-            this.formVacante.patchValue({ idEmpresa: empresa.idEmpresa });
+  ngOnInit(): void {
+    this.ruta.params.subscribe(async (params: any) => {
+      if (params.idVacante) {
+        this.tipo = "Editar";
+        const vacanteResponse: IVacante = await this.vacanteService.getById(params.idVacante);
+        if (vacanteResponse) {
+          this.formVacante.patchValue(vacanteResponse);
         }
-    }
+      } else {
+        this.tipo = "Crear";
+      }
+    });
   }
 
   async getDataForm() {
     if (!this.formVacante.value.idCategoria || !this.formVacante.value.idEmpresa) {
-        return;
+      return;
     }
 
-    this.formVacante.patchValue({ idCategoria: Number(this.formVacante.value.idCategoria) });
-    await this.vacanteService.insert(this.formVacante.value);
+    if (this.tipo === "Crear") {
+      this.vacanteService.insert(this.formVacante.value)
+        .then(response => this.mostrarMensaje(response, "Vacante creada"));
+    } else if (this.tipo === "Editar") {
+      this.vacanteService.update(this.formVacante.value)
+        .then(response => this.mostrarMensaje(response, "Vacante actualizada"));
+    }
   }
+
+  async eliminarVacante() {
+    const idVacante = this.formVacante.value.idVacante;
+    if (!idVacante) return;
+
+    this.vacanteService.delete(idVacante)
+      .then(response => this.mostrarMensaje(response, "Vacante eliminada con éxito"));
+  }
+
+  mostrarMensaje(response: number, mensajeOk: string) {
+    if (response === 1) {
+      this.mensaje = mensajeOk;
+      this.router.navigate(['/dashboardEmpresa']);
+    }
+  }
+
+  checkControl(nombre: string, error: string): boolean {
+    return this.formVacante.get(nombre)?.hasError(error) ?? false;
+  }
+  
 
   volver(): void {
     this.router.navigate(["/dashboardEmpresa"]);
   }
-
-  checkControl(nombre: string, required: string) {
-    return nombre;
-  }
 }
+

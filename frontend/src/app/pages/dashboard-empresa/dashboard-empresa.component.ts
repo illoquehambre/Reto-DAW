@@ -24,4 +24,9 @@ export class DashboardEmpresaComponent {
   solicitudes(){
     this.router.navigate(['/solicitudesList']);
   }
+
+  perfil(){
+    this.router.navigate(['/perfilEmpresa']);
+  }
+
 } 
