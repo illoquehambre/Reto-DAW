@@ -1,26 +1,16 @@
-<div class="row justify-content-center w-100">
-    <div class="col-12 col-10 col-8 col-6 mb-3">
-
-        <div class="card mb-3 panel-focus--light-90 p-2 w-70">
-            <div class="row g-3">
-
-                <div
-            class="col-auto d-none d-sm-flex bg-success-subtle justify-content-center align-items-center p-3"
-            style="min-width: 80px;"
-          >
-            <i class="bi bi-info-circle-fill fs-2"></i>
-          </div>
-          <div class="col">
-                    <div class="flex-grow-1">
-                        <h5 class="card-title">{{ vacante.nombre }}</h5>
-                        <p>Descripción: {{ vacante.descripcion }}</p>
-                        <p>Salario: {{ vacante.salario | currency:'EUR' }}</p>
-                        <p>Fecha de publicación: {{ vacante.fecha | date:'longDate' }}</p>
-                        @if(vacante.destacado) {
-                            <p class="text-success"> Vacante destacada</p>
-                        }
-                    </div>
-                </div>
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="card-body d-flex">
+            <div class="flex-grow-1">
+                <h5 class="card-title">{{ vacante.nombre }}</h5>
+                <p>Descripción: {{ vacante.descripcion }}</p>
+                <p>Salario: {{ vacante.salario | currency:'EUR' }}</p>
+                <p>Fecha de publicación: {{ vacante.fecha | date:'longDate' }}</p>
+                @if(vacante.destacado) {
+                    <p class="text-success"> Vacante destacada</p>
+                }
+                <a [routerLink]="['/vacante', vacante.idVacante]" class="btn btn-primary">Ver detalles</a>
+                <a [routerLink]="['/solicitudes', vacante.idVacante]" class="btn btn-warning">Ver solicitudes</a>
             </div>
         </div>
     </div>

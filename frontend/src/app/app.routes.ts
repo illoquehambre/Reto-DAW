@@ -16,6 +16,7 @@ import { VacantesListClienteComponent } from './pages/vacantes-list-cliente/vaca
 import { VacantesListComponent } from './pages/vacantes-list/vacantes-list.component';
 import { SolicitudFormCliComponent } from './pages/solicitud-form-cli/solicitud-form-cli.component';
 import { HomeComponentComponent } from './pages/home-component/home-component.component';
+import { SolicitudListEmpresaComponent } from './pages/solicitud-list-empresa/solicitud-list-empresa.component';
 
 export const routes: Routes = [
 
@@ -172,6 +173,13 @@ export const routes: Routes = [
     component: SolicitudFormCliComponent,
     canActivate: [AuthGuard],
     data: { rol: ['CLIENTE'] },
+  },
+
+  {
+    path: 'solicitudes/:idVacante',
+    component: SolicitudListEmpresaComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['EMPRESA'] },
   },
 
   { path: '**', redirectTo: 'home' },

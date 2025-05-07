@@ -31,7 +31,7 @@ export class VacanteService {
   async insert(vacante: IVacante): Promise<number> {
     console.log("Enviando solicitud con token...");
     return await lastValueFrom(
-        this.http.post<number>("http://localhost:8083/empresa/nuevaVacante",vacante,this.getAuthoritation()));
+        this.http.post<number>(this.apiUrl+"/nuevaVacante",vacante,this.getAuthoritation()));
   }
 
   async getByCategoria(idCategoria: number): Promise<IVacante[]> {
