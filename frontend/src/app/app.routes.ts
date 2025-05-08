@@ -18,6 +18,8 @@ import { SolicitudFormCliComponent } from './pages/solicitud-form-cli/solicitud-
 import { HomeComponentComponent } from './pages/home-component/home-component.component';
 import { SolicitudListEmpresaComponent } from './pages/solicitud-list-empresa/solicitud-list-empresa.component';
 import { SolicitudesListClienteComponent } from './pages/solicitudes-list-cliente/solicitudes-list-cliente.component';
+import { EmpresaAdminListComponent } from './pages/empresa-admin-list/empresa-admin-list.component';
+import { EmpresaAdminFormComponent } from './pages/empresa-admin-form/empresa-admin-form.component';
 
 export const routes: Routes = [
 
@@ -37,6 +39,7 @@ export const routes: Routes = [
     children: [
       { path: 'usersList', component: UserListComponent },
       { path: 'categoriasList', component: CategoriaListComponent },
+      { path: 'empresasAdminList', component: EmpresaAdminListComponent }
     ]
   },
   {
@@ -180,9 +183,30 @@ export const routes: Routes = [
     data: { rol: ['ADMON'] },
   },
 
+  {
+    path: 'empresasAdminList',
+    component: EmpresaAdminListComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['ADMON'] },
+  },
+
+  {
+    path: 'empresaAdminNew',
+    component: EmpresaAdminFormComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['ADMON'] },
+  },
+
+  {
+    path: 'empresaAdminUpdate/:id_empresa',
+    component: EmpresaAdminFormComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['ADMON'] },
+  },
+
   /** Solicitudes **/
   {
-    path: 'solicitudNew',
+    path: 'solicitudNew/:id_vacante',
     component: SolicitudFormCliComponent,
     canActivate: [AuthGuard],
     data: { rol: ['CLIENTE'] },

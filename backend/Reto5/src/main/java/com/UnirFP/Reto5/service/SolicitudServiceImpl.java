@@ -41,6 +41,15 @@ public class SolicitudServiceImpl implements SolicitudService{
 	@Override
 	public int insertOne(Solicitud entidad) {
 		try {
+			Solicitud solicitud = srepo.findByUsuario_EmailAndVacante_IdVacante(entidad.getUsuario().getEmail(),entidad.getVacante().getIdVacante());
+			if(solicitud != null) {
+				return 2;
+			}
+			
+			if (entidad.getIdSolicitud() == null) {
+				srepo.save(entidad);
+				return 1;
+			}
 			if (srepo.existsById(entidad.getIdSolicitud())) {
 				return 0;
 			}else {

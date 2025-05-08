@@ -221,23 +221,27 @@ public class UserController {
     }
     
     @PostMapping("/solicitud")
-    public ResponseEntity<Integer> nuevaSolicitud(@RequestBody SolicitudDto solicitudDto){
+    public ResponseEntity<Integer> nuevaSolicitud(@RequestBody SolicitudDto solicitudDto,@AuthenticationPrincipal Usuario currentUser){
     	
     	Vacante vacante = vservice.findById(solicitudDto.getIdVacante());
-    	Usuario usuario = usuarioService.findByEmail(solicitudDto.getEmail());
+    	//Usuario usuario = usuarioService.findByEmail(solicitudDto.getEmail());
+    	Usuario usuario = usuarioService.findByEmail(currentUser.getEmail());
     	
     	Solicitud solicitud = new Solicitud();
     	
-    	solicitud.setFecha(solicitudDto.getFecha());
+    	//solicitud.setFecha(solicitudDto.getFecha());
+    	solicitud.setFecha(new Date());
         solicitud.setArchivo(solicitudDto.getArchivo());
         solicitud.setComentarios(solicitudDto.getComentarios());
-        solicitud.setEstado(solicitudDto.getEstado());
+        //solicitud.setEstado(solicitudDto.getEstado());
+        solicitud.setEstado(0);
         solicitud.setCurriculum(solicitudDto.getCurriculum());
         solicitud.setVacante(vacante);
         solicitud.setUsuario(usuario);
     	
     	switch(sservice.insertOne(solicitud)) {
 			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
+			case 2: return new ResponseEntity<Integer>(2, HttpStatus.OK);
 			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
 			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
 			default: return null;
@@ -271,10 +275,25 @@ public class UserController {
     }
     
     @GetMapping("/solicitudes")
-    public ResponseEntity<List<Solicitud>> getSolicitudesDelUsuario(@AuthenticationPrincipal Usuario currentUser) {
+    public ResponseEntity<List<SolicitudDto>> getSolicitudesDelUsuario(@AuthenticationPrincipal Usuario currentUser) {
         String userId = currentUser.getEmail();
         List<Solicitud> solicitudes = sservice.findByUsuario(userId);
-        return ResponseEntity.ok(solicitudes);
+        List<SolicitudDto> solicitudesDto = new ArrayList<>();
+        
+        for (Solicitud solicitud : solicitudes) {
+    		SolicitudDto solicitudDto = new SolicitudDto();
+    		solicitudDto.setIdSolicitud(solicitud.getIdSolicitud());
+    		solicitudDto.setFecha(solicitud.getFecha());
+    		solicitudDto.setArchivo(solicitud.getArchivo());
+    	    solicitudDto.setComentarios(solicitud.getComentarios());
+    	    solicitudDto.setEstado(solicitud.getEstado());
+    	    solicitudDto.setCurriculum(solicitud.getCurriculum());
+    	    solicitudDto.setIdVacante(solicitud.getVacante().getIdVacante());
+    	    solicitudDto.setEmail(solicitud.getUsuario().getEmail());
+    	    solicitudesDto.add(solicitudDto);
+    	}
+        
+        return ResponseEntity.ok(solicitudesDto);
     }
 }
     

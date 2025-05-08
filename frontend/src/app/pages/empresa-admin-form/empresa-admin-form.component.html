@@ -1,0 +1,55 @@
+<section>
+    <h3>{{tipo}} Empresa</h3>
+    <hr>
+    <form class="card shadow p-4" [formGroup]="empresaForm" (ngSubmit)="getDataForm()">
+        <div class="mt-3">
+            <label for="cifEmpresa" class="form-label">CIF</label>
+            <input type="text" id="cifEmpresa" class="form-control" formControlName="cifEmpresa">
+        </div>
+
+        <div class="mt-3">
+            <label for="nombreEmpresa" class="form-label">Nombre empresa</label>
+            <input type="text" id="cifEmpresa" class="form-control" formControlName="nombreEmpresa">
+        </div>
+
+        <div class="mt-3">
+            <label for="direccionEmpresa" class="form-label">Dirección empresa</label>
+            <input type="text" id="cifEmpresa" class="form-control" formControlName="direccionEmpresa">
+        </div>
+
+        <div class="mt-3">
+            <label for="paisEmpresa" class="form-label">País empresa</label>
+            <input type="text" id="cifEmpresa" class="form-control" formControlName="paisEmpresa">
+        </div>
+
+        <div class="mt-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" id="email" class="form-control" formControlName="email">
+        </div>
+    
+        <hr>
+        <h3>Usuario</h3>
+        <div class="mt-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" class="form-control" formControlName="nombre">
+        </div>
+    
+        <div class="mt-3">
+            <label for="apellidos" class="form-label">apellidos</label>
+            <input type="text" id="apellidos" class="form-control" formControlName="apellidos">
+        </div>
+        
+
+        <div class="d-flex gap-2 mt-4">
+            @if(tipo == 'Nuevo'){
+                <input type="submit" value="Guardar" class="btn btn-danger" [disabled]="!empresaForm.valid">
+            }
+            @else {
+                <input type="submit" value="Actualizar" class="btn btn-danger" [disabled]="!empresaForm.valid">
+            }
+            
+            <a [routerLink]="['/empresasAdminList']" class="btn btn-warning">Volver</a>
+        </div>
+
+    </form>
+</section>
