@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SolicitudService } from '../../services/solicitud.service';
 import { ISolicitud } from '../../interfaces/isolicitud';
 import { CommonModule } from '@angular/common';
+import { ISolicitudResponse } from '../../interfaces/isolicitud-response';
 
 @Component({
   selector: 'app-solicitud-detail-empresa',
@@ -17,7 +18,7 @@ export class SolicitudDetailEmpresaComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
-  solicitud!: ISolicitud;
+  solicitud!: ISolicitudResponse;
   error: string = "";
 
   ngOnInit(): void {

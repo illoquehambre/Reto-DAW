@@ -30,5 +30,12 @@ public class VacanteDto implements Serializable{
     private String detalles;
     private Integer idCategoria;
     private Integer idEmpresa;
+
+    //categoria
+    private String nombreCategoria;
+
+    //empresa
+    private String nombreEmpresa;
+    private String pais;
     
 }

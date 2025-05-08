@@ -4,16 +4,17 @@
     }
   
     @if (!error && vacante) {
-      <div class="card p-4">
+      <div class="card mt-4 p-4">
         <h2 class="card-title">{{ vacante.nombre }}</h2>
+        <hr>
+        <p>Empresa: {{ vacante.nombreEmpresa }}</p>
+        <p>Pais: {{ vacante.pais }}</p>
         <p>Descripción: {{ vacante.descripcion }}</p>
         <p>Salario: {{ vacante.salario | currency:'EUR' }}</p>
         <p>Fecha de publicación: {{ vacante.fecha | date:'longDate' }}</p>
-        <p>Estatus: {{ vacante.estatus }}</p>
-        @if(vacante.destacado) {
-            <p class="text-success">🌟 Vacante destacada</p>
-        }
-        <p>Detalles: {{ vacante.detalles }}</p>
+        <p>Requisitos: {{ vacante.detalles }}</p>
+        <p>Categoría: {{ vacante.nombreCategoria }}</p>
+
         <button class="btn btn-primary mt-3" (click)="volver()">Volver</button>
       </div>
     }

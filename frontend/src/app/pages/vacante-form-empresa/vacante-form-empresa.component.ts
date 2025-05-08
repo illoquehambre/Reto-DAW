@@ -5,6 +5,7 @@ import { VacanteService } from '../../services/vacante.service';
 import { EmpresaService } from '../../services/empresa.service';
 import { Estatus } from '../../interfaces/iestatus';
 import { IVacante } from '../../interfaces/ivacante';
+import { IVacanteResponse } from '../../interfaces/ivacante-response';
 
 @Component({
   selector: 'app-vacante-form-empresa',
@@ -47,7 +48,7 @@ export class VacanteFormEmpresaComponent implements OnInit {
     this.ruta.params.subscribe(async (params: any) => {
       if (params.idVacante) {
         this.tipo = "Editar";
-        const vacanteResponse: IVacante = await this.vacanteService.getById(params.idVacante);
+        const vacanteResponse: IVacanteResponse = await this.vacanteService.getById(params.idVacante);
         if (vacanteResponse) {
           this.formVacante.patchValue(vacanteResponse);
         }

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
  import { Injectable, inject } from '@angular/core';
  import { lastValueFrom } from 'rxjs';
  import { ISolicitud } from '../interfaces/isolicitud';
+import { ISolicitudResponse } from '../interfaces/isolicitud-response';
  
  @Injectable({ providedIn: 'root' })
  export class SolicitudService {
@@ -14,12 +15,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
      return lastValueFrom(this.http.get<ISolicitud[]>(`${this.apiUrl}`, this.getAuthorization()));
    }
  
-   getById(idSolicitud: number): Promise<ISolicitud> {
-     return lastValueFrom(this.http.get<ISolicitud>(`${this.apiUrl}/${idSolicitud}`, this.getAuthorization()));
+   getById(idSolicitud: number): Promise<ISolicitudResponse> {
+     return lastValueFrom(this.http.get<ISolicitudResponse>(`${this.apiUrl}/solicitud/${idSolicitud}`, this.getAuthorization()));
    }
  
-   getSolicitudesByVacante(idVacante: number): Promise<ISolicitud[]> {
-     return lastValueFrom(this.http.get<ISolicitud[]>(`${this.apiUrl}/solicitudes/${idVacante}`, this.getAuthorization()));
+   getSolicitudesByVacante(idVacante: number): Promise<ISolicitudResponse[]> {
+     return lastValueFrom(this.http.get<ISolicitudResponse[]>(`${this.apiUrl}/solicitudes/${idVacante}`, this.getAuthorization()));
    }
  
    async putSolicitud(solicitud: ISolicitud): Promise<number> {

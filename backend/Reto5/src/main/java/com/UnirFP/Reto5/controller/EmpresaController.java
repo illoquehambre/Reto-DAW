@@ -126,18 +126,23 @@ public class EmpresaController {
 	@GetMapping("/vacante/{idVacante}")
 	public ResponseEntity<VacanteDto> unaVacante(@PathVariable int idVacante){
 		Vacante vacante = vservice.findById(idVacante);
-		VacanteDto vacanteDto = new VacanteDto(
-				vacante.getIdVacante(),
-			    vacante.getNombre(),
-			    vacante.getDescripcion(),
-			    vacante.getFecha(),
-			    vacante.getSalario(),
-			    vacante.getEstatus(),
-			    vacante.isDestacado(),
-			    vacante.getImagen(),
-			    vacante.getDetalles(),
-			    vacante.getCategoria().getIdCategoria(),
-			    vacante.getEmpresa().getIdEmpresa());
+		VacanteDto vacanteDto = VacanteDto.builder()
+    .idVacante(vacante.getIdVacante())
+    .nombre(vacante.getNombre())
+    .descripcion(vacante.getDescripcion())
+    .fecha(vacante.getFecha())
+    .salario(vacante.getSalario())
+    .estatus(vacante.getEstatus())
+    .destacado(vacante.isDestacado())
+    .imagen(vacante.getImagen())
+    .detalles(vacante.getDetalles())
+    .idCategoria(vacante.getCategoria().getIdCategoria())
+    .idEmpresa(vacante.getEmpresa().getIdEmpresa())
+    .nombreCategoria(vacante.getCategoria().getNombre())
+    .nombreEmpresa(vacante.getEmpresa().getNombreEmpresa())
+    .pais(vacante.getEmpresa().getPais())
+    .build();
+		
 		
 		return new ResponseEntity<VacanteDto>(vacanteDto,HttpStatus.OK);
 	}
@@ -293,20 +298,42 @@ public class EmpresaController {
 	
 	//SOLICITUDES
 	@GetMapping("/solicitud/{idSolicitud}")
-	public ResponseEntity<SolicitudDto> unaSolicitud(@PathVariable int idSolicitud){
-		Solicitud solicitud = sservice.findById(idSolicitud);
-		SolicitudDto solicitudDto = new SolicitudDto(
-				solicitud.getIdSolicitud(),
-				solicitud.getFecha(),
-				solicitud.getArchivo(),
-				solicitud.getComentarios(),
-				solicitud.getEstado(),
-				solicitud.getCurriculum(),
-				solicitud.getVacante().getIdVacante(),
-				solicitud.getUsuario().getEmail());
-		
-		return new ResponseEntity<SolicitudDto>(solicitudDto,HttpStatus.OK);
-	}
+public ResponseEntity<SolicitudDto> unaSolicitud(@PathVariable int idSolicitud) {
+    Solicitud solicitud = sservice.findById(idSolicitud);
+
+    if (solicitud == null) {
+        return ResponseEntity.notFound().build();
+    }
+
+    SolicitudDto solicitudDto = SolicitudDto.builder()
+        .idSolicitud(solicitud.getIdSolicitud())
+        .fecha(solicitud.getFecha())
+        .archivo(solicitud.getArchivo())
+        .comentarios(solicitud.getComentarios())
+        .estado(solicitud.getEstado())
+        .curriculum(solicitud.getCurriculum())
+        .idVacante(solicitud.getVacante().getIdVacante())
+        .email(solicitud.getUsuario().getEmail())
+
+        //vacante
+        .nombreVacante(solicitud.getVacante().getNombre())
+        .descripcionVacante(solicitud.getVacante().getDescripcion())
+        .salarioVacante(String.valueOf(solicitud.getVacante().getSalario())) // Convertimos Double a String si es necesario
+
+        //usuario
+        .nombreUsuario(solicitud.getUsuario().getNombre())
+        .apellidoUsuario(solicitud.getUsuario().getApellidos()) // "Apellidos" en la entidad Usuario
+        .emailUsuario(solicitud.getUsuario().getEmail())
+
+        // empresa
+        .nombreEmpresa(solicitud.getVacante().getEmpresa().getNombreEmpresa())
+        .paisEmpresa(solicitud.getVacante().getEmpresa().getPais())
+        .build();
+
+    return ResponseEntity.ok(solicitudDto);
+}
+
+
 
 	
 	@GetMapping("/solicitudes")

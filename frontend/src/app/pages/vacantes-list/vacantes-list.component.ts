@@ -4,6 +4,7 @@ import { VacanteService } from '../../services/vacante.service';
 import { IVacante } from '../../interfaces/ivacante';
 import { RouterModule } from '@angular/router';
 import { VacanteCardComponent } from '../../components/vacante-card/vacante-card.component';
+import { IVacanteResponse } from '../../interfaces/ivacante-response';
 
 @Component({
   selector: 'app-vacantes-list',
@@ -16,7 +17,7 @@ export class VacantesListComponent implements OnInit {
 
   private vacanteService = inject(VacanteService);
 
-  vacantes: IVacante[] = [];
+  vacantes: IVacanteResponse[] = [];
   loading = true;
   error: string | null = null;
 

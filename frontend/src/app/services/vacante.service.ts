@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { IVacante } from '../interfaces/ivacante';
+import { IVacanteResponse } from '../interfaces/ivacante-response';
 
 @Injectable({ providedIn: 'root' })
 export class VacanteService {
@@ -20,23 +21,23 @@ export class VacanteService {
     return lastValueFrom(this.http.get<IVacante[]>(this.apiUrl+'/vacantes', { headers }));
   }
 
-  getVacantesByEmpresa(idEmpresa: number): Promise<IVacante[]> {
+  getVacantesByEmpresa(idEmpresa: number): Promise<IVacanteResponse[]> {
     const token = localStorage.getItem('accessToken') || '';
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     });
   
-    return lastValueFrom(this.http.get<IVacante[]>(`${this.apiUrl}/vacantesEmpresa/${idEmpresa}`, { headers }));
+    return lastValueFrom(this.http.get<IVacanteResponse[]>(`${this.apiUrl}/vacantesEmpresa/${idEmpresa}`, { headers }));
   }
 
-  getById(id_vacante: number): Promise<IVacante>{
+  getById(id_vacante: number): Promise<IVacanteResponse>{
     const token = localStorage.getItem('accessToken') || '';
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`
     });
-    return lastValueFrom(this.http.get<IVacante>(this.apiUrl+"/vacante/"+id_vacante, { headers }));
+    return lastValueFrom(this.http.get<IVacanteResponse>(this.apiUrl+"/vacante/"+id_vacante, { headers }));
   }
 
   async insert(vacante: IVacante): Promise<number> {

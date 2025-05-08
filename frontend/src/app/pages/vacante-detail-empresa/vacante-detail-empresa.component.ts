@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { VacanteService } from '../../services/vacante.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IVacante } from '../../interfaces/ivacante';
+import { IVacanteResponse } from '../../interfaces/ivacante-response';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -17,13 +17,13 @@ export class VacanteDetailEmpresaComponent {
   private ruta = inject(ActivatedRoute);
   private router = inject(Router);
 
-  vacante!: IVacante;
+  vacante!: IVacanteResponse;
   error: string | null = null;
 
   async ngOnInit(): Promise<void> {
     const id = this.ruta.snapshot.params['id'];
     try {
-      this.vacante = await this.vacanteService.findById(id);
+      this.vacante = await this.vacanteService.getById(id);
   
       
     } catch (err) {
@@ -33,6 +33,6 @@ export class VacanteDetailEmpresaComponent {
    
 
   volver(): void {
-    this.router.navigate(['/dashboardEmpresa']);
+    this.router.navigate(['/vacantesList']);
   }
 }

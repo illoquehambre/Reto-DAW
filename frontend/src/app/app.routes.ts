@@ -17,8 +17,7 @@ import { VacantesListComponent } from './pages/vacantes-list/vacantes-list.compo
 import { SolicitudFormCliComponent } from './pages/solicitud-form-cli/solicitud-form-cli.component';
 import { HomeComponentComponent } from './pages/home-component/home-component.component';
 import { SolicitudListEmpresaComponent } from './pages/solicitud-list-empresa/solicitud-list-empresa.component';
-import { VacanteDetailEmpresaComponent } from './pages/vacante-detail-empresa/vacante-detail-empresa.component';
-import { PerfilEmpresaComponent } from './pages/perfil-empresa/perfil-empresa.component';
+import { SolicitudDetailEmpresaComponent } from './pages/solicitud-detail-empresa/solicitud-detail-empresa.component';
 
 export const routes: Routes = [
 
@@ -78,7 +77,12 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         data: { rol: ['EMPRESA'] },
       },
-     
+      {
+        path: '',
+        component: VacantesListComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['EMPRESA'] },
+      },
     ]
   },
 
@@ -86,20 +90,6 @@ export const routes: Routes = [
   {
     path: 'vacanteNew',
     component: VacanteFormEmpresaComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['EMPRESA'] },
-  },
-
-  {
-    path: 'editarVacante/:idVacante',
-    component: VacanteFormEmpresaComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['EMPRESA'] },
-  },
-
-  {
-    path: 'vacante/:id',
-    component: VacanteDetailEmpresaComponent,
     canActivate: [AuthGuard],
     data: { rol: ['EMPRESA'] },
   },
@@ -172,13 +162,6 @@ export const routes: Routes = [
 
   /** Empresas **/
   {
-    path: 'perfilEmpresa',
-    component: PerfilEmpresaComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['EMPRESA'] },
-  },
-
-  {
     path: 'empresasList',
     component: EmpresaListComponent,
     canActivate: [AuthGuard],
@@ -191,6 +174,13 @@ export const routes: Routes = [
     component: SolicitudFormCliComponent,
     canActivate: [AuthGuard],
     data: { rol: ['CLIENTE'] },
+  },
+
+  {
+    path: 'solicitudDetail/:idSolicitud',
+    component: SolicitudDetailEmpresaComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['EMPRESA'] },
   },
 
   {

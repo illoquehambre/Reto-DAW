@@ -3,7 +3,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="text-center">Detalles de la Solicitud</h3>
+                    <h3 class="text-center">Detalles de la solicitud</h3>
                 </div>
                 <div class="card-body">
                     @if (error) {
@@ -11,11 +11,19 @@
                     }
 
                     @if (!error && solicitud) {
-                        <h2 class="card-title">{{ solicitud.nombreCandidato }}</h2>
-                        <p>Email: {{ solicitud.email }}</p>
-                        <p>Teléfono: {{ solicitud.telefono }}</p>
+                        <p>Nombre: {{ solicitud.nombreVacante }}</p>
+                        <p>Descripcion: {{ solicitud.descripcionVacante }}</p>
+                        <p>Salario: {{ solicitud.salarioVacante }}</p>
+                        <hr>
+                        <p>Nombre: {{ solicitud.nombreUsuario }}</p>
+                        <p>Apellido: {{ solicitud.apellidoUsuario }}</p>
+                        <p>Email: {{ solicitud.emailUsuario }}</p>
+
+
                         <p>Fecha de solicitud: {{ solicitud.fecha | date:'longDate' }}</p>
-                        <p>Estatus: {{ solicitud.estatus }}</p>
+
+                        
+
 
                         <div class="d-grid gap-2">
                             <button type="button" class="btn btn-primary mt-3" (click)="volver()">Volver</button>
