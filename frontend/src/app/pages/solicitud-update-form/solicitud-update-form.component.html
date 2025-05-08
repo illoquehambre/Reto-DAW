@@ -1,0 +1,33 @@
+<div class="modal fade show d-block bg-dark bg-opacity-50" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="modal-header">
+            <h5 class="modal-title">Editar Solicitud</h5>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label>Archivo</label>
+              <input type="text" formControlName="archivo" class="form-control" />
+            </div>
+  
+            <div class="mb-3">
+              <label>Curriculum</label>
+              <input type="text" formControlName="cv" class="form-control" />
+            </div>
+  
+            <div class="mb-3">
+              <label>Comentarios</label>
+              <textarea formControlName="comentarios" class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+  
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" (click)="guardar.emit(null)">Cancelar</button>
+            <button class="btn btn-success" type="submit">Guardar cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

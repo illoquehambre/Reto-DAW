@@ -1,11 +1,13 @@
 package com.UnirFP.Reto5.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.UnirFP.Reto5.model.Solicitud;
+import com.UnirFP.Reto5.model.dto.SolicitudUpdateDto;
 import com.UnirFP.Reto5.repository.SolicitudRepository;
 import com.UnirFP.Reto5.repository.EmpresaRepository;
 
@@ -53,10 +55,33 @@ public class SolicitudServiceImpl implements SolicitudService{
 	}
 
 	@Override
-	public int updateOne(Solicitud entidad) {
+	public int updateOne(SolicitudUpdateDto entidad) {
 		try {
-			if (srepo.existsById(entidad.getIdSolicitud())) {
-				srepo.save(entidad);
+	        Optional<Solicitud> optional = srepo.findById(entidad.getIdSolicitud());
+	        if (optional.isPresent()) {
+	            Solicitud solicitud = optional.get();
+
+	            solicitud.setArchivo(entidad.getArchivo());
+	            solicitud.setComentarios(entidad.getComentarios());
+	            solicitud.setCurriculum(entidad.getCurriculum());
+	           
+	            srepo.save(solicitud);
+	            return 1;
+	        } else {
+	            return 0;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return -1;
+	    }
+	}
+
+
+	@Override
+	public int deleteOne(Integer clavePk) {
+		try {
+			if (srepo.existsById(clavePk)) {
+				srepo.deleteById(clavePk);
 				return 1;
 			}else {
 				return 0;
@@ -69,10 +94,10 @@ public class SolicitudServiceImpl implements SolicitudService{
 	}
 
 	@Override
-	public int deleteOne(Integer clavePk) {
+	public int updateOne(Solicitud entidad) {
 		try {
-			if (srepo.existsById(clavePk)) {
-				srepo.deleteById(clavePk);
+			if (srepo.existsById(entidad.getIdSolicitud())) {
+				srepo.save(entidad);
 				return 1;
 			}else {
 				return 0;

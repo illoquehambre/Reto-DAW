@@ -8,6 +8,7 @@ import com.UnirFP.Reto5.model.Vacante;
 import com.UnirFP.Reto5.model.dto.EmpresaDto;
 import com.UnirFP.Reto5.model.dto.LoginRequest;
 import com.UnirFP.Reto5.model.dto.SolicitudDto;
+import com.UnirFP.Reto5.model.dto.SolicitudUpdateDto;
 import com.UnirFP.Reto5.model.dto.UsuarioResponseDto;
 import com.UnirFP.Reto5.model.dto.VacanteDto;
 import com.UnirFP.Reto5.service.CategoriaService;
@@ -30,13 +31,16 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -240,4 +244,38 @@ public class UserController {
     	}
     }
     
+ 
+    @PutMapping("/solicitud")
+    public ResponseEntity<Integer> updateSolicitud(@RequestBody SolicitudUpdateDto solicitud) {
+    	 System.out.println("Recibido en backend: " + solicitud);
+    	 System.out.println("== PUT recibido con ID: " + solicitud.getIdSolicitud());
+        switch(sservice.updateOne(solicitud)) {
+        case 1: return new ResponseEntity<Integer>(1, HttpStatus.OK);
+		case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
+		case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
+		default: return null;
+        }
+        
+    }
+
+    
+    @DeleteMapping("solicitud/{id}")
+    public ResponseEntity<Integer> deleteSolicitud(@PathVariable Integer id) {
+        switch(sservice.deleteOne(id)) {
+        case 1: return new ResponseEntity<Integer>(1, HttpStatus.OK);
+      		case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
+      		case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
+      		default: return null;
+        }
+       
+    }
+    
+    @GetMapping("/solicitudes")
+    public ResponseEntity<List<Solicitud>> getSolicitudesDelUsuario(@AuthenticationPrincipal Usuario currentUser) {
+        String userId = currentUser.getEmail();
+        List<Solicitud> solicitudes = sservice.findByUsuario(userId);
+        return ResponseEntity.ok(solicitudes);
+    }
 }
+    
+
