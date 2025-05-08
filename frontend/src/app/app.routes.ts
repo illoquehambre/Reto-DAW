@@ -39,7 +39,8 @@ export const routes: Routes = [
     children: [
       { path: 'usersList', component: UserListComponent },
       { path: 'categoriasList', component: CategoriaListComponent },
-      { path: 'empresasAdminList', component: EmpresaAdminListComponent }
+      { path: 'empresasAdminList', component: EmpresaAdminListComponent },
+      { path: '', component: EmpresaAdminListComponent }
     ]
   },
   {
