@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SidebarEmpresaComponent } from "../../components/sidebar-empresa/sidebar-empresa.component";
 

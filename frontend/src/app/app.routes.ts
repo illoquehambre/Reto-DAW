@@ -10,7 +10,6 @@ import { UserListComponent } from './pages/user-list/user-list.component';
 import { UserFormComponent } from './pages/user-form/user-form.component';
 import { EmpresaListComponent } from './pages/empresa-list/empresa-list.component';
 import { AuthGuard } from './auth.guard';
-import { HomeComponentComponent } from './pages/home-component/home-component.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { SignUpComponent } from './pages/signup/signup.component';
 import { VacanteFormEmpresaComponent } from './pages/vacante-form-empresa/vacante-form-empresa.component';
@@ -22,6 +21,7 @@ import { SolicitudListEmpresaComponent } from './pages/solicitud-list-empresa/so
 import { SolicitudesListClienteComponent } from './pages/solicitudes-list-cliente/solicitudes-list-cliente.component';
 import { EmpresaAdminListComponent } from './pages/empresa-admin-list/empresa-admin-list.component';
 import { EmpresaAdminFormComponent } from './pages/empresa-admin-form/empresa-admin-form.component';
+import { VacanteDetailComponent } from './pages/vacante-detail/vacante-detail.component';
 
 export const routes: Routes = [
 
