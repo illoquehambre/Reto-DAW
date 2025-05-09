@@ -84,6 +84,20 @@ public class AdministradorController {
 		return new ResponseEntity<EmpresaDto>(empresaDto,HttpStatus.OK);
 	}
 	
+	@GetMapping("/empresaEmail/{email}")
+	public ResponseEntity<EmpresaDto> unaEmpresaPorEmail(@PathVariable String email){
+		Empresa empresa = eservice.findByEmail(email);
+		EmpresaDto empresaDto = new EmpresaDto(
+				empresa.getIdEmpresa(),
+				empresa.getCif(),
+				empresa.getNombreEmpresa(),
+				empresa.getDireccionFiscal(),
+				empresa.getPais(),
+				empresa.getUsuario().getEmail());
+		//return new ResponseEntity<Empresa>(eservice.findById(idEmpresa),HttpStatus.OK);
+		return new ResponseEntity<EmpresaDto>(empresaDto,HttpStatus.OK);
+	}
+	
 	@PostMapping("/empresa")
 	public ResponseEntity<Integer> altaEmpresa(@RequestBody EmpresaDto empresaDto){
 		
@@ -222,13 +236,13 @@ public class AdministradorController {
 	
 	@PutMapping("/usuario")
 	public ResponseEntity<Integer> modificarUsuario(@RequestBody UsuarioCreacionDto usuarioDto){
-		
+		System.out.println(usuarioDto);
 		Usuario usuario = uservice.findByEmail(usuarioDto.getEmail());
 		usuario.setNombre(usuarioDto.getNombre());
 		usuario.setApellidos(usuarioDto.getApellidos());
-		usuario.setPassword(usuarioDto.getPassword());
+		//usuario.setPassword(usuarioDto.getPassword());
 		usuario.setRol(usuarioDto.getRol());
-		
+		System.out.println(usuario);
 		switch(uservice.updateOne(usuario)) {
 			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
 			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);

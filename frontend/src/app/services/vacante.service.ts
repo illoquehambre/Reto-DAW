@@ -29,7 +29,13 @@ export class VacanteService {
   }
 
   async insert(vacante: IVacante): Promise<number> {
+<<<<<<< HEAD
     return lastValueFrom(this.http.post<number>(`${this.apiUrl}/nuevaVacante`, vacante, this.getAuthoritation()));
+=======
+    console.log("Enviando solicitud con token...");
+    return await lastValueFrom(
+        this.http.post<number>(this.apiUrl+"/nuevaVacante",vacante,this.getAuthoritation()));
+>>>>>>> origin/adri-versionDefinitiva
   }
 
   findById(id: number): Promise<IVacante> {

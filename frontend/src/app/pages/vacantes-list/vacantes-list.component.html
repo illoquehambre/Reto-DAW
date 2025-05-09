@@ -1,7 +1,14 @@
 
-    <div class="row gy-4">
-        @for (vacante of vacantes; track vacante.idVacante) {
-      <app-vacante-card [vacante]="vacante"></app-vacante-card>
-        }
+  @if (error) {
+    <div class="alert alert-danger text-center" role="alert">
+      {{ error }}
+    </div>
+  }
+
+  @if (!loading && !error) {
+    <div class="row justify-content-center g-3">
+      @for (vacante of vacantes; track vacante.idVacante) {
+        <app-vacante-card [vacante]="vacante"></app-vacante-card>
+      }        
     </div>
 
