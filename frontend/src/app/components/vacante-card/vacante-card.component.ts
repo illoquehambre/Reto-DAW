@@ -11,8 +11,8 @@ import { VacanteService } from '../../services/vacante.service';
   templateUrl: './vacante-card.component.html',
   styleUrls: ['./vacante-card.component.css']
 })
-export class VacanteCardComponent {
 
+export class VacanteCardComponent {
   router = inject(Router);
   vacanteService = inject(VacanteService);
 
@@ -20,16 +20,19 @@ export class VacanteCardComponent {
 
   async cancelarVacante() {
     if (!this.vacante.idVacante) return;
+    
+    if (!confirm('¿Estás seguro de cancelar esta vacante?')) return;
 
-    this.vacanteService.delete(this.vacante.idVacante)
-      .then(response => {
-        if (response === 1) {
-          alert("Vacante cancelada");
-          this.vacante.estatus = "CANCELADA"; //Para que la vacante cancelada quede oculta sin tener que actualizar
-        } else {
-          alert("Error al cancelar la vacante");
-        }
-      });
+    try {
+      const response = await this.vacanteService.delete(this.vacante.idVacante);
+      if (response === 1) {
+        this.vacante.estatus = "CANCELADA";
+      } else {
+        alert("Error al cancelar la vacante");
+      }
+    } catch (error) {
+      alert("Ocurrió un error al procesar la solicitud");
+      console.error(error);
+    }
   }
 }
-

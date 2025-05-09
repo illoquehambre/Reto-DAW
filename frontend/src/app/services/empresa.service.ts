@@ -40,7 +40,7 @@ export class EmpresaService {
   }
 
   update(empresa: IEmpresa): Observable<number> {
-    return this.httpClient.put<number>(this.baseUrl+"/empresa", empresa, this.getAuthoritation());
+    return this.httpClient.put<number>(`${this.baseUrl}/`, empresa, this.getAuthoritation());
   }
 
   delete(id: number): Observable<void> {
@@ -56,9 +56,10 @@ export class EmpresaService {
     return { headers };
   }
 
-  getPerfilEmpresa(idEmpresa: number): Promise<IEmpresa> {
-    return lastValueFrom(this.httpClient.get<IEmpresa>(`${this.baseUrl}/${idEmpresa}`, this.getAuthoritation()));
+  getPerfilEmpresa(): Promise<IEmpresa> {
+    return lastValueFrom(this.httpClient.get<IEmpresa>(`${this.baseUrl}/me`, this.getAuthoritation()));
   }
+
 
 
 async findEmpresaUsuario(): Promise<IEmpresa> {

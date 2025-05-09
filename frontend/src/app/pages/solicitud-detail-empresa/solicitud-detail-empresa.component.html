@@ -1,36 +1,113 @@
 <div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center">Detalles de la solicitud</h3>
+      <div class="col-md-8">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h3 class="card-title text-center mb-0">Detalles de la Solicitud</h3>
+          </div>
+          
+          <div class="card-body">
+            @if (error) {
+              <div class="alert alert-danger text-center">{{ error }}</div>
+            }
+  
+            @if (!error && solicitud) {
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Vacante:</label>
+                    <div class="p-2 bg-light rounded">
+                      {{ solicitud.nombreVacante }}
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Empresa:</label>
+                    <div class="p-2 bg-light rounded">
+                      {{ solicitud.nombreEmpresa }}
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Descripción:</label>
+                    <div class="p-2 bg-light rounded">
+                      {{ solicitud.descripcionVacante }}
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Salario:</label>
+                    <div class="p-2 bg-light rounded">
+                      {{ solicitud.salarioVacante | currency:'EUR' }}
+                    </div>
+                  </div>
                 </div>
-                <div class="card-body">
-                    @if (error) {
-                        <div class="alert alert-danger text-center">{{ error }}</div>
-                    }
-
-                    @if (!error && solicitud) {
-                        <p>Nombre: {{ solicitud.nombreVacante }}</p>
-                        <p>Descripcion: {{ solicitud.descripcionVacante }}</p>
-                        <p>Salario: {{ solicitud.salarioVacante }}</p>
-                        <hr>
-                        <p>Nombre: {{ solicitud.nombreUsuario }}</p>
-                        <p>Apellido: {{ solicitud.apellidoUsuario }}</p>
-                        <p>Email: {{ solicitud.emailUsuario }}</p>
-
-
-                        <p>Fecha de solicitud: {{ solicitud.fecha | date:'longDate' }}</p>
-
-                        
-
-
-                        <div class="d-grid gap-2">
-                            <button type="button" class="btn btn-primary mt-3" (click)="volver()">Volver</button>
-                        </div>
-                    }
+                
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Solicitante:</label>
+                    <div class="p-2 bg-light rounded">
+                      {{ solicitud.nombreUsuario }} {{ solicitud.apellidoUsuario }}
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Email:</label>
+                    <div class="p-2 bg-light rounded">
+                      {{ solicitud.emailUsuario }}
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">ID Solicitud:</label>
+                    <div class="p-2 bg-light rounded">
+                      {{ solicitud.idSolicitud }}
+                    </div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label class="form-label fw-bold">Fecha:</label>
+                    <div class="p-2 bg-light rounded">
+                      {{ solicitud.fecha | date:'longDate' }}
+                    </div>
+                  </div>
                 </div>
-            </div>
+              </div>
+  
+              <div class="mb-3">
+                <label class="form-label fw-bold">Estado:</label>
+                @if (solicitud.estado === 1) {
+                  <div class="alert alert-success text-center mb-0">
+                    Asignada
+                  </div>
+                } @else if (solicitud.estado === 0) {
+                  <div class="alert alert-warning text-center mb-0">
+                    En espera
+                  </div>
+                } @else if (solicitud.estado === -1) {
+                  <div class="alert alert-danger text-center mb-0">
+                    Rechazada
+                  </div>
+                }
+              </div>
+  
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                <button type="button" class="btn btn-success me-md-2" (click)="asignarSolicitud(1)">
+                  Asignar
+                </button>
+                <button type="button" class="btn btn-warning me-md-2" (click)="asignarSolicitud(0)">
+                  En espera
+                </button>
+                <button type="button" class="btn btn-danger me-md-2" (click)="asignarSolicitud(-1)">
+                  Rechazar
+                </button>
+                <button type="button" class="btn btn-primary" (click)="volver()">
+                  Volver
+                </button>
+              </div>
+            }
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>

@@ -11,9 +11,9 @@
                     <p class="text-success"> Vacante destacada</p>
                 }
 
-                <a [routerLink]="['/vacante', vacante.idVacante]" class="me-1 btn btn-primary">Ver detalles</a>
-                <a [routerLink]="['/solicitudes', vacante.idVacante]" class="me-1 btn btn-warning">Ver solicitudes</a>
-                <a [routerLink]="['/editarVacante', vacante.idVacante]" class="me-1 btn btn-info">Editar</a>
+                <a [routerLink]="['/dashboardEmpresa/vacanteDetail', vacante.idVacante]" class="me-1 btn btn-primary">Ver detalles</a>
+                <a [routerLink]="['/dashboardEmpresa/solicitudes', vacante.idVacante]" class="me-1 btn btn-warning">Ver solicitudes</a>
+                <a [routerLink]="['/dashboardEmpresa/editarVacante', vacante.idVacante]" class="me-1 btn btn-info">Editar</a>
 
                 <button type="button" class="btn btn-danger" (click)="cancelarVacante()">Cancelar Vacante</button>
                 

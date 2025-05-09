@@ -406,6 +406,24 @@ public ResponseEntity<SolicitudDto> unaSolicitud(@PathVariable int idSolicitud) 
 			default: return null;
 		}
 	}
+
+	@PutMapping("/editarSolicitud/{idSolicitud}")
+	public ResponseEntity<Integer> editarSolicitud(@PathVariable Integer idSolicitud, @RequestBody SolicitudDto solicitudDto) { 
+
+    Solicitud solicitud = sservice.findById(idSolicitud);
+    	if (solicitud == null) {
+        	return new ResponseEntity<>(0, HttpStatus.NOT_FOUND);
+    	}
+
+    solicitud.setEstado(solicitudDto.getEstado());
+
+    	switch (sservice.updateOne(solicitud)) {
+        	case 1: return new ResponseEntity<>(1, HttpStatus.OK);
+        	case 0: return new ResponseEntity<>(0, HttpStatus.NOT_FOUND);
+        	case -1: return new ResponseEntity<>(-1, HttpStatus.CONFLICT);
+        	default: return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+	}
 	
 	
 	@DeleteMapping("/eliminarSolicitud/{idSolicitud}")

@@ -26,6 +26,25 @@ import { ISolicitudResponse } from '../interfaces/isolicitud-response';
    async putSolicitud(solicitud: ISolicitud): Promise<number> {
      return lastValueFrom(this.http.put<number>(`${this.apiUrl}/editarSolicitud`, solicitud, this.getAuthorization()));
    }
+   
+   async updateEstadoSolicitud(idSolicitud: number, estado: number): Promise<number> {
+    const url = `${this.apiUrl}/editarSolicitud/${idSolicitud}`;
+    const body = { estado };
+  
+    try {
+      return await lastValueFrom(
+        this.http.put<number>(url, body, {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+          })
+        })
+      );
+    } catch (error) {
+      throw error;
+    }
+  }
+  
  
    async deleteSolicitud(idSolicitud: number): Promise<number> {
      return lastValueFrom(this.http.delete<number>(`${this.apiUrl}/eliminarSolicitud/${idSolicitud}`, this.getAuthorization()));

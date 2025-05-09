@@ -1,21 +1,77 @@
-<div class="container">
-    @if (error) {
-      <div class="alert alert-danger text-center">{{ error }}</div>
-    }
-  
-    @if (!error && vacante) {
-      <div class="card mt-4 p-4">
-        <h2 class="card-title">{{ vacante.nombre }}</h2>
-        <hr>
-        <p>Empresa: {{ vacante.nombreEmpresa }}</p>
-        <p>Pais: {{ vacante.pais }}</p>
-        <p>Descripción: {{ vacante.descripcion }}</p>
-        <p>Salario: {{ vacante.salario | currency:'EUR' }}</p>
-        <p>Fecha de publicación: {{ vacante.fecha | date:'longDate' }}</p>
-        <p>Requisitos: {{ vacante.detalles }}</p>
-        <p>Categoría: {{ vacante.nombreCategoria }}</p>
+<div class="container mt-4">
+  @if (error) {
+    <div class="alert alert-danger text-center">
+      {{ error }}
+      <button class="btn btn-outline-primary mt-2" (click)="volver()">Volver</button>
+    </div>
+  }
 
-        <button class="btn btn-primary mt-3" (click)="volver()">Volver</button>
+  @if (vacante) {
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h3 class="card-title mb-0">{{ vacante.nombre }}</h3>
       </div>
-    }
-  </div>
+      
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Empresa:</label>
+              <div class="p-2 bg-light rounded">
+                {{ vacante.nombreEmpresa || 'No especificado' }}
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label fw-bold">País:</label>
+              <div class="p-2 bg-light rounded">
+                {{ vacante.pais || 'No especificado' }}
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label fw-bold">Salario:</label>
+              <div class="p-2 bg-light rounded">
+                {{ vacante.salario | currency:'EUR' }}
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label fw-bold">Fecha:</label>
+              <div class="p-2 bg-light rounded">
+                {{ vacante.fecha | date:'longDate' }}
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label fw-bold">Categoría:</label>
+              <div class="p-2 bg-light rounded">
+                {{ vacante.nombreCategoria || 'No especificada' }}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold">Descripción:</label>
+          <div class="p-3 bg-light rounded">
+            {{ vacante.descripcion }}
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <label class="form-label fw-bold">Requisitos:</label>
+          <div class="p-3 bg-light rounded">
+            {{ vacante.detalles || 'No especificados' }}
+          </div>
+        </div>
+        
+        <div class="d-flex justify-content-end mt-4">
+          <button class="btn btn-primary" (click)="volver()">Volver</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

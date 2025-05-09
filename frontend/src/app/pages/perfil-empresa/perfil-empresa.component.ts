@@ -1,35 +1,46 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { EmpresaService } from '../../services/empresa.service';
+import { Router } from '@angular/router';
 import { IEmpresa } from '../../interfaces/iempresa';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-perfil-empresa',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './perfil-empresa.component.html',
   styleUrls: ['./perfil-empresa.component.css']
 })
 export class PerfilEmpresaComponent {
+  
+  empresa?: IEmpresa;
+  error = '';
 
   private empresaService = inject(EmpresaService);
-  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
-  empresa?: IEmpresa;
-  error = "";
-
-
-  ngOnInit(): void {
-    const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-    const idEmpresa = usuario?.idEmpresa || null;
-  
-    if (!idEmpresa) {
-      this.error = "ID de empresa no válido.";
-      return;
-    }
-  
-    this.empresaService.getPerfilEmpresa(idEmpresa)
-      .then(response => this.empresa = response)
-      .catch(() => this.error = "Error al cargar el perfil de la empresa");
+  async ngOnInit(): Promise<void> {
+    await this.cargarPerfil();
   }
-  
+
+  async cargarPerfil(): Promise<void> {
+    try {
+      
+      this.empresa = await this.empresaService.getPerfilEmpresa();
+    } catch (error) {
+      console.error('Error cargando perfil:', error);
+      this.error = 'Error al cargar el perfil de la empresa';
+    }
+  }
+
+  editarPerfil(): void {
+    if (this.empresa) {
+      this.router.navigate(['/dashboardEmpresa/perfilForm'], {
+        state: { 
+          empresa: this.empresa,
+          modoEdicion: true
+        }
+      });
+    }
+  }
 }

@@ -18,177 +18,69 @@ import { SolicitudFormCliComponent } from './pages/solicitud-form-cli/solicitud-
 import { HomeComponentComponent } from './pages/home-component/home-component.component';
 import { SolicitudListEmpresaComponent } from './pages/solicitud-list-empresa/solicitud-list-empresa.component';
 import { SolicitudDetailEmpresaComponent } from './pages/solicitud-detail-empresa/solicitud-detail-empresa.component';
+import { VacanteDetailEmpresaComponent } from './pages/vacante-detail-empresa/vacante-detail-empresa.component';
+import { PerfilEmpresaComponent } from './pages/perfil-empresa/perfil-empresa.component';
+import { PerfilFormComponent } from './pages/perfil-form/perfil-form.component';
 
 export const routes: Routes = [
-
-  /** Rutas generales **/
-  { path: '', pathMatch: 'full', component:HomeComponentComponent },
-  { path: 'home', pathMatch: 'full', component:HomeComponentComponent },
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  /** Rutas públicas **/
+  { path: '', pathMatch: 'full', component: HomeComponentComponent },
+  { path: 'home', component: HomeComponentComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
 
-  /** Panel de usuario **/
+  /** Panel de Administrador **/
   {
     path: 'dashboardAdmin',
     component: DashboardAdminComponent,
     canActivate: [AuthGuard],
     data: { rol: ['ADMON'] },
     children: [
+      { path: '', redirectTo: 'usersList', pathMatch: 'full' },
       { path: 'usersList', component: UserListComponent },
+      { path: 'userNew', component: UserFormComponent },
+      { path: 'userUpdate/:email', component: UserFormComponent },
       { path: 'categoriasList', component: CategoriaListComponent },
+      { path: 'categoriaNew', component: CategoriaFormComponent },
+      { path: 'categoriaUpdate/:id_categoria', component: CategoriaFormComponent },
+      { path: 'empresasList', component: EmpresaListComponent }
     ]
   },
+
+  /** Panel de Cliente **/
   {
     path: 'dashboardCliente',
     component: DashboardClienteComponent,
     canActivate: [AuthGuard],
     data: { rol: ['CLIENTE'] },
     children: [
-      {
-        path: 'vacantesListCli',
-        component: VacantesListClienteComponent,
-        canActivate: [AuthGuard],
-        data: { rol: ['CLIENTE'] },
-      },
-      {
-        path: '',
-        component: VacantesListClienteComponent,
-        canActivate: [AuthGuard],
-        data: { rol: ['CLIENTE'] },
-      }
+      { path: '', redirectTo: 'vacantesListCli', pathMatch: 'full' },
+      { path: 'vacantesListCli', component: VacantesListClienteComponent },
+      { path: 'vacanteDetalle/:id_vacante', component: VacanteFormComponent },
+      { path: 'solicitudNew', component: SolicitudFormCliComponent }
     ]
   },
+
+  /** Panel de Empresa **/
   {
     path: 'dashboardEmpresa',
     component: DashboardEmpresaComponent,
     canActivate: [AuthGuard],
     data: { rol: ['EMPRESA'] },
     children: [
-      {
-        path: 'vacanteNew',
-        component: VacanteFormEmpresaComponent,
-        canActivate: [AuthGuard],
-        data: { rol: ['EMPRESA'] },
-      },
-      {
-        path: 'vacantesList',
-        component: VacantesListComponent,
-        canActivate: [AuthGuard],
-        data: { rol: ['EMPRESA'] },
-      },
-      {
-        path: '',
-        component: VacantesListComponent,
-        canActivate: [AuthGuard],
-        data: { rol: ['EMPRESA'] },
-      },
+      { path: '', redirectTo: 'vacantesList', pathMatch: 'full' },
+      { path: 'vacantesList', component: VacantesListComponent },
+      { path: 'vacanteNew', component: VacanteFormEmpresaComponent },
+      { path: 'vacanteDetail/:idVacante', component: VacanteDetailEmpresaComponent },
+      { path: 'editarVacante/:idVacante', component: VacanteFormEmpresaComponent },
+      { path: 'solicitudes/:idVacante', component: SolicitudListEmpresaComponent },
+      { path: 'solicitudDetail/:idSolicitud', component: SolicitudDetailEmpresaComponent },
+      { path: 'perfilEmpresa', component: PerfilEmpresaComponent },
+      { path: 'perfilForm', component: PerfilFormComponent }
+      
+
     ]
   },
 
-  /** Vacantes **/
-  {
-    path: 'vacanteNew',
-    component: VacanteFormEmpresaComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['EMPRESA'] },
-  },
-
-  {
-    path: 'vacantesList',
-    component: VacantesListComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['EMPRESA'] },
-  },
-  
-  {
-    path: 'vacantesListCli',
-    component: VacantesListClienteComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['CLIENTE'] },
-  },
-
-  {
-    path: 'vacanteDetalle/:id_vacante',
-    component: VacanteFormComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['CLIENTE'] },
-  },
-
-  /** Categorias **/
-
-  {
-    path: 'categoriaNew',
-    component: CategoriaFormComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['ADMON'] },
-  },
-
-  {
-    path: 'categoriasList',
-    component: CategoriaListComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['ADMON'] },
-  },
-  
-  {
-    path: 'categoriaUpdate/:id_categoria',
-    component: CategoriaFormComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['ADMON'] },
-  },
-
-  /** Usuarios **/
-  {
-    path: 'userNew',
-    component: UserFormComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['ADMON'] },
-  },
-
-  {
-    path: 'usersList',
-    component: UserListComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['ADMON'] },
-  },
-  
-  {
-    path: 'userUpdate/:email',
-    component: UserFormComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['ADMON'] },
-  },
-
-  /** Empresas **/
-  {
-    path: 'empresasList',
-    component: EmpresaListComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['ADMON'] },
-  },
-
-  /** Solicitudes **/
-  {
-    path: 'solicitudNew',
-    component: SolicitudFormCliComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['CLIENTE'] },
-  },
-
-  {
-    path: 'solicitudDetail/:idSolicitud',
-    component: SolicitudDetailEmpresaComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['EMPRESA'] },
-  },
-
-  {
-    path: 'solicitudes/:idVacante',
-    component: SolicitudListEmpresaComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['EMPRESA'] },
-  },
-
-  { path: '**', redirectTo: 'home' },
+  { path: '**', redirectTo: 'home' }
 ];

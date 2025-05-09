@@ -5,7 +5,6 @@ import { VacanteService } from '../../services/vacante.service';
 import { EmpresaService } from '../../services/empresa.service';
 import { Estatus } from '../../interfaces/iestatus';
 import { IVacante } from '../../interfaces/ivacante';
-import { IVacanteResponse } from '../../interfaces/ivacante-response';
 
 @Component({
   selector: 'app-vacante-form-empresa',
@@ -24,7 +23,7 @@ export class VacanteFormEmpresaComponent implements OnInit {
   formVacante: FormGroup;
   mensaje: string = "";
   tipo!: string;
-  err: string = '';
+  error: string = '';
 
   estOptions: Estatus[] = [Estatus.CREADA, Estatus.CUBIERTA, Estatus.CANCELADA];
 
@@ -44,11 +43,21 @@ export class VacanteFormEmpresaComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    //obtener idEmpresa
+    const email = localStorage.getItem('email');
+    if (email) {
+      const empresa = await this.empresaService.findByEmail(email);
+      if (empresa?.idEmpresa) {
+        this.formVacante.patchValue({ idEmpresa: empresa.idEmpresa });
+      }
+    }
+
+
     this.ruta.params.subscribe(async (params: any) => {
       if (params.idVacante) {
         this.tipo = "Editar";
-        const vacanteResponse: IVacanteResponse = await this.vacanteService.getById(params.idVacante);
+        const vacanteResponse: IVacante = await this.vacanteService.getById(params.idVacante);
         if (vacanteResponse) {
           this.formVacante.patchValue(vacanteResponse);
         }
@@ -59,41 +68,66 @@ export class VacanteFormEmpresaComponent implements OnInit {
   }
 
   async getDataForm() {
-    if (!this.formVacante.value.idCategoria || !this.formVacante.value.idEmpresa) {
+    if (this.formVacante.invalid) {
+      this.error = "Faltan campos por completar.";
       return;
     }
 
-    if (this.tipo === "Crear") {
-      this.vacanteService.insert(this.formVacante.value)
-        .then(response => this.mostrarMensaje(response, "Vacante creada"));
-    } else if (this.tipo === "Editar") {
-      this.vacanteService.update(this.formVacante.value)
-        .then(response => this.mostrarMensaje(response, "Vacante actualizada"));
+    try {
+      let response;
+      if (this.tipo === "Crear") {
+        if (!this.formVacante.value.idEmpresa) {
+          this.error = "no se encuentra el idEmpresa";
+          return;
+        }
+        response = await this.vacanteService.insert(this.formVacante.value);
+        this.mostrarMensaje(response, "Vacante creada con éxito");
+      } else {
+        response = await this.vacanteService.update(this.formVacante.value);
+        this.mostrarMensaje(response, "Vacante actualizada con éxito");
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
   async eliminarVacante() {
     const idVacante = this.formVacante.value.idVacante;
-    if (!idVacante) return;
+    if (!idVacante) {
+      this.error = "No se puede eliminar la vacante";
+      return;
+    }
 
-    this.vacanteService.delete(idVacante)
-      .then(response => this.mostrarMensaje(response, "Vacante eliminada con éxito"));
+    try {
+      const response = await this.vacanteService.delete(idVacante);
+      this.mostrarMensaje(response, "Vacante eliminada con éxito");
+    } catch (error) {
+      this.error = "Error al eliminar la vacante";
+      console.error(error);
+    }
   }
 
   mostrarMensaje(response: number, mensajeOk: string) {
     if (response === 1) {
       this.mensaje = mensajeOk;
       this.router.navigate(['/dashboardEmpresa']);
+    } else {
+      this.error = "Operación no completada";
     }
   }
 
   checkControl(nombre: string, error: string): boolean {
-    return this.formVacante.get(nombre)?.hasError(error) ?? false;
+    const control = this.formVacante.get(nombre);
+    return control ? control.hasError(error) && control.touched : false;
   }
-  
+
+  cancelar() {
+    if (confirm('¿Estás seguro de que deseas cancelar? Los cambios no guardados se perderán.')) {
+      this.volver();
+    }
+  }
 
   volver(): void {
     this.router.navigate(["/dashboardEmpresa"]);
   }
 }
-
