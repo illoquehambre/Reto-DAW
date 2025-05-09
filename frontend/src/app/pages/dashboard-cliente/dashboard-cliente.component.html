@@ -1,25 +1,5 @@
+<app-sidebar></app-sidebar>
+<div class="container-fluid p-3 w-100"> 
+    <router-outlet/>
+</div>
 
-<app-sidebar (menuSelected)="selectedMenu = $event"></app-sidebar>
-  
-
-  <main class="container-fluid p-3" style="margin-top: 1rem;">
-    
-      <ng-container>
-      @switch (selectedMenu) {
-      
-          @case('perfil'){
-            <app-perfil></app-perfil>
-          }
-          @case('find-job'){
-            <app-vacantes-list></app-vacantes-list>
-          }
-          @case('solicitud'){
-            <app-solicitudes-list></app-solicitudes-list>
-          }
-          @default{
-            <div>Selecciona una opción del menú.</div>
-          }
-                           }
-      </ng-container>
-  </main>
-  

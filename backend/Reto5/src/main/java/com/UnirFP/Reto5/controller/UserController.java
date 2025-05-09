@@ -8,6 +8,7 @@ import com.UnirFP.Reto5.model.Vacante;
 import com.UnirFP.Reto5.model.dto.EmpresaDto;
 import com.UnirFP.Reto5.model.dto.LoginRequest;
 import com.UnirFP.Reto5.model.dto.SolicitudDto;
+import com.UnirFP.Reto5.model.dto.SolicitudUpdateDto;
 import com.UnirFP.Reto5.model.dto.UsuarioResponseDto;
 import com.UnirFP.Reto5.model.dto.VacanteDto;
 import com.UnirFP.Reto5.service.CategoriaService;
@@ -30,13 +31,16 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -136,18 +140,22 @@ public class UserController {
     @GetMapping("/vacante/{idVacante}")
 	public ResponseEntity<VacanteDto> unaVacante(@PathVariable int idVacante){
 		Vacante vacante = vservice.findById(idVacante);
-		VacanteDto vacanteDto = new VacanteDto(
-				vacante.getIdVacante(),
-			    vacante.getNombre(),
-			    vacante.getDescripcion(),
-			    vacante.getFecha(),
-			    vacante.getSalario(),
-			    vacante.getEstatus(),
-			    vacante.isDestacado(),
-			    vacante.getImagen(),
-			    vacante.getDetalles(),
-			    vacante.getCategoria().getIdCategoria(),
-			    vacante.getEmpresa().getIdEmpresa());
+		VacanteDto vacanteDto = VacanteDto.builder()
+    .idVacante(vacante.getIdVacante())
+    .nombre(vacante.getNombre())
+    .descripcion(vacante.getDescripcion())
+    .fecha(vacante.getFecha())
+    .salario(vacante.getSalario())
+    .estatus(vacante.getEstatus())
+    .destacado(vacante.isDestacado())
+    .imagen(vacante.getImagen())
+    .detalles(vacante.getDetalles())
+    .idCategoria(vacante.getCategoria().getIdCategoria())
+    .idEmpresa(vacante.getEmpresa().getIdEmpresa())
+    .nombreCategoria(vacante.getCategoria().getNombre())
+    .nombreEmpresa(vacante.getEmpresa().getNombreEmpresa())
+    .pais(vacante.getEmpresa().getPais())
+    .build();
 		
 		return new ResponseEntity<VacanteDto>(vacanteDto,HttpStatus.OK);
 	}
@@ -217,27 +225,80 @@ public class UserController {
     }
     
     @PostMapping("/solicitud")
-    public ResponseEntity<Integer> nuevaSolicitud(@RequestBody SolicitudDto solicitudDto){
+    public ResponseEntity<Integer> nuevaSolicitud(@RequestBody SolicitudDto solicitudDto,@AuthenticationPrincipal Usuario currentUser){
     	
     	Vacante vacante = vservice.findById(solicitudDto.getIdVacante());
-    	Usuario usuario = usuarioService.findByEmail(solicitudDto.getEmail());
+    	//Usuario usuario = usuarioService.findByEmail(solicitudDto.getEmail());
+    	Usuario usuario = usuarioService.findByEmail(currentUser.getEmail());
     	
     	Solicitud solicitud = new Solicitud();
     	
-    	solicitud.setFecha(solicitudDto.getFecha());
+    	//solicitud.setFecha(solicitudDto.getFecha());
+    	solicitud.setFecha(new Date());
         solicitud.setArchivo(solicitudDto.getArchivo());
         solicitud.setComentarios(solicitudDto.getComentarios());
-        solicitud.setEstado(solicitudDto.getEstado());
+        //solicitud.setEstado(solicitudDto.getEstado());
+        solicitud.setEstado(0);
         solicitud.setCurriculum(solicitudDto.getCurriculum());
         solicitud.setVacante(vacante);
         solicitud.setUsuario(usuario);
     	
     	switch(sservice.insertOne(solicitud)) {
 			case 1: return new ResponseEntity<Integer>(1, HttpStatus.CREATED);
+			case 2: return new ResponseEntity<Integer>(2, HttpStatus.OK);
 			case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
 			case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
 			default: return null;
     	}
     }
     
+ 
+    @PutMapping("/solicitud")
+    public ResponseEntity<Integer> updateSolicitud(@RequestBody SolicitudUpdateDto solicitud) {
+    	 System.out.println("Recibido en backend: " + solicitud);
+    	 System.out.println("== PUT recibido con ID: " + solicitud.getIdSolicitud());
+        switch(sservice.updateOne(solicitud)) {
+        case 1: return new ResponseEntity<Integer>(1, HttpStatus.OK);
+		case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
+		case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
+		default: return null;
+        }
+        
+    }
+
+    
+    @DeleteMapping("solicitud/{id}")
+    public ResponseEntity<Integer> deleteSolicitud(@PathVariable Integer id) {
+        switch(sservice.deleteOne(id)) {
+        case 1: return new ResponseEntity<Integer>(1, HttpStatus.OK);
+      		case 0: return new ResponseEntity<Integer>(0, HttpStatus.NOT_FOUND);
+      		case -1: return new ResponseEntity<Integer>(-1, HttpStatus.CONFLICT);
+      		default: return null;
+        }
+       
+    }
+    
+    @GetMapping("/solicitudes")
+    public ResponseEntity<List<SolicitudDto>> getSolicitudesDelUsuario(@AuthenticationPrincipal Usuario currentUser) {
+        String userId = currentUser.getEmail();
+        List<Solicitud> solicitudes = sservice.findByUsuario(userId);
+        List<SolicitudDto> solicitudesDto = new ArrayList<>();
+        
+        for (Solicitud solicitud : solicitudes) {
+    		SolicitudDto solicitudDto = new SolicitudDto();
+    		solicitudDto.setIdSolicitud(solicitud.getIdSolicitud());
+    		solicitudDto.setFecha(solicitud.getFecha());
+    		solicitudDto.setArchivo(solicitud.getArchivo());
+    	    solicitudDto.setComentarios(solicitud.getComentarios());
+    	    solicitudDto.setEstado(solicitud.getEstado());
+    	    solicitudDto.setCurriculum(solicitud.getCurriculum());
+    	    solicitudDto.setIdVacante(solicitud.getVacante().getIdVacante());
+    	    solicitudDto.setEmail(solicitud.getUsuario().getEmail());
+    	    solicitudesDto.add(solicitudDto);
+    	}
+        
+        return ResponseEntity.ok(solicitudesDto);
+    }
 }
+    
+

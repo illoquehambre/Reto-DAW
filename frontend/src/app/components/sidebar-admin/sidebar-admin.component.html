@@ -19,25 +19,22 @@
           <li class="nav-item">
             <button
               class="nav-link btn btn-link"
-             type="button"
-              (click)="onMenuSelect('empresas')"
-              [class.active]="selectedMenu === 'empresas'"
+              type="button"
+              (click)="irA('empresasAdminList')"
             >Empresa</button>
           </li>
           <li class="nav-item">
                 <button
                   class="nav-link btn btn-link"
                   type="button"
-                  (click)="onMenuSelect('usuarios')"
-                  [class.active]="selectedMenu === 'usuarios'"
+                  (click)="irA('usersList')"
                 >Usuarios</button>
           </li>
           <li class="nav-item">
             <button
               class="nav-link btn btn-link"
               type="button"
-              (click)="onMenuSelect('categorias')"
-              [class.active]="selectedMenu === 'categorias'"
+              (click)="irA('categoriasList')"
             >Categorias</button>
       </li>
        

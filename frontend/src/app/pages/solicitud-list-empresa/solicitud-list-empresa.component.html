@@ -1,0 +1,23 @@
+<div class="container py-4">
+    @if (loading) {
+      <div class="d-flex justify-content-center my-5">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+      </div>
+    }
+  
+    @if (error) {
+      <div class="alert alert-danger text-center" role="alert">
+        {{ error }}
+      </div>
+    }
+  
+    @if (!loading && !error) {
+      <div class="row gy-4">
+        @for (solicitud of solicitudes; track solicitud.idSolicitud) {
+          <app-solicitud-card [solicitud]="solicitud"></app-solicitud-card>
+        }        
+      </div>
+    }
+  </div>

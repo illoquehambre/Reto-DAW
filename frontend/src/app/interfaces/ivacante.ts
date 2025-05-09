@@ -2,7 +2,7 @@ export interface IVacante {
     idVacante: number;
     nombre: string;
     descripcion: string;
-    fecha: string;      
+    fecha: string;       
     salario: number;
     estatus: string;
     destacado: boolean;

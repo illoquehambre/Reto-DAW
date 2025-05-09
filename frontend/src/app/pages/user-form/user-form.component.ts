@@ -198,7 +198,7 @@ export class UserFormComponent {
         user.nombre = userFormRegister.nombre;
         user.apellidos = userFormRegister.apellidos;
         user.rol = userFormRegister.rol;
-
+console.log(user)
         comprobar = await this.userService.update(user);
 
         if (userFormRegister.rol == 'EMPRESA') {

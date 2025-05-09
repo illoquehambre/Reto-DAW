@@ -58,4 +58,3 @@ export class VacantesEmpresaListComponent implements OnInit{
     });
   }
 }
-
