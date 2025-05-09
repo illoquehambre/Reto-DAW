@@ -7,11 +7,10 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-
-  constructor(private router: Router, public authService: AuthService) {}
+  constructor(private router: Router,public authService: AuthService,) {}
 
   getDashboardRoute(): string {
     const rol = this.authService.getRoles();
@@ -26,6 +25,7 @@ export class NavbarComponent {
       return '/'; 
     }
   }
+  
 
   logout() {
     this.authService.logout();

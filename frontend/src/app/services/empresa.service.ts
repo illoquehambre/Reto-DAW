@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { lastValueFrom, Observable } from 'rxjs';
 import { IEmpresa } from '../interfaces/iempresa';
-import { IVacante } from '../interfaces/ivacante';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +40,7 @@ export class EmpresaService {
   }
 
   update(empresa: IEmpresa): Observable<number> {
-    return this.httpClient.put<number>(`${this.baseUrl}/`, empresa, this.getAuthoritation());
+    return this.httpClient.put<number>(this.baseUrl+"/empresa", empresa, this.getAuthoritation());
   }
 
   delete(id: number): Observable<void> {
@@ -56,15 +55,6 @@ export class EmpresaService {
     });
     return { headers };
   }
-
-  getPerfilEmpresa(): Promise<IEmpresa> {
-    return lastValueFrom(this.httpClient.get<IEmpresa>(`${this.baseUrl}/me`, this.getAuthoritation()));
-  }
-
-  getVacantesByEmpresa(idEmpresa: number): Observable<IVacante[]> {
-    return this.httpClient.get<IVacante[]>(`${this.baseUrl}/vacantesEmpresa/${idEmpresa}`);
-}
-
 
 
 async findEmpresaUsuario(): Promise<IEmpresa> {

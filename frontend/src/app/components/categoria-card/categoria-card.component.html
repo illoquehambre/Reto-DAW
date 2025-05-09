@@ -1,27 +1,28 @@
 <div class="row justify-content-center w-100">
-  <div class="col-12 col-10 col-8 col-6 mb-3">
-    <div class="card mb-3 panel-focus--light-90 p-2 w-100">
-      <div class="row g-3">
-       
-        <div
-          class="col-auto d-none d-sm-flex bg-success-subtle justify-content-center align-items-center p-3"
-          style="min-width: 80px;"
-        >
-          <i class="bi bi-info-circle-fill fs-2"></i>
-        </div>
-
-        <div class="col">
-          <h2 class="h5 text-uppercase focus--dark mb-2">
-            {{ miCategoria.nombre }}
-          </h2>
-          <p class="mb-1 medium focus--dark">Email: {{ miCategoria.descripcion }}</p>
-          <div class="d-flex gap-2">
-           <button class="btn btn-primary mb-2" (click)="editarCategoria(miCategoria.idCategoria)">Editar</button>
-              <button class="btn btn-danger mb-2" (click)="eliminarCategoria(miCategoria.idCategoria, miCategoria.nombre)">Eliminar</button>
+    <div class="col-12 col-10 col-8 col-6 mb-3">
+      <div class="card mb-3 panel-focus--light-90 p-2 w-100">
+        <div class="row g-3">
+         
+          <div
+            class="col-auto d-none d-sm-flex bg-success-subtle justify-content-center align-items-center p-3"
+            style="min-width: 80px;"
+          >
+            <i class="bi bi-info-circle-fill fs-2"></i>
+          </div>
+  
+          <div class="col">
+            <h2 class="h5 text-uppercase focus--dark mb-2">
+              {{ miCategoria.nombre }}
+            </h2>
+            <p class="mb-1 medium focus--dark">Email: {{ miCategoria.descripcion }}</p>
+            <div class="d-flex gap-2">
+             <button class="btn btn-primary mb-2" (click)="editarCategoria(miCategoria.idCategoria)">Editar</button>
+                <button class="btn btn-danger mb-2" (click)="eliminarCategoria(miCategoria.idCategoria, miCategoria.nombre)">Eliminar</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
+  
+  

@@ -24,10 +24,6 @@ export class AuthService {
     return this.getRoles().includes(rol);
   }
 
-   getCurrentUserEmail(): string | null {
-    return localStorage.getItem('email');
-  }
-  
   isAuthenticated(): boolean {
     return !!localStorage.getItem(this.tokenKey);
   }

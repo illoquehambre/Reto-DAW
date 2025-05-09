@@ -30,7 +30,7 @@ export class UserListComponent {
   }
 
   nuevoUser(){
-    this.router.navigate(['/dashboardAdmin/userNew']);
+    this.router.navigate(['/userNew']);
   }
 
   volver(){

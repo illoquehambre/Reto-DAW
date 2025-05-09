@@ -13,6 +13,12 @@ import { SolicitudService } from '../../services/solicitud.service';
 })
 
 export class SolicitudCardComponent {
+onDelete() {
+throw new Error('Method not implemented.');
+}
+onEdit() {
+throw new Error('Method not implemented.');
+}
 
   @Input() solicitud!: ISolicitud;
   private solicitudService = inject(SolicitudService);
