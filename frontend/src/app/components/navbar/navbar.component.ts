@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+<<<<<<< HEAD
 import { CommonModule } from '@angular/common';
+=======
+>>>>>>> versionArreglada
 
 @Component({
   selector: 'app-navbar',
@@ -11,9 +14,13 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-
   constructor(private router: Router,public authService: AuthService,) {}
 
+<<<<<<< HEAD
+  constructor(private router: Router,public authService: AuthService,) {}
+
+=======
+>>>>>>> versionArreglada
   getDashboardRoute(): string {
     const rol = this.authService.getRoles();
   

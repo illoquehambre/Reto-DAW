@@ -136,18 +136,22 @@ public class UserController {
     @GetMapping("/vacante/{idVacante}")
 	public ResponseEntity<VacanteDto> unaVacante(@PathVariable int idVacante){
 		Vacante vacante = vservice.findById(idVacante);
-		VacanteDto vacanteDto = new VacanteDto(
-				vacante.getIdVacante(),
-			    vacante.getNombre(),
-			    vacante.getDescripcion(),
-			    vacante.getFecha(),
-			    vacante.getSalario(),
-			    vacante.getEstatus(),
-			    vacante.isDestacado(),
-			    vacante.getImagen(),
-			    vacante.getDetalles(),
-			    vacante.getCategoria().getIdCategoria(),
-			    vacante.getEmpresa().getIdEmpresa());
+		VacanteDto vacanteDto = VacanteDto.builder()
+    .idVacante(vacante.getIdVacante())
+    .nombre(vacante.getNombre())
+    .descripcion(vacante.getDescripcion())
+    .fecha(vacante.getFecha())
+    .salario(vacante.getSalario())
+    .estatus(vacante.getEstatus())
+    .destacado(vacante.isDestacado())
+    .imagen(vacante.getImagen())
+    .detalles(vacante.getDetalles())
+    .idCategoria(vacante.getCategoria().getIdCategoria())
+    .idEmpresa(vacante.getEmpresa().getIdEmpresa())
+    .nombreCategoria(vacante.getCategoria().getNombre())
+    .nombreEmpresa(vacante.getEmpresa().getNombreEmpresa())
+    .pais(vacante.getEmpresa().getPais())
+    .build();
 		
 		return new ResponseEntity<VacanteDto>(vacanteDto,HttpStatus.OK);
 	}

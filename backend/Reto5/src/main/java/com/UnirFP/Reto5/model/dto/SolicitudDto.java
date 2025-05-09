@@ -27,4 +27,17 @@ public class SolicitudDto implements Serializable{
     private Integer idVacante;
     private String email;
   
+    //vacante
+    private String nombreVacante;
+    private String descripcionVacante;
+    private String salarioVacante;
+
+    //usuario
+    private String nombreUsuario;
+    private String apellidoUsuario;
+    private String emailUsuario;
+
+    //Empresa
+    private String nombreEmpresa;
+    private String paisEmpresa;
 }

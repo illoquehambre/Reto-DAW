@@ -4,6 +4,7 @@ import { VacanteService } from '../../services/vacante.service';
 import { IVacante } from '../../interfaces/ivacante';
 import { RouterModule } from '@angular/router';
 import { VacanteCardComponent } from '../../components/vacante-card/vacante-card.component';
+import { IVacanteResponse } from '../../interfaces/ivacante-response';
 
 
 @Component({
@@ -17,14 +18,15 @@ export class VacantesListComponent implements OnInit {
 
   private vacanteService = inject(VacanteService);
 
-  vacantes: IVacante[] = [];
+  vacantes: IVacanteResponse[] = [];
   loading = true;
   error: string | null = null;
 
   async ngOnInit() {
     try {
-      this.vacantes = await this.vacanteService.getAllVacantes();
-      console.log(this.vacantes);
+      const idEmpresa = 1; // Aquí puedes obtener el ID dinámicamente
+      this.vacantes = await this.vacanteService.getVacantesByEmpresa(idEmpresa);
+      console.log("Vacantes de la empresa:", this.vacantes);
     } catch (err) {
       console.error('Error al cargar vacantes', err);
       this.error = 'No se pudieron cargar las vacantes';
