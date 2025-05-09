@@ -1,6 +1,11 @@
+<<<<<<< HEAD
+import { Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+=======
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+>>>>>>> versionArreglada
 
 @Component({
   selector: 'app-sidebar',
@@ -11,9 +16,18 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
 
+<<<<<<< HEAD
+@Output()  menuSelected = new EventEmitter<string>();
+selectedMenu: string = 'perfil';
+
+  onMenuSelect(menuKey: string): void {
+    this.selectedMenu = menuKey;
+    this.menuSelected.emit(menuKey);
+=======
   router = inject(Router);
 
   irA(ruta: string) {
     this.router.navigate([`/dashboardCliente/${ruta}`]);
+>>>>>>> versionArreglada
   }
 }

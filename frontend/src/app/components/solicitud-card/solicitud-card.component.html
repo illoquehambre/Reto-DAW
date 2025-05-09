@@ -1,3 +1,27 @@
+<<<<<<< HEAD
+<div class="card shadow-sm">
+  <div class="card-body d-flex flex-column">
+    <h5 class="card-title"><strong>Estado:</strong>
+        {{ solicitud.estado === 0 
+            ? 'Presentado' 
+            : solicitud.estado === 1 
+              ? 'Adjudicado' 
+              : 'Desconocido' }} </h5>
+    <p class="card-text flex-grow-1">{{ solicitud.comentarios }}</p>
+    <div class="mb-2">
+      <small class="text-muted">
+        {{ solicitud.fecha | date:'longDate' }} • 
+      </small>
+    </div>
+    <div class="mb-2 badge bg-success">
+        <small class="text-muted">
+          {{ solicitud.archivo}} • 
+        </small>
+      </div>
+  </div>
+</div>
+ 
+=======
 <div class="col-md-6 mb-4">
     <div class="card shadow-sm h-100">
       <div class="card-header bg-primary text-white">
@@ -46,3 +70,4 @@
       </div>
     </div>
   </div>
+>>>>>>> versionArreglada

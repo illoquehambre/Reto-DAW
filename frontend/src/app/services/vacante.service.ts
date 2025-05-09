@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { IVacante } from '../interfaces/ivacante';
 import { IVacanteResponse } from '../interfaces/ivacante-response';
 
@@ -41,6 +41,16 @@ export class VacanteService {
   }
 
   async insert(vacante: IVacante): Promise<number> {
+<<<<<<< HEAD
+    return lastValueFrom(this.http.post<number>(`${this.apiUrl}/nuevaVacante`, vacante, this.getAuthoritation()));
+  }
+
+  findById(id: number): Promise<IVacante> {
+    return lastValueFrom(this.http.get<IVacante>(`${this.apiUrl}/vacante/${id}`, this.getAuthoritation()));
+  }  
+  
+   
+=======
     return await lastValueFrom(this.http.post<number>(this.apiUrl+"/nuevaVacante",vacante,this.getAuthoritation()));
   }
 
@@ -56,6 +66,7 @@ export class VacanteService {
     return lastValueFrom(this.http.get<IVacante>(`${this.apiUrl}/vacante/${id}`, this.getAuthoritation()));
   } 
   
+>>>>>>> versionArreglada
 
   async getByCategoria(idCategoria: number): Promise<IVacante[]> {
     return await lastValueFrom(this.http.get<IVacante[]>(`${this.apiUrl}/vacantes/categoria/${idCategoria}`));
@@ -136,4 +147,5 @@ export class VacanteService {
 
     return arrVacantes;
   }
+
 }

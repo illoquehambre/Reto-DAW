@@ -1,17 +1,26 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+<<<<<<< HEAD
+import { CommonModule } from '@angular/common';
+=======
+>>>>>>> versionArreglada
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive,CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
   constructor(private router: Router,public authService: AuthService,) {}
 
+<<<<<<< HEAD
+  constructor(private router: Router,public authService: AuthService,) {}
+
+=======
+>>>>>>> versionArreglada
   getDashboardRoute(): string {
     const rol = this.authService.getRoles();
   
