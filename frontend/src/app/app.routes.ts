@@ -29,8 +29,8 @@ export const routes: Routes = [
 
   /** Rutas públicas **/
   { path: '', pathMatch: 'full', component: HomeComponentComponent },
+  { path: 'login', component: LoginComponent},
   { path: 'home', component: HomeComponentComponent },
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'signup', component: SignUpComponent },
 
   /** Admin **/
