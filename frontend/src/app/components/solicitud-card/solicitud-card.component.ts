@@ -1,43 +1,20 @@
-<<<<<<< HEAD
-import { Component, Input } from '@angular/core';
-import { ISolicitud } from '../../interfaces/isolicitud';
-import { CommonModule } from '@angular/common';
-=======
 import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ISolicitud } from '../../interfaces/isolicitud';
 import { RouterModule } from '@angular/router';
 import { SolicitudService } from '../../services/solicitud.service';
-import { ISolicitudResponse } from '../../interfaces/isolicitud-response';
->>>>>>> versionArreglada
 
 @Component({
   selector: 'app-solicitud-card',
   standalone: true,
-<<<<<<< HEAD
-  imports: [CommonModule],
-  templateUrl: './solicitud-card.component.html',
-  styleUrl: './solicitud-card.component.css'
-})
-export class SolicitudCardComponent {
-@Input() solicitud!: ISolicitud;
-
-}
-=======
   imports: [CommonModule, RouterModule],
   templateUrl: './solicitud-card.component.html',
   styleUrls: ['./solicitud-card.component.css']
 })
 
 export class SolicitudCardComponent {
-onDelete() {
-throw new Error('Method not implemented.');
-}
-onEdit() {
-throw new Error('Method not implemented.');
-}
 
-  @Input() solicitud!: ISolicitudResponse;
+  @Input() solicitud!: ISolicitud;
   private solicitudService = inject(SolicitudService);
 
   async eliminarSolicitud() {
@@ -46,8 +23,8 @@ throw new Error('Method not implemented.');
       alert('Solicitud eliminada correctamente');
       window.location.reload();
     } catch (error) {
+      console.error('Error al eliminar solicitud', error);
       alert('No se pudo eliminar la solicitud');
     }
   }
 }
->>>>>>> versionArreglada

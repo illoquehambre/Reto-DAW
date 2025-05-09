@@ -1,38 +1,17 @@
 <div class="d-flex align-items-center justify-content-between mb-2">
-<<<<<<< HEAD
-    <h1 class="mt-0">Usuarios</h1>
-    <div class="ms-auto">
+  <h1 class="mb-0">Usuarios</h1>
+  <div class="ml-auto">
       <button class="btn btn-primary me-2" (click)="nuevoUser()">Nuevo</button>
-      <button class="btn btn-success"   (click)="volver()">Volver</button>
-    </div>
+      <button class="btn btn-success" (click)="volver()">Volver</button>
   </div>
-  <hr class="w-100" style="height: 2px; background-color: black;">
-  
-  <div class="row justify-content-center g-3">
-    @for(user of arrUsers;track user.email){
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-            <app-user-card [miUser]="user"></app-user-card>
-          </div>
-    }
-    
-  </div>
-  
-=======
-    <h1 class="mb-0">Usuarios</h1>
-    <div class="ml-auto">
-        <button class="btn btn-primary me-2" (click)="nuevoUser()">Nuevo</button>
-        <button class="btn btn-success" (click)="volver()">Volver</button>
-    </div>
 </div>
 <hr class="mx-auto w-100" style="height: 2px; background-color: black;">
 
 
 <div class="row justify-content-center g-3">
-    @for(user of arrUsers; track user.email){
-    <article class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <app-user-card [miUser] = "user"></app-user-card>
-    </article>
-    }
+  @for(user of arrUsers; track user.email){
+  <article class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <app-user-card [miUser] = "user"></app-user-card>
+  </article>
+  }
 </div>
-<
->>>>>>> versionArreglada

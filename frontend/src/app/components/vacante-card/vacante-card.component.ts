@@ -19,9 +19,6 @@ export class VacanteCardComponent {
 
   @Input() vacante!: IVacante;
 
-<<<<<<< HEAD
-}
-=======
   async cancelarVacante() {
     if (!this.vacante.idVacante) return;
     
@@ -40,4 +37,4 @@ export class VacanteCardComponent {
     }
   }
 }
->>>>>>> versionArreglada
+

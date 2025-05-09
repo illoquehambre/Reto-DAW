@@ -30,7 +30,7 @@ export class CategoriaListComponent {
   }
 
   nuevaCategoria(){
-    this.router.navigate(['/categoriaNew']);
+    this.router.navigate(['/dashboardAdmin/categoriaNew']);
   }
 
   volver(){

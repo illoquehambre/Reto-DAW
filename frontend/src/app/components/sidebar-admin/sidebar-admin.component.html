@@ -1,63 +1,44 @@
 <nav class="navbar navbar-expand-lg bg-light w-100">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">MiCuenta</a>
-  
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarMenu"
-        aria-controls="navbarMenu"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navbarMenu">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <button
-              class="nav-link btn btn-link"
-<<<<<<< HEAD
-<<<<<<< HEAD
-             type="button"
-              (click)="onMenuSelect('empresas')"
-              [class.active]="selectedMenu === 'empresas'"
-=======
->>>>>>> versionArreglada
-=======
-              type="button"
-              (click)="irA('empresasAdminList')"
->>>>>>> origin/adri-versionDefinitiva
-            >Empresa</button>
-          </li>
-          <li class="nav-item">
-                <button
-                  class="nav-link btn btn-link"
-                  type="button"
-<<<<<<< HEAD
-                  (click)="onMenuSelect('usuarios')"
-                  [class.active]="selectedMenu === 'usuarios'"
-=======
-                  (click)="irA('usersList')"
->>>>>>> versionArreglada
-                >Usuarios</button>
-          </li>
-          <li class="nav-item">
-            <button
-              class="nav-link btn btn-link"
-              type="button"
-<<<<<<< HEAD
-              (click)="onMenuSelect('categorias')"
-              [class.active]="selectedMenu === 'categorias'"
-=======
-              (click)="irA('categoriasList')"
->>>>>>> versionArreglada
-            >Categorias</button>
-      </li>
-       
-        </ul>
-      </div>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MiCuenta</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarMenu"
+      aria-controls="navbarMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <button
+            class="nav-link btn btn-link"
+            type="button"
+            (click)="irA('empresasAdminList')"
+          >Empresa</button>
+        </li>
+        <li class="nav-item">
+              <button
+                class="nav-link btn btn-link"
+                type="button"
+                (click)="irA('usersList')"
+              >Usuarios</button>
+        </li>
+        <li class="nav-item">
+          <button
+            class="nav-link btn btn-link"
+            type="button"
+            (click)="irA('categoriasList')"
+          >Categorias</button>
+    </li>
+     
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>

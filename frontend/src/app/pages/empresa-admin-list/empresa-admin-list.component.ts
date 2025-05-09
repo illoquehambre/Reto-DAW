@@ -32,7 +32,7 @@ export class EmpresaAdminListComponent {
   }
   
   nuevaEmpresa(){
-    this.router.navigate(['/empresaAdminNew']);
+    this.router.navigate(['/dashboardAdmin/empresaAdminNew']);
   }
   
   volver(){

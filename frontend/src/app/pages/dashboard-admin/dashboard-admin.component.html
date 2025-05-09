@@ -1,29 +1,4 @@
-<<<<<<< HEAD
-<app-sidebar-admin (menuSelected)="selectedMenu = $event"></app-sidebar-admin>
-
-<main class="container-fluid p-3" style="margin-top: 0.5rem;">
-    
-    <ng-container>
-    @switch (selectedMenu) {
-    
-        @case('empresas'){
-          <app-empresa-list></app-empresa-list>
-        }
-        @case('usuarios'){
-          <app-user-list></app-user-list>
-        }
-        @case('categorias'){
-          <app-categoria-list></app-categoria-list>
-        }
-        @default{
-          <div>Selecciona una opción del menú.</div>
-        }
-                         }
-    </ng-container>
-</main>
-=======
 <app-sidebar-admin></app-sidebar-admin>
->>>>>>> versionArreglada
 
 <div class="container-fluid p-3 w-100"> 
     <router-outlet/>

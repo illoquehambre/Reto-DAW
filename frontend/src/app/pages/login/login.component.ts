@@ -1,4 +1,3 @@
-// login.component.ts
 import { Component, inject } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,10 +21,10 @@ export class LoginComponent {
     const credentials: ILogin = loginForm.value;
     try {
       const resp = await this.userService.login(credentials) as IAuthResponse;
-    
+      // guardamos token y roles
       this.authService.saveAuthData(resp.token, resp.rol);
 
-     
+      // suponiendo que solo hay un rol principal:
       const role = resp.rol;
       console.log(role);
       switch (role) {
@@ -41,23 +40,12 @@ export class LoginComponent {
           break;
         default:
           
-          
+          // redirige a un dashboard genérico o a un “acceso denegado”
           this.router.navigate(['/']);
       }
     } catch (err) {
-      console.error('Error tras login:', err);
-    
-      const token = localStorage.getItem('accessToken');
-      const rol = localStorage.getItem('rol');
-    
-      if (token && rol) {
-        console.warn('Login parece haber sido exitoso, pero algo más falló.');
-        // Redirige igual si quieres
-        this.router.navigate(['/dashboardDefault']);
-      } else {
-        alert("Usuario o contraseña incorrectos");
-        loginForm.reset();
-      }
+      alert("Usuario o contraseña incorrectos");
+      loginForm.reset();
     }
-  }    
+  }
 }
