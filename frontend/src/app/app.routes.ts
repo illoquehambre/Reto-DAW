@@ -20,6 +20,8 @@ import { SolicitudListEmpresaComponent } from './pages/solicitud-list-empresa/so
 import { SolicitudesListClienteComponent } from './pages/solicitudes-list-cliente/solicitudes-list-cliente.component';
 import { EmpresaAdminListComponent } from './pages/empresa-admin-list/empresa-admin-list.component';
 import { EmpresaAdminFormComponent } from './pages/empresa-admin-form/empresa-admin-form.component';
+import { VacanteCardComponent } from './components/vacante-card/vacante-card.component';
+import { VacanteDetailEmpresaComponent } from './pages/vacante-detail-empresa/vacante-detail-empresa.component';
 
 export const routes: Routes = [
 
@@ -87,12 +89,6 @@ export const routes: Routes = [
         data: { rol: ['EMPRESA'] },
       },
       {
-        path: 'solicitudesList',
-        component: SolicitudListEmpresaComponent,
-        canActivate: [AuthGuard],
-        data: { rol: ['EMPRESA'] },
-      },
-      {
         path: '',
         component: VacantesListComponent,
         canActivate: [AuthGuard],
@@ -124,10 +120,16 @@ export const routes: Routes = [
   },
 
   {
-    path: 'vacanteDetalle/:id_vacante',
+    path: 'vacante/:id_vacante',
     component: VacanteFormComponent,
     canActivate: [AuthGuard],
     data: { rol: ['CLIENTE'] },
+  },
+    {
+    path: 'vacanteDetalle/:idVacante',
+    component: VacanteDetailEmpresaComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['EMPRESA'] },
   },
 
   /** Categorias **/

@@ -8,7 +8,7 @@ import { SolicitudCardComponent } from '../../components/solicitud-card/solicitu
 @Component({
   selector: 'app-solicitud-list-empresa',
   standalone: true,
-  imports: [CommonModule, RouterModule, SolicitudCardComponent], // Asegúrate de que está aquí
+  imports: [CommonModule, RouterModule, SolicitudCardComponent], 
   templateUrl: './solicitud-list-empresa.component.html',
   styleUrls: ['./solicitud-list-empresa.component.css']
 })
