@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SidebarAdminComponent } from "../../components/sidebar-admin/sidebar-admin.component";
 
@@ -10,7 +10,6 @@ import { SidebarAdminComponent } from "../../components/sidebar-admin/sidebar-ad
   styleUrl: './dashboard-admin.component.css'
 })
 export class DashboardAdminComponent {
-@Input() selectedMenu:string='usuarios';
 
   router = inject(Router);
 

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { lastValueFrom, Observable } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { IVacante } from '../interfaces/ivacante';
 
 @Injectable({ providedIn: 'root' })
@@ -29,20 +29,10 @@ export class VacanteService {
   }
 
   async insert(vacante: IVacante): Promise<number> {
-<<<<<<< HEAD
-    return lastValueFrom(this.http.post<number>(`${this.apiUrl}/nuevaVacante`, vacante, this.getAuthoritation()));
-=======
     console.log("Enviando solicitud con token...");
     return await lastValueFrom(
         this.http.post<number>(this.apiUrl+"/nuevaVacante",vacante,this.getAuthoritation()));
->>>>>>> origin/adri-versionDefinitiva
   }
-
-  findById(id: number): Promise<IVacante> {
-    return lastValueFrom(this.http.get<IVacante>(`${this.apiUrl}/vacante/${id}`, this.getAuthoritation()));
-  }  
-  
-   
 
   async getByCategoria(idCategoria: number): Promise<IVacante[]> {
     return await lastValueFrom(this.http.get<IVacante[]>(`${this.apiUrl}/vacantes/categoria/${idCategoria}`));
@@ -123,5 +113,4 @@ export class VacanteService {
 
     return arrVacantes;
   }
-
 }

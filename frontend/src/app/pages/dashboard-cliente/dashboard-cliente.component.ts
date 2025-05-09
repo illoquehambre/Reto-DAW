@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 
@@ -11,9 +11,6 @@ import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 })
 export class DashboardClienteComponent {
 
- @Input() selectedMenu:string='perfil';
-
-
   router = inject(Router);
 
   vacantes(){
@@ -23,5 +20,4 @@ export class DashboardClienteComponent {
   solicitudes(){
     this.router.navigate(['/solicitudesList']);
   }
-
 }

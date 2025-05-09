@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
+import { SignUpComponent } from './pages/signup/signup.component';
 import { DashboardAdminComponent } from './pages/dashboard-admin/dashboard-admin.component';
 import { DashboardClienteComponent } from './pages/dashboard-cliente/dashboard-cliente.component';
 import { DashboardEmpresaComponent } from './pages/dashboard-empresa/dashboard-empresa.component';
@@ -10,8 +11,6 @@ import { UserListComponent } from './pages/user-list/user-list.component';
 import { UserFormComponent } from './pages/user-form/user-form.component';
 import { EmpresaListComponent } from './pages/empresa-list/empresa-list.component';
 import { AuthGuard } from './auth.guard';
-import { PerfilComponent } from './components/perfil/perfil.component';
-import { SignUpComponent } from './pages/signup/signup.component';
 import { VacanteFormEmpresaComponent } from './pages/vacante-form-empresa/vacante-form-empresa.component';
 import { VacantesListClienteComponent } from './pages/vacantes-list-cliente/vacantes-list-cliente.component';
 import { VacantesListComponent } from './pages/vacantes-list/vacantes-list.component';
@@ -21,7 +20,6 @@ import { SolicitudListEmpresaComponent } from './pages/solicitud-list-empresa/so
 import { SolicitudesListClienteComponent } from './pages/solicitudes-list-cliente/solicitudes-list-cliente.component';
 import { EmpresaAdminListComponent } from './pages/empresa-admin-list/empresa-admin-list.component';
 import { EmpresaAdminFormComponent } from './pages/empresa-admin-form/empresa-admin-form.component';
-import { VacanteDetailComponent } from './pages/vacante-detail/vacante-detail.component';
 
 export const routes: Routes = [
 
@@ -103,12 +101,6 @@ export const routes: Routes = [
       },
     ]
   },
-  {
-    path: 'perfil',
-    component: PerfilComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['CLIENTE'] },
-  },
 
   /** Vacantes **/
   {
@@ -117,6 +109,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: { rol: ['EMPRESA'] },
   },
+
   {
     path: 'vacantesList',
     component: VacantesListComponent,
@@ -135,16 +128,8 @@ export const routes: Routes = [
     path: 'vacanteDetalle/:id_vacante',
     component: VacanteFormComponent,
     canActivate: [AuthGuard],
-    data: { rol: ['ADMON', 'CLIENTE'] }
+    data: { rol: ['CLIENTE'] },
   },
-
-  {
-    path: 'vacante/:id',
-    component: VacanteDetailComponent,
-    canActivate: [AuthGuard],
-    data: { rol: ['ADMON', 'EMPRESA'] }
-  },
-
 
   /** Categorias **/
 
