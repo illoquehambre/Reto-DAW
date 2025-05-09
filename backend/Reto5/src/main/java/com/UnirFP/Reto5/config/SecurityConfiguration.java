@@ -35,7 +35,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/admin/**").hasRole("ADMON")
                         .requestMatchers("/api/**").hasRole("CLIENTE")
                         .requestMatchers("/empresa/**").hasRole("EMPRESA")
-                        .requestMatchers("/auth/**","/login").permitAll()
+                        .requestMatchers("/auth/**","/login", "/actuator/health", "/actuator/info", "/swagger-ui/**", "/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess                                        // sesiones sin estado

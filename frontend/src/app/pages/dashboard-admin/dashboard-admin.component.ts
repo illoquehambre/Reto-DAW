@@ -13,7 +13,6 @@ import { CategoriaListComponent } from "../categoria-list/categoria-list.compone
   styleUrl: './dashboard-admin.component.css'
 })
 export class DashboardAdminComponent {
-@Input() selectedMenu:string='usuarios';
 
   router = inject(Router);
 

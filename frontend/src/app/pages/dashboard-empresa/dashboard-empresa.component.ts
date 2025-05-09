@@ -13,8 +13,6 @@ import { Router } from '@angular/router';
 })
 export class DashboardEmpresaComponent {
 
-@Input() selectedMenu: string = 'vacantes';
-
   router = inject(Router);
 
   newvacante(){

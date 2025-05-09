@@ -41,6 +41,7 @@ export class VacanteService {
   }
 
   async insert(vacante: IVacante): Promise<number> {
+<<<<<<< HEAD
     return await lastValueFrom(this.http.post<number>(this.apiUrl+"/nuevaVacante",vacante,this.getAuthoritation()));
   }
 
@@ -57,6 +58,13 @@ export class VacanteService {
   } 
   
 
+=======
+    console.log("Enviando solicitud con token...");
+    return await lastValueFrom(
+        this.http.post<number>(this.apiUrl+"/nuevaVacante",vacante,this.getAuthoritation()));
+  }
+
+>>>>>>> dockerImpl
   async getByCategoria(idCategoria: number): Promise<IVacante[]> {
     return await lastValueFrom(this.http.get<IVacante[]>(`${this.apiUrl}/vacantes/categoria/${idCategoria}`));
   }

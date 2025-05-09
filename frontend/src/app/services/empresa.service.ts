@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { lastValueFrom, Observable } from 'rxjs';
 import { IEmpresa } from '../interfaces/iempresa';
-import { IVacante } from '../interfaces/ivacante';
 
 @Injectable({
   providedIn: 'root'

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { VacanteService } from '../../services/vacante.service';
 
-
 @Component({
   selector: 'app-vacante-card',
   standalone: true,

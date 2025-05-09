@@ -8,4 +8,3 @@ export interface ISolicitud {
     idVacante: number;
     email: string;
 }
-
