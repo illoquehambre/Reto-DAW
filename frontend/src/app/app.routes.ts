@@ -17,7 +17,16 @@ import { VacanteFormEmpresaComponent } from './pages/vacante-form-empresa/vacant
 import { VacantesListClienteComponent } from './pages/vacantes-list-cliente/vacantes-list-cliente.component';
 import { VacantesListComponent } from './pages/vacantes-list/vacantes-list.component';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { VacanteDetailComponent } from './pages/vacante-detail/vacante-detail.component';
+=======
+import { SolicitudFormCliComponent } from './pages/solicitud-form-cli/solicitud-form-cli.component';
+import { HomeComponentComponent } from './pages/home-component/home-component.component';
+import { SolicitudListEmpresaComponent } from './pages/solicitud-list-empresa/solicitud-list-empresa.component';
+import { SolicitudesListClienteComponent } from './pages/solicitudes-list-cliente/solicitudes-list-cliente.component';
+import { EmpresaAdminListComponent } from './pages/empresa-admin-list/empresa-admin-list.component';
+import { EmpresaAdminFormComponent } from './pages/empresa-admin-form/empresa-admin-form.component';
+>>>>>>> origin/adri-versionDefinitiva
 
 export const routes: Routes = [
 
@@ -52,9 +61,14 @@ export const routes: Routes = [
       { path: 'userNew', component: UserFormComponent },
       { path: 'userUpdate/:email', component: UserFormComponent },
       { path: 'categoriasList', component: CategoriaListComponent },
+<<<<<<< HEAD
       { path: 'categoriaNew', component: CategoriaFormComponent },
       { path: 'categoriaUpdate/:id_categoria', component: CategoriaFormComponent },
       { path: 'empresasList', component: EmpresaListComponent }
+=======
+      { path: 'empresasAdminList', component: EmpresaAdminListComponent },
+      { path: '', component: EmpresaAdminListComponent }
+>>>>>>> origin/adri-versionDefinitiva
     ]
   },
 
@@ -65,10 +79,31 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: { rol: ['CLIENTE'] },
     children: [
+<<<<<<< HEAD
       { path: '', redirectTo: 'vacantesListCli', pathMatch: 'full' },
       { path: 'vacantesListCli', component: VacantesListClienteComponent },
       { path: 'vacanteDetalle/:id_vacante', component: VacanteFormComponent },
       { path: 'solicitudNew', component: SolicitudFormCliComponent }
+=======
+      {
+        path: 'vacantesListCli',
+        component: VacantesListClienteComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['CLIENTE'] },
+      },
+      {
+        path: 'solicitudesCliList',
+        component: SolicitudesListClienteComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['CLIENTE'] },
+      },
+      {
+        path: '',
+        component: VacantesListClienteComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['CLIENTE'] },
+      }
+>>>>>>> origin/adri-versionDefinitiva
     ]
   },
 
@@ -79,6 +114,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     data: { rol: ['EMPRESA'] },
     children: [
+<<<<<<< HEAD
       { path: '', redirectTo: 'vacantesList', pathMatch: 'full' },
       { path: 'vacantesList', component: VacantesListComponent },
       { path: 'vacanteNew', component: VacanteFormEmpresaComponent },
@@ -90,6 +126,32 @@ export const routes: Routes = [
       { path: 'perfilForm', component: PerfilFormComponent }
       
 
+=======
+      {
+        path: 'vacanteNew',
+        component: VacanteFormEmpresaComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['EMPRESA'] },
+      },
+      {
+        path: 'vacantesList',
+        component: VacantesListComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['EMPRESA'] },
+      },
+      {
+        path: 'solicitudesList',
+        component: SolicitudListEmpresaComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['EMPRESA'] },
+      },
+      {
+        path: '',
+        component: VacantesListComponent,
+        canActivate: [AuthGuard],
+        data: { rol: ['EMPRESA'] },
+      },
+>>>>>>> origin/adri-versionDefinitiva
     ]
   },
   {
@@ -189,7 +251,53 @@ export const routes: Routes = [
     data: { rol: ['ADMON'] },
   },
 
+<<<<<<< HEAD
   { path: '**', redirectTo: 'login' },
+=======
+  {
+    path: 'empresasAdminList',
+    component: EmpresaAdminListComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['ADMON'] },
+  },
+
+  {
+    path: 'empresaAdminNew',
+    component: EmpresaAdminFormComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['ADMON'] },
+  },
+
+  {
+    path: 'empresaAdminUpdate/:id_empresa',
+    component: EmpresaAdminFormComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['ADMON'] },
+  },
+
+  /** Solicitudes **/
+  {
+    path: 'solicitudNew/:id_vacante',
+    component: SolicitudFormCliComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['CLIENTE'] },
+  },
+
+  {
+    path: 'solicitudes/:idVacante',
+    component: SolicitudListEmpresaComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['EMPRESA'] },
+  },
+  {
+    path: 'solicitudesList',
+    component: SolicitudListEmpresaComponent,
+    canActivate: [AuthGuard],
+    data: { rol: ['EMPRESA'] },
+  },
+
+  { path: '**', redirectTo: 'home' },
+>>>>>>> origin/adri-versionDefinitiva
 ];
 =======
   { path: '**', redirectTo: 'home' }

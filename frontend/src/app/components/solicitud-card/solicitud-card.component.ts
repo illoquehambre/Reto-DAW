@@ -30,6 +30,12 @@ export class SolicitudCardComponent {
 })
 
 export class SolicitudCardComponent {
+onDelete() {
+throw new Error('Method not implemented.');
+}
+onEdit() {
+throw new Error('Method not implemented.');
+}
 
   @Input() solicitud!: ISolicitudResponse;
   private solicitudService = inject(SolicitudService);

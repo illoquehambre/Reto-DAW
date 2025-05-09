@@ -15,15 +15,15 @@ export class EmpresaCliService {
   constructor() { }
 
   getAll(): Observable<IEmpresa[]> {
-    return this.httpClient.get<IEmpresa[]>(this.baseUrl);
+    return this.httpClient.get<IEmpresa[]>(this.baseUrl+"/empresas", this.getAuthoritation());
   }
 
   getAllCliente(): Promise<IEmpresa[]> {
     return lastValueFrom(this.httpClient.get<IEmpresa[]>(this.baseUrlCli+"/empresas", this.getAuthoritation()));
   }
 
-  findById(id: number): Observable<IEmpresa> {
-    return this.httpClient.get<IEmpresa>(`${this.baseUrl}/${id}`);
+  findById(id: number): Promise<IEmpresa> {
+    return lastValueFrom(this.httpClient.get<IEmpresa>(`${this.baseUrl}/empresa/${id}`, this.getAuthoritation()));
   }
 
   findByIdCliente(id: number): Promise<IEmpresa> {
@@ -42,8 +42,8 @@ export class EmpresaCliService {
     return this.httpClient.put<number>(this.baseUrl+"/empresa", empresa, this.getAuthoritation());
   }
 
-  delete(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.baseUrl}/${id}`);
+  delete(id: number): Observable<number> {
+    return this.httpClient.delete<number>(`${this.baseUrl}/empresa/${id}`, this.getAuthoritation());
   }
 
   getAuthoritation(){
