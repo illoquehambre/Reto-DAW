@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ISolicitud } from '../../interfaces/isolicitud';
 import { RouterModule } from '@angular/router';
 import { SolicitudService } from '../../services/solicitud.service';
+import { ISolicitudResponse } from '../../interfaces/isolicitud-response';
 
 @Component({
   selector: 'app-solicitud-card',
@@ -14,7 +15,7 @@ import { SolicitudService } from '../../services/solicitud.service';
 
 export class SolicitudCardComponent {
 
-  @Input() solicitud!: ISolicitud;
+  @Input() solicitud!: ISolicitudResponse;
   private solicitudService = inject(SolicitudService);
 
   async eliminarSolicitud() {
@@ -23,7 +24,6 @@ export class SolicitudCardComponent {
       alert('Solicitud eliminada correctamente');
       window.location.reload();
     } catch (error) {
-      console.error('Error al eliminar solicitud', error);
       alert('No se pudo eliminar la solicitud');
     }
   }

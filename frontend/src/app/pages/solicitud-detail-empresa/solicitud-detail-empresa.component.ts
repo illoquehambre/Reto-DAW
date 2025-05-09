@@ -12,6 +12,7 @@ import { ISolicitudResponse } from '../../interfaces/isolicitud-response';
   styleUrls: ['./solicitud-detail-empresa.component.css']
 })
 export class SolicitudDetailEmpresaComponent {
+
   private solicitudService = inject(SolicitudService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -30,11 +31,9 @@ export class SolicitudDetailEmpresaComponent {
       if (!this.solicitud) this.error = "Solicitud no encontrada";
     } catch (error) {
       this.error = "Error al cargar la solicitud";
-      console.error(error);
     }
   }
 
-  // Versión ultra-minimalista
 async asignarSolicitud(estado: number): Promise<void> {
   if (!this.solicitud?.idSolicitud) return;
   
